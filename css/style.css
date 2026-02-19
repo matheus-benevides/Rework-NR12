@@ -1,0 +1,1049 @@
+/* Criei essa div pq daria mais trampo mexer na js do evento da arrow q o miguel fez doq simplesmente colocar uma div nova */
+.dontmove{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    padding: 6px 15px;
+    width: 230px;
+    height: 45px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    color: var(--corTxt);
+    background: var(--corBase);
+    font-size: var(--text-base);
+
+    &:hover {
+        background: var(--corDestaque);
+    }
+}
+
+.metade {
+    width: 33%;
+}
+
+/* --- CSS ESPECÍFICO PARA A TELA DE TUTORIAL --- */
+
+/* Texto de boas vindas */
+.welcome-box {
+    background-color: #FFFFFF;
+    text-align: center;
+    width: 100%;
+    height: 14%;
+    margin-bottom: 40px;
+    color: var(--corTxt3);
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+.welcome-box h1 {
+    margin-left: 20px;
+    text-align: left;
+    font-size: var(--text-4xl);
+    margin-bottom: 10px;
+    color: var(--corBase);
+}
+
+.welcome-box p {
+    text-align: left;
+    margin-left: 20px;
+    font-size: 30%;
+    font-size: var(--text-base);
+    margin-bottom: 10px;
+    color: #D9D9D9;
+}
+
+hr {
+    justify-self: center;
+    width: 98%;
+}
+
+/* Ajustes no Container dos Cards para não bugar */
+.card-box {
+    width: 90%;
+    height: auto;
+    /* Mudado de 20% para auto para caber o texto */
+    min-height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* Espalha os cards */
+    gap: 20px;
+    /* Garante espaço entre eles se a tela diminuir */
+}
+
+.card-box1 {
+    width: 90%;
+    height: 400px;
+    /* Mudado de 20% para auto para caber o texto */
+    min-height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* Espalha os cards */
+    gap: 20px;
+    /* Garante espaço entre eles se a tela diminuir */
+    justify-content: center;
+}
+
+.card-box-filho {
+    background: var(--corFundo2);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+    min-height: 200px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    flex: 0 0 48%;
+
+
+}
+
+.card-box-filho ul {
+    padding-left: 20px;
+    margin: 0;
+}
+
+
+.btn-document {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 200%;
+    /* controla o quanto desce */
+    padding: 6px 15px;
+    width: 230px;
+    height: 45px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    color: var(--corTxt);
+    background: var(--corBase);
+    font-size: var(--text-base);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
+.card-box-filho h1 {
+    color: var(--corBase);
+    width: 100%;
+    border-bottom: 1px solid var(--corBordas);
+}
+
+.card-box-filho p {
+    color: var(--corTxt3);
+}
+
+.card-box-filho li {
+    color: var(--corTxt3);
+}
+
+
+/* Adaptação do Card original para Texto Explicativo */
+.card {
+    /* Forçamos uma altura fixa para ficarem alinhados */
+    height: 280px;
+    width: 32%;
+    /* Divide em 3 colunas iguais com folga */
+    padding: 20px;
+
+}
+
+/* Ícones grandes e bonitos */
+.card-header i {
+    font-size: 2.5rem;
+    color: var(--corBase);
+    color: var(--corTxt3)
+}
+
+.card-header span {
+    font-weight: bold;
+    font-size: var(--text-xl);
+}
+
+/* SOBRESCREVENDO A FONTE GIGANTE DO CSS ORIGINAL */
+/* O original tem 48px, aqui usamos 16px para ler o tutorial */
+.card-info-tutorial {
+    color: var(--corTxt3);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    margin-top: 15px;
+    text-align: justify;
+}
+
+/* Cards da Página Principal dos Guri */
+.card-box {
+    width: 90%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card {
+    padding: 10px;
+    width: 31%;
+    height: 100%;
+    border-radius: 10px;
+    background: var(--corFundo2);
+    box-shadow: var(--sombra);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-top: 3px solid var(--corBase);
+
+    &:hover {
+        background: var(--cinzafundo);
+        border-color: var(--corDestaque);
+    }
+}
+
+.card-header {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 2px solid var(--corBordas);
+    color: var(--corTxt3);
+}
+
+.card-info {
+    color: var(--corTxt3);
+    font-size: var(--text-4xl);
+}
+
+/* Tabela */
+.div-tabelas {
+    width: 100%;
+    border-radius: 15px;
+    height: 60%;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    gap: 10px;
+    align-items: center;
+}
+
+.tabela-bg {
+    width: 100%;
+    height: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--corFundo2);
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+
+}
+
+.tabela-bg table,
+.tabela-bg2 table {
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+}
+
+.tabela-bg table thead,
+.tabela-bg2 table thead {
+    /* background: linear-gradient(360deg, var(--corDestaque), var(--corBase)); */
+    background: var(--corDestaque);
+    color: var(--corTxt);
+}
+
+.tabela-bg table thead th,
+.tabela-bg2 table thead th {
+    padding: 15px;
+    min-width: 130px;
+    white-space: nowrap;
+}
+
+.tabela-bg table tbody tr,
+.tabela-bg2 table tbody tr {
+    height: 71.2px;
+    color: var(--corTxt3);
+    transition: 0s;
+
+    &:nth-child(even) {
+        background-color: var(--corFundo);
+    }
+
+    &:hover {
+        background: var(--hoverTr);
+        color: var(--corTxt3);
+    }
+}
+
+.tabela-bg2 {
+    width: 90%;
+    height: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--corFundo2);
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+
+    .tabela-bg,
+    .tabela-bg2 {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 0;
+    }
+
+    .tabela-bg table,
+    .tabela-bg2 table {
+        min-width: 600px;
+    }
+
+    .tabela-bg table thead th,
+    .tabela-bg2 table thead th {
+        padding: 8px 5px;
+        min-width: 80px;
+        font-size: 12px;
+    }
+
+    .tabela-bg table tbody tr,
+    .tabela-bg2 table tbody tr {
+        height: 35px;
+    }
+
+    .tabela-bg table tbody td,
+    .tabela-bg2 table tbody td {
+        padding: 5px 3px;
+        font-size: 12px;
+    }
+
+    .div-tabelas {
+        height: auto;
+        padding: 10px;
+    }
+
+    .div-btns-pages div {
+        width: 100%;
+    }
+}
+
+.btnAcao {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    color: var(--corTxt);
+    border-radius: 5px;
+}
+
+.editar {
+    background: var(--editar);
+
+    &:hover {
+        background: var(--editarHover);
+    }
+}
+
+.confirmar {
+    background: var(--confirmar);
+
+    &:hover {
+        background: var(--confirmarHover);
+    }
+}
+
+.deletar {
+    background: var(--corBase);
+
+    &:hover {
+        background: var(--corDestaque);
+    }
+}
+
+.ferramentas {
+    background: var(--ferramentas);
+
+    &:hover {
+        background: var(--ferramentasHover);
+    }
+}
+
+.clipes {
+    background: var(--clipes);
+
+    &:hover {
+        background: var(--clipesHover);
+    }
+}
+
+.botao-acoes {
+    border: none;
+    padding: 12px 0px;
+    width: 120px;
+    height: 40px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    color: var(--corTxt3);
+}
+
+.div-btns-change {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.div-btns-change button {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: var(--text-lg);
+    border: none;
+    background: none;
+    color: var(--corBase);
+    cursor: pointer;
+}
+
+.div-btns-pages {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.div-btns-pages div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 5px;
+    background: var(--corFundo2);
+    border-radius: 5px;
+    width: 60dvw;
+    /* box-shadow: var(--sombra); */
+    color: var(--corTxt3);
+}
+
+.div-btns-pages div input {
+    width: 2500px;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid var(--corBordas);
+    border-radius: 5px 5px 0px 0px;
+    background: var(--corFundo);
+    color: var(--corTxt3);
+}
+
+@media (max-width: 768px) {
+
+    .div-header {
+        font-size: var(--text-sm);
+    }
+
+    .div-txt-header p span:last-child {
+        font-size: 0px;
+    }
+
+    .div-header {
+        font-size: var(--text-sm);
+    }
+
+    .div-txt-header p span:last-child {
+        font-size: 0px;
+    }
+
+    .card {
+        width: 100%;
+        max-height: 180px;
+        justify-content: sp;
+    }
+
+    .card-box {
+        flex-direction: row;
+    }
+
+    .card-info-tutorial {
+        font-size: var(--text-sm);
+    }
+
+    .div-btns-pages {
+        padding: 5px;
+    }
+
+    .div-btns-pages div {
+        padding: 5px;
+    }
+
+    .div-tabelas {
+        position: relative;
+        top: 35%;
+    }
+
+    .btn {
+        width: 45px;
+        justify-content: space-between;
+    }
+
+    .btn:first-of-type {
+        font-size: 0px;
+    }
+
+    .btn i {
+        font-size: var(--text-sm);
+    }
+
+    .card-info-tutorial {
+        margin-top: 0px;
+    }
+
+    .quick-actions {
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-quick {
+        width: 100%;
+    }
+}
+
+select{
+    cursor: pointer;
+}
+
+#link-user {
+    color: var(--corTxt3);
+    text-decoration: none;
+}
+
+.add-image {
+    display: flex;
+    background-color: white;
+    border-color: #000000 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    left: 50%;
+    cursor: pointer;
+}
+
+/* Topo da PREVENTIVA */
+/* Container dos cards */
+.status-dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    /* Isso é o segredo da responsividade: permite cair para a linha de baixo */
+    gap: 20px;
+    /* Espaço entre os cards */
+    width: 100%;
+    margin-bottom: 30px;
+    align-items: stretch;
+    /* Garante que todos tenham a mesma altura */
+}
+
+/* Estilo do cartão individual */
+.status-card {
+    background-color: var(--corFundo2);
+    border-radius: 12px;
+    padding: 20px;
+    /* O flex abaixo significa: 
+       1 (pode crescer), 
+       1 (pode diminuir), 
+       200px (tamanho base ideal) */
+    flex: 1 1 220px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 200px;
+    /* Impede que o card fique pequeno demais */
+}
+
+/* --- Mantenha as cores iguais ao anterior --- */
+.card-green {
+    border-left-color: #28a745;
+}
+
+.card-yellow {
+    border-left-color: #ffc107;
+}
+
+.card-red {
+    border-left-color: #dc3545;
+}
+
+.card-blue {
+    border-left-color: #007bff;
+}
+
+.card-label {
+    font-size: 0.75rem;
+    color: #6c757d;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    /* Evita que o título quebre em duas linhas feias */
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.card-icon {
+    font-size: 1.2rem;
+}
+
+/* Cores dos ícones */
+.card-green .card-icon {
+    color: #28a745;
+}
+
+.card-yellow .card-icon {
+    color: #ffc107;
+}
+
+.card-red .card-icon {
+    color: #dc3545;
+}
+
+.card-blue .card-icon {
+    color: #007bff;
+}
+
+.div-dad {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    border-radius: 15px;
+    box-shadow: var(--sombra);
+    background: var(--corFundo2);
+    padding: 15px;
+}
+
+.div-row {
+    display: flex;
+    width: 75%;
+    gap: 50px;
+    align-items: center;
+    color: var(--corTxt3);
+
+}
+
+.status {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+}
+
+.div-row div p {
+    color: var(--corTxt3);
+    font-weight: bold;
+    font-size: var(--text-xl);
+}
+
+/* --- ESTILOS DE MANUTENÇÃO PREVENTIVA --- */
+
+/* Dashboard de Indicadores */
+.dashboard-row {
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.col-md-3 {
+    flex: 1;
+    min-width: 200px;
+}
+
+.col-md-4 {
+    flex: 1;
+    min-width: 1000px;
+}
+
+.card-dash {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    transition: 0.3s;
+    background: #fff;
+    border-left: 6px solid #ccc;
+    cursor: pointer;
+    text-align: left;
+}
+
+.card-dash:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-ok {
+    border-left-color: var(--status-ok);
+}
+
+.card-warning {
+    border-left-color: var(--status-warning);
+}
+
+.card-danger {
+    border-left-color: var(--status-danger);
+}
+
+.card-dash small {
+    font-weight: bold;
+    color: #888;
+    text-transform: uppercase;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.card-dash h2 {
+    font-weight: 800;
+    margin: 5px 0 0 0;
+    color: #333;
+    font-size: 2em;
+    display: inline-block;
+}
+
+.card-dash i {
+    float: right;
+    font-size: 2em;
+    opacity: 0.8;
+}
+
+/* Badges de Status e Frequência */
+.badge-status {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}
+
+.bg-danger {
+    background-color: var(--status-danger);
+}
+
+.bg-warning {
+    background-color: var(--status-warning);
+    color: #333;
+}
+
+.bg-success {
+    background-color: var(--status-ok);
+}
+
+.badge-freq {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 9px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge-mensal {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-trimestral {
+    background: #e3f2fd;
+    color: #0d47a1;
+}
+
+.badge-semestral {
+    background: #f3e5f5;
+    color: #4a148c;
+}
+
+.badge-anual {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+/* Auxiliares */
+.highlight-red {
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+.highlight-yellow {
+    background-color: #fff3cd !important;
+    color: #856404 !important;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+.row-hidden {
+    display: none !important;
+}
+
+.panel-title {
+    color: var(--senai-red);
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+/* Button Action Checklist */
+.btnAcao.checklist {
+    background-color: var(--senai-red);
+    color: white;
+}
+
+.btnAcao.checklist:hover {
+    background-color: var(--senai-dark-red);
+}
+
+/* GERENCIADOR DE ORDEM DE SERVIÇO */
+.card-table {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    margin-top: 30px;
+    width: 90%;
+    /* Força ocupar toda a largura */
+    box-sizing: border-box;
+    /* Garante que o padding não estoure a tela */
+    overflow-x: auto;
+}
+
+/* Tabela */
+.custom-table {
+    width: 100%;
+    border-collapse: separate;
+    /* Permite espaçamento melhor */
+    border-spacing: 0 5px;
+    /* Pequeno respiro entre linhas */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.custom-table th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #9aa0ac;
+    font-weight: 700;
+    padding: 15px;
+    /* border-bottom: 2px solid #000000; */
+    text-align: center;
+}
+
+.custom-table td {
+    padding: 20px 15px;
+    /* Aumentei o padding para ficar mais espaçado */
+    vertical-align: middle;
+    border-bottom: 1px solid #f5f5f5;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+/* Coluna Equipamento e Técnico */
+.col-info strong {
+    display: block;
+    font-size: 1rem;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.col-info span,
+.sub-text {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.gestor-highlight {
+    color: #4a90e2;
+    font-size: 0.75rem;
+    margin-top: 2px;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.status-solicitada {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.status-execucao {
+    background-color: #fff3cd;
+    color: #d88d00;
+}
+
+.status-concluida {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+/* Ações */
+.btn-aprovar {
+    background: transparent;
+    border: 1px solid #4a90e2;
+    color: #4a90e2;
+    padding: 6px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-aprovar:hover {
+    background: #4a90e2;
+    color: #fff;
+}
+
+.btn-acao-dark {
+    background-color: #2d2d2d;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    color: #f1c40f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-acao-dark:hover {
+    background-color: #000;
+    transform: scale(1.05);
+}
+
+.aguardando-text {
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Ajuste do Título Workflow para ficar parecido com a imagem */
+.workflow-title {
+    color: #d9534f;
+    /* Um tom avermelhado/laranja */
+    font-weight: 800;
+}
+
+.status-ativo {
+    background-color: var(--confirmar);
+    /* verde bootstrap */
+    color: var(--txtClaro);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.status-inativo {
+    background-color: var(--corBase);
+    /* vermelho bootstrap */
+    color: var(--txtClaro);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+.filtrar-status {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 10px;
+    margin-bottom: 0px;
+    width: 30%;
+}
+
+#select-filtro-status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--corBordas);
+    background-color: var(--corFundo);
+    color: var(--corTxt3);
+    cursor: pointer;
+}
+
+#select-filtro-turmas {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--corBordas);
+    background-color: var(--corFundo);
+    color: var(--corTxt3);
+}
+
+#select-filtro-alunos {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--corBordas);
+    background-color: var(--corFundo);
+    color: var(--corTxt3);
+}
+
+.box-pesquisar {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 45.6%;
+}
+
+.avatar-profile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 150px;
+    padding: 10px;
+    font-weight: bold;
+    font-size: var(--text-4xl);
+    border-radius: 10px;
+    color: var(--corBase);
+    background: var(--corFundo);
+    border: 1px solid var(--corBordas)
+}

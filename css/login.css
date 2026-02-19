@@ -1,0 +1,201 @@
+.body_login::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 30%;
+    background: linear-gradient(to bottom right, #ba2323, #fc2323);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    z-index: 1;
+}
+
+.body_login::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 40%;
+    background: linear-gradient(to top left, #ba2323, #fc2323);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    z-index: 1;
+}
+
+
+/* Tela De Login */
+.login-bg {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(98deg, var(--corDestaque), var(--corBase));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 40%;
+    min-width: 420px;
+    height: 620px;
+    padding: 5px;
+    border-radius: 25px;
+    background: var(--corFundo);
+    box-shadow: var(--sombra);
+}
+
+.login-form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.div-img {
+    width: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 0%;
+}
+
+img {
+    width: 100%;
+}
+
+.div-msg-erro {
+    width: 75%;
+    border-radius: 15px 15px 0px 0px;
+    padding: 20px;
+    color: var(--corTxt);
+    font-weight: bold;
+    background: var(--corBase);
+    text-align: center;
+}
+
+.div-inputs-chefe {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-direction: column;
+}
+
+.div-input {
+    border: 2px solid var(--corDestaque);
+    width: 65%;
+    padding: 10px;
+    border-radius: 5px;
+    justify-content: space-around;
+    display: flex;
+    align-items: center;
+    box-shadow: var(--sombra);
+    font-size: var(--fontLg);
+    color: var(--corTxt3);
+
+    &:focus-within {
+        background: var(--corDestaque);
+        color: var(--corTxt3);
+    }
+
+    &:focus-within button {
+        color: var(--corTxt3);
+    }
+
+    &:focus-within .input::placeholder {
+        color: var(--corTxt3);
+    }
+}
+
+.div-input button {
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: var(--text-xl);
+    background: transparent;
+    border: none;
+    color: var(--corDestaque);
+}
+
+.login-form label {
+    color: var(--corTxt3);
+}
+
+.input {
+    padding: 15px;
+    background: transparent;
+    border-radius: 5px 5px 0px 0px;
+    width: 80%;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    color: var(--corTxt3);
+    border-bottom: 2px solid transparent;
+
+    &::placeholder {
+        color: var(--corTxt3);
+    }
+
+    &:focus {
+        border-color: var(--corBase);
+        color: var(--corTxt3);
+    }
+}
+
+.div-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.div-btn #trocarForm {
+    background: none;
+    border: none;
+    color: var(--corBase);
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.btn {
+    padding: 6px 15px;
+    width: 230px;
+    height: 45px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    color: var(--corTxt);
+    background: var(--corBase);
+    font-size: var(--text-base);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+        background: var(--corDestaque);
+    }
+}
+
+@media (max-width: 768px) {
+    .login-box{
+        scale: 0.8;   
+    }
+
+    .body_login::after, .body_login::before{
+        display: none;
+    }
+
+}

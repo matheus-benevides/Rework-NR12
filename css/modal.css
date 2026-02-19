@@ -1,0 +1,389 @@
+.modal-fundo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* MODAL DE ACESSO NEGADO */
+.modal-box-acesso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 40%;
+    height: 200px;
+    padding: 10px;
+    border-radius: 25px;
+    background: var(--corFundo);
+    color: var(--corTxt);
+}
+
+.modal-header-acesso {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+    color: var(--corBase);
+}
+
+.modal-header-acesso button {
+    font-size: var(--text-xl);
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--corTxt3);
+
+    &:hover {
+        color: var(--corBase);
+    }
+}
+
+#fechar-modal {
+    position: absolute;
+    top: 15%;
+    left: 93%;
+    font-size: 2.4rem;
+    color: var(--txtClaro);
+    transition: 0.35s;
+
+    &:hover {
+        scale: 0.75;
+        color: var(--txtClaro);
+    }
+}
+
+.modal-txt-acesso {
+    width: 100%;
+    text-align: center;
+    color: var(--corTxt3);
+}
+
+.modal-btn-acesso {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-btn-acesso button {
+    background: var(--confirmar);
+    color: var(--corTxt3);
+    width: 49%;
+
+    &:last-child {
+        background: var(--corBase);
+
+        &:hover {
+            background: var(--corDestaque);
+        }
+    }
+
+
+    &:hover {
+        background: var(--confirmarHover);
+    }
+}
+
+.modal-notificacao .modal-notificacao-corpo {
+    width: 90%;
+    height: 75%;
+    overflow: auto;
+}
+
+.modal-notificacao #notificacoes-lista {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-notificacao .notificacao h6,
+h5,
+h4,
+h3,
+h2,
+h1 {
+    color: var(--corDestaque);
+}
+
+.modal-notificacao .notificacao div:last-child {
+    color: var(--corTxt3);
+    font-weight: bold;
+}
+
+.modal-notificacao .notificacao {
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    background: var(--corFundo);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notificacao-vencida {
+    border-bottom: 5px solid var(--corDestaque);
+}
+
+#notificacoes-lista::-webkit-scrollbar {
+    width: 6px;
+    margin-left: 2;
+}
+
+#notificacoes-lista::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#notificacoes-lista::-webkit-scrollbar-thumb {
+    background-color: var(--corDestaque);
+    border-radius: 20px;
+}
+
+#notificacoes-lista::-webkit-scrollbar-thumb:hover {
+    background-color: var(--corFundo);
+}
+
+
+/* MODAL PADRÃO */
+.modal-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 42.5%;
+    height: auto;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 14px;
+    background: var(--corFundo2);
+    color: var(--corTxt3);
+}
+
+.modal-header button {
+    background: none;
+    border: none;
+    font-size: var(--text-xl);
+    cursor: pointer;
+    color: var(--corTxt3);
+
+    &:hover {
+        color: var(--corBase);
+    }
+}
+
+.modal-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-input label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: var(--corTxt3);
+}
+
+.input-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.modal-input input,
+.modal-input textarea,
+.modal-input select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--corBordas);
+    background: var(--corFundo);
+
+    font-size: 1rem;
+    color: var(--corTxt3);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.modal-input input::placeholder {
+    color: var(--corBordas);
+}
+
+.modal-row {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+}
+
+.input-senha-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-senha-wrapper input {
+    width: 100%;
+    padding-right: 45px;
+    border: 1px solid var(--corBordas);
+}
+
+.input-senha-wrapper .eye-btn {
+    position: absolute;
+    right: -180px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 10;
+}
+
+.eye-btn {
+    position: absolute;
+    top: 50%;
+    left: 88%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--corEscura);
+    padding: 0;
+    width: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-footer {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-confirmar-metade {
+    width: 50%;
+    color: var(--txtClaro);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.btn-confirmar-full {
+    width: 100%;
+    color: var(--txtClaro);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.modal-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--text-xl);
+    margin-bottom: 20px;
+    color: var(--corBase);
+}
+
+#modal-notif {
+    position: relative;
+    top: -20px;
+    width: 105.2%;
+}
+
+.modal-cam {
+    width: 650px;
+    height: 650px;
+    background: var(--corFundo);
+    padding: 5px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+#reader {
+    width: 80%;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .modal-notificacao {
+        width: 80%;
+    }
+
+    #fechar-modal {
+        font-size: 1.75rem;
+        top: 25%;
+        left: 90%;
+    }
+
+    .modal-fundo,
+    .modal-fundo2 {
+        scale: 1;
+    }
+
+    .modal-box {
+        width: 80%;
+    }
+
+    .modal-row i {
+        position: relative;
+        left: -50%;
+    }
+
+}
+
+/* --- RESPONSIVIDADE (Para celular) --- */
+@media (max-width: 768px) {
+    .modal-body-layout {
+        grid-template-columns: 1fr;
+        /* Vira uma coluna só */
+    }
+
+    .image-section {
+        order: -1;
+        /* Joga a imagem para cima do texto no celular */
+        margin-bottom: 20px;
+    }
+}
