@@ -57,6 +57,14 @@
                         <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i
                                 class="bi bi-x-lg"></i></a>
                     <?php endif; ?>
+                    <div class="filtrar-status">
+                        <label for="">Status:</label>
+                        <select id="select-filtro-unidade" name="filtro-status" onchange="filtrarUnidade()">
+                            <option value="todos">Todos</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
                 </div>
             </form>
 

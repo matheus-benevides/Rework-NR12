@@ -357,10 +357,36 @@ require_once '../configs/conexao.php';
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
+                <br>
+                <button type="button" class="btn-confirmar-full btn" onclick="showModal('alunosLote')">
+                    Cadastrar em Lote <i class="bi bi-plus-lg"></i>
+                </button>
             </div>
         </form>
     </div>
 </div>
+
+<!-- Adicionar Aluno em Lote -->
+<div class="modal-fundo" id="alunosLote">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Cadastro em Lote</h3>
+            <button class="" onclick="closeModal('alunosLote')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form id="form-cad-aluno" class="modal-form">
+            <div class="modal-input">
+                <label for="arquivo">Selecione o arquivo CSV:</label>
+                <div class="input-wrapper">
+                    <input type="file" id="arquivo" accept=".csv">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i> </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 <!-- Editar Aluno -->
 <div class="modal-fundo" id="edicaoAluno" style="display: none">

@@ -25,7 +25,7 @@
     <?php require '../components/nav.php'; ?>
 
     <section class="sec-main dontmove" style="align-items: center; justify-content: center;">
-
+        
         <div class="modal-box" style="width: 50em; height: auto">
             <div class="modal-header">
                 <h3>Relacionar Requisitos</h3>
@@ -58,26 +58,50 @@
                         <label for="tipo">Tipo de Máquina: </label>
                         <div class="input-wrapper">
                             <select name="tipo" id="tipo">
-                                <?php $sql="SELECT * FROM tipo_maquina"; 
-                                $result = mysqli_query($conn, $sql);
-                                while($row = mysqli_fetch_assoc($result)){
-                                    echo "<option value='".$r   ow['idtipomaquina']."'>".$row['nome']."</option>";
-                                }
+                                <option value="">Selecione...</option>
+                                <?php
+                                    $sql = "SELECT idtipomaquina, tipomaquina_nome FROM tipomaquina ORDER BY tipomaquina_nome";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+                                    
+                                    if ($result->num_rows > 0) {
+                                        while ($resultado = $result->fetch_assoc()) {
+                                            echo '<option value="'.$resultado['idtipomaquina'].'">'.$resultado['tipomaquina_nome'].'</option>';
+                                        }
+                                    }
                                 ?>
                             </select>
                         </div>
                     </div>
                     <div class="modal-input">
-                        <label for="">Setor: </label>
+                        <label for="setor">Setor: </label>
                         <div class="input-wrapper">
-                            <?php $sql="SELECT "; ?>
+                            <select name="setor" id="setor">
+                                <option value="">Selecione...</option>
+                                <?php
+                                    $sql = "SELECT idsetor, setor_nome FROM setores ORDER BY setor_nome";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+                                    
+                                    if ($result->num_rows > 0) {
+                                        while ($resultado = $result->fetch_assoc()) {
+                                            echo '<option value="'.$resultado['idsetor'].'">'.$resultado['setor_nome'].'</option>';
+                                        }
+                                    }
+                                ?>
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="modal-input">
-                    <label for="">Função: </label>
-                    <div class="input-wrapper">
-                        <input type="text" name="" id="" disabled value="<?php echo $permissao_usuario; ?>">
+
+                <div class="modal-row">
+                    <div class="modal-input">
+                        <label for="funcao">Função: </label>
+                        <div class="input-wrapper">
+                            <input type="text" name="funcao" id="funcao" disabled value="<?php echo $permissao_usuario; ?>">
+                        </div>
                     </div>
                 </div>
 

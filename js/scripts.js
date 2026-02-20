@@ -391,6 +391,9 @@ function showModal(qual, id) {
         document.getElementById("desativarManutencao").style.display = "flex";
     } else if (qual == "notificacao-modal") {
         document.getElementById("notificacao-modal").style.display = "flex";
+    } else if (qual == "alunosLote") {
+        document.getElementById("alunosLote").style.display = "flex";
+        document.getElementById("adicaoAluno").style.display = "none";
     } else if (qual == "adicaoSuporte") {
         document.getElementById("adicaoSuporte").style.display = "flex";
     }
@@ -477,6 +480,9 @@ function closeModal(qual) {
         document.getElementById("deletarManutencao").style.display = "none";
     } else if (qual == "desativarManutencao") {
         document.getElementById("desativarManutencao").style.display = "none";
+    } else if (qual == "alunosLote") {
+        document.getElementById("alunosLote").style.display = "none";
+        document.getElementById("adicaoAluno").style.display = "flex";
     } else if (qual == "adicaoSuporte") {
         document.getElementById("adicaoSuporte").style.display = "none";
     } else {
@@ -1367,7 +1373,7 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarPagina(1);
     }
 
-     // --- BLOCO 1 ---    
+    // --- BLOCO 1 ---    
     if (tabelaCursos13 != undefined) {
         let paginaAtual = 1;
         const linhas = Array.from(tabelaCursos13.getElementsByTagName("tr"));
@@ -1697,6 +1703,30 @@ function filtrarMaquinas() {
 function filtrarProximaManutencao() {
     const select = document.querySelector("#select-filtro-agendamento");
     const linhas = document.querySelectorAll("#tabela-agendamento tr");
+
+    if (!select) return;
+
+    const filtro = select.value.toLowerCase().trim();
+
+    linhas.forEach(linha => {
+        // O índice 6 refere-se à 7ª coluna (Status) da sua tabela
+        const colunaStatus = linha.getElementsByTagName("td")[4];
+
+        if (colunaStatus) {
+            const textoStatus = colunaStatus.textContent.toLowerCase().trim();
+
+            if (filtro === "todos" || textoStatus === filtro) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        }
+    });
+}
+
+function filtrarUnidade() {
+    const select = document.querySelector("#select-filtro-unidade");
+    const linhas = document.querySelectorAll("#tabela-unidade tr");
 
     if (!select) return;
 

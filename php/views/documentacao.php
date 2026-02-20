@@ -62,9 +62,6 @@
         </div>
         </form>
            <form action="" method="POST">
-        <div class="div-botao">
-            <button class="btn-document" onclick="">Baixar documento</button>
-        </div>
         </form>
         
     </section>

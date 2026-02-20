@@ -16,9 +16,9 @@
 
     .sec-main h3{
         width: 90%;
-        display: flex;
+        /* display: flex; */
         gap: 10px;
-        align-items: center;
+        /* align-items: center; */
     }
 
     .div-header {
