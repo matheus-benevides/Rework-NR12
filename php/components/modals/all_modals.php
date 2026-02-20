@@ -478,26 +478,26 @@ require_once '../configs/conexao.php';
             <button class="" onclick="closeModal('adicaoUnidade')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form action="../actions/aluno/registrar.php" class="modal-form" method="POST">
+        <form id="form-cad-unidade" class="modal-form">
 
             <div class="modal-input">
-                <label for="nome" name="nome">Nome:</label>
+                <label for="nome_unidade_cad">Nome:</label>
                 <div class="input-wrapper">
-                    <input type="text" name="nome" id="nome" placeholder="Ex: Senai da Silva">
+                    <input type="text" id="nome_unidade_cad" placeholder="Ex: Senai da Silva">
                 </div>
             </div>
 
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="cidade">Cidade:</label>
-                        <input type="text" name="cidade" id="cidade" placeholder="Ex: Votucity">
+                        <label for="cidade_unidade_cad">Cidade:</label>
+                        <input type="text" id="cidade_unidade_cad" placeholder="Ex: Votucity">
                     </div>
                 </div>
 
                 <div class="modal-input">
-                    <label for="estado">Estado:</label>
-                    <select name="estado" id="estado">
+                    <label for="estado_unidade_cad">Estado:</label>
+                    <select id="estado_unidade_cad">
                         <option value="" disabled selected>Selecione o Estado</option>
                         <option value="Acre">AC</option>
                         <option value="Alagoas">AL</option>
@@ -531,50 +531,51 @@ require_once '../configs/conexao.php';
             </div>
             <div class="modal-row">
                 <div class="modal-input">
+                    <label for="numero_unidade_cad">Número:</label>
                     <div class="input-wrapper">
-                        <label for="numero">Numero</label>
-                        <input type="text" name="numero" id="numero" placeholder="123">
+                        <input type="text" id="numero_unidade_cad" placeholder="Ex: 123">
                     </div>
                 </div>
             </div>
+
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
+        </form>
     </div>
-    </form>
 </div>
 
 <!-- Editar Unidade -->
-<div class="modal-fundo" id="editarUnidade" style="display: none">
+<div class="modal-fundo" id="edicaoUnidade" style="display: none">
     <div class="modal-box">
         <div class="modal-header">
             <h3>Editar Unidade</h3>
-            <button class="" onclick="closeModal('editarUnidade')"><i class="bi bi-x-lg"></i></button>
+            <button class="" onclick="closeModal('edicaoUnidade')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form action="../actions/aluno/editar.php" class="modal-form" method="POST">
-
+        <form id="form-edit-unidade" class="modal-form">
+            <input type="hidden" id="id_unidade_edit">
             <div class="modal-input">
-                <label for="nome" name="nome">Nome:</label>
+                <label for="nome_unidade_edit">Nome:</label>
                 <div class="input-wrapper">
-                    <input type="text" name="nome" id="nome" placeholder="Ex: Senai da Silva">
+                    <input type="text" id="nome_unidade_edit" placeholder="Ex: Senai da Silva">
                 </div>
             </div>
 
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="cidade">Cidade:</label>
-                        <input type="text" name="cidade" id="cidade" placeholder="Ex: Votucity">
+                        <label for="cidade_unidade_edit">Cidade:</label>
+                        <input type="text" id="cidade_unidade_edit" placeholder="Ex: Votucity">
                     </div>
                 </div>
 
                 <div class="modal-input">
-                    <label for="estado">Estado:</label>
-                    <select name="estado" id="estado">
-                        <option value="" disabled selected>Selecione o Estado</option>
+                    <label for="estado_unidade_edit">Estado:</label>
+                    <select id="estado_unidade_edit">
+                        <option value="" disabled>Selecione o Estado</option>
                         <option value="Acre">AC</option>
                         <option value="Alagoas">AL</option>
                         <option value="Amapá">AP</option>
@@ -607,36 +608,55 @@ require_once '../configs/conexao.php';
             </div>
             <div class="modal-row">
                 <div class="modal-input">
+                    <label for="numero_unidade_edit">Número:</label>
                     <div class="input-wrapper">
-                        <label for="numero">Numero</label>
-                        <input type="text" name="numero" id="numero" placeholder="123">
+                        <input type="text" id="numero_unidade_edit" placeholder="Ex: 123">
                     </div>
                 </div>
             </div>
+
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Editar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
+        </form>
     </div>
-    </form>
 </div>
 
-<!-- Deletar Unidade -->
-<div class="modal-fundo" id="deletarUnidade" style="display: none;">
+<!-- Desativar Unidade -->
+<div class="modal-fundo" id="desativarUnidade" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Deletar Unidade</h3>
-            <button onclick="closeModal('deletarUnidade')"><i class="bi bi-x-lg"></i></button>
+            <h3>Desativar Unidade</h3>
+            <button onclick="closeModal('desativarUnidade')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer deletar unidade?</p>
+            <p>Tem certeza que quer desativar esta unidade?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
-            <button onclick="closeModal('deletarUnidad')" type="button" class="btn-confirmar-full confirmar"
+            <input type="hidden" id="id_unidade_desativar">
+            <button id="btn-confirmar-desativar-unidade" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('desativarUnidade')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
+
+<!-- Ativar Unidade -->
+<div class="modal-fundo" id="ativarUnidade" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Ativar Unidade</h3>
+            <button onclick="closeModal('ativarUnidade')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer ativar esta unidade?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="hidden" id="id_unidade_ativar">
+            <button id="btn-confirmar-ativar-unidade" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('ativarUnidade')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
     </div>
@@ -650,21 +670,21 @@ require_once '../configs/conexao.php';
             <button class="" onclick="closeModal('adicaoSetor')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form action="../actions/setor/registrar.php" class="modal-form" method="POST">
+        <form id="form-cad-setor" class="modal-form">
 
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="nome" name="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome" placeholder="Ex: Senai da Silva">
+                    <label for="nome_setor_cad">Nome:</label>
+                    <input type="text" id="nome_setor_cad" placeholder="Ex: Senai da Silva">
                 </div>
             </div>
 
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="unidade">Unidade:</label>
-                        <select name="unidade" id="unidade">
-                            <option value="Sem valor" disabled>Selecione a unidade</option>
+                        <label for="unidade_setor_cad">Unidade:</label>
+                        <select id="unidade_setor_cad">
+                            <option value="" disabled selected>Selecione a unidade</option>
 
                             <?php
                             $buscar = "SELECT * FROM unidade";
@@ -685,8 +705,8 @@ require_once '../configs/conexao.php';
                     Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
+        </form>
     </div>
-    </form>
 </div>
 
 <!-- Editar Setor -->
@@ -697,21 +717,21 @@ require_once '../configs/conexao.php';
             <button class="" onclick="closeModal('editarSetor')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form action="../actions/setor/editar.php" class="modal-form" method="POST">
-
+        <form id="form-edit-setor" class="modal-form">
+            <input type="hidden" id="id_setor_edit">
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="nome" name="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome" placeholder="Ex: Senai da Silva">
+                    <label for="nome_setor_edit">Nome:</label>
+                    <input type="text" id="nome_setor_edit" placeholder="Ex: Senai da Silva">
                 </div>
             </div>
 
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="unidade">Unidade:</label>
-                        <select name="unidade" id="unidade">
-                            <option value="Sem valor" disabled>Selecione a unidade</option>
+                        <label for="unidade_setor_edit">Unidade:</label>
+                        <select id="unidade_setor_edit">
+                            <option value="" disabled>Selecione a unidade</option>
 
                             <?php
                             $buscar = "SELECT * FROM unidade";
@@ -732,8 +752,8 @@ require_once '../configs/conexao.php';
                     Editar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
+        </form>
     </div>
-    </form>
 </div>
 
 <!-- Desativar Setor -->
@@ -747,10 +767,28 @@ require_once '../configs/conexao.php';
             <p>Tem certeza que quer desativar setor?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
+            <input type="hidden" id="id_setor_desativar">
+            <button id="btn-confirmar-desativar-setor" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('desativarSetor')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
+
+<!-- Ativar Setor -->
+<div class="modal-fundo" id="ativarSetor" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Ativar Setor</h3>
+            <button onclick="closeModal('ativarSetor')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer ativar este setor?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="hidden" id="id_setor_ativar">
+            <button id="btn-confirmar-ativar-setor" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('ativarSetor')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
     </div>
@@ -1246,11 +1284,11 @@ require_once '../configs/conexao.php';
 </div>
 
 <!-- Editar Maquina -->
-<div class="modal-fundo" id="editarMaquina" style="display: none">
+<div class="modal-fundo" id="edicaoMaquina" style="display: none">
     <div class="modal-box">
         <div class="modal-header">
             <h3>Editar Máquina</h3>
-            <button class="" onclick="closeModal('editarMaquina')"><i class="bi bi-x-lg"></i></button>
+            <button class="" onclick="closeModal('edicaoMaquina')"><i class="bi bi-x-lg"></i></button>
         </div>
 
         <form action="../actions/maquina/registrar.php" class="modal-form" method="POST">
@@ -1391,7 +1429,176 @@ require_once '../configs/conexao.php';
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
             <button onclick=""
                 class="btn-confirmar-full confirmar">Sim</button>
-            <button onclick="closeModal('desativarMotor')" type="button" class="btn-confirmar-full confirmar"
+            <button onclick="closeModal('deletarMaquina')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
+
+<!-- Adicionar Manutenção -->
+<div class="modal-fundo" id="adicaoManutencao">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Cadastrar Manutenção</h3>
+            <button class="" onclick="closeModal('adicaoManutencao')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form action="../actions/maquina/registrar.php" class="modal-form" method="POST">
+            <div class="modal-row">
+                <div class="modal-input">
+                    <div class="input-wrapper">
+                        <label for="pesquisarnimaquina">Pesquisar NI da Máquina:</label>
+                        <input type="text" id="tipoMaquinaInput" name="pesquisarnimaquina">
+                    </div>
+                </div>
+                <div class="modal-input">
+                    <div class="input-wrapper">
+                        <label for="nimaquina">Selecione a Máquina:</label>
+                        <select name="nimaquina" id="nimaquina">
+                            <option value="sem Valor" selected disabled>Selecione o NI</option>
+                            <?php
+                            $buscar = "SELECT * FROM maquina";
+                            $resultado = $conn->query($buscar);
+                            if ($resultado && $resultado->num_rows > 0) {
+                                while ($linha = $resultado->fetch_assoc()) {
+                                    echo "<option value='" . $linha['idmaquina'] . "'>" . $linha['maquina_ni'] . " - " . $linha['maquina_fabricante'] . " - " . $linha['maquina_modelo'] . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-row">
+                <div class="modal-input">
+                    <div class="input-wrapper">
+                        <label for="manutencao_prev">Manutenção Preventiva</label>
+                        <input type="checkbox" name="manutencao_prev" id="manutencao_prev">
+                    </div>
+                </div>
+                <div class="modal-input">
+                    <label for="descricao">Descrição:</label>
+                    <div class="input-wrapper">
+                        <textarea style="min-height: 180px; max-height: 180px;" name="" id="" placeholder="Descreva com poucas palavras o erro ou dúvida."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">
+                    Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Deletar Manutenção -->
+<div class="modal-fundo" id="deletarManutencao" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Deletar Manutenção</h3>
+            <button onclick="closeModal('deletarManutencao')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer deletar manutenção?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
+            <button onclick=""
+                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('deletarManutencao')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
+
+<!-- Desativar Manutenção -->
+<div class="modal-fundo" id="desativarManutencao" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Desativar Manutenção</h3>
+            <button onclick="closeModal('desativarManutencao')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer desativar manutenção?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
+            <button onclick=""
+                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('desativarManutencao')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
+
+<!-- Adicionar Tipos de Maquinas -->
+<div class="modal-fundo" id="adicaoTipoMaquina" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Tipo de Máquina</h3>
+            <button class="" onclick="closeModal('adicaoTipoMaquina')"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <form id="form-cad-curso" class="modal-form">
+
+            <div class="modal-input">
+                <div class="input-wrapper">
+                    <label for="tipoMaquina">Tipo de Máquina:</label>
+                    <input type="text" id="tipoMaquinaInput">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">
+                    Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edição de Tipo Máquina -->
+<div class="modal-fundo" id="edicaoTipoMaquina" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Editar Tipo de Máquina</h3>
+            <button class="" onclick="closeModal('edicaoTipoMaquina')"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <form id="form-cad-curso" class="modal-form">
+
+            <div class="modal-input">
+                <div class="input-wrapper">
+                    <label for="tipoMaquina">Tipo de máquina:</label>
+                    <input type="text" id="tipoMaquinaInput">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">
+                    Editar <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Deletar Máquina -->
+<div class="modal-fundo" id="deletarTipoMaquina" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Deletar Tipo Máquina</h3>
+            <button onclick="closeModal('deletarTipoMaquina')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer deletar tipo máquina?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
+            <button onclick=""
+                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('deletarTipoMaquina')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
     </div>

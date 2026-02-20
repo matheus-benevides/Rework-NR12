@@ -45,20 +45,31 @@
         <div class="div-btns-pages">
 
             <form action="" method="GET" style="display: flex; gap: 10px; align-items: center;">
-                <div class="box-pesquisar">
+                <div>
                     <?php
+                    // Captura o valor atual para manter no input
                     $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
                     ?>
                     <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
                         placeholder="Pesquisar..." style="width: 1000%;">
-                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i class="bi bi-search"></i></button>
+                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i
+                            class="bi bi-search"></i></button>
                     <?php if ($busca_atual): ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px;"><i class="bi bi-x-lg"></i></a>
+                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i
+                                class="bi bi-x-lg"></i></a>
                     <?php endif; ?>
+                    <div class="filtrar-status">
+                        <label for="">Status:</label>
+                        <select id="select-filtro-turmas" name="filtro-status" onchange="filtrarTurmas()">
+                            <option value="todos">Todos</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
                 </div>
             </form>
 
-            <button class="btn" onclick="showModal('adicaoSetor')">Adicionar Motor <i
+            <button class="btn" onclick="showModal('adicaoMotor')">Adicionar Motores <i
                     class="bi bi-plus-circle"></i></button>
         </div>
 
@@ -99,7 +110,6 @@
                             echo "<td>" . $linha["motor_potencia"] . "</td>";
                             echo "<td>" . $linha["motor_tensão"] . "</td>";
                             echo "<td>" . $linha["motor_corrente"] . "</td>";
-                            echo "<td>" . $linha["motor_modelo"] . "</td>";
 
                             $status = strtolower($linha["motor_status"]);
 
@@ -114,7 +124,8 @@
                             echo "<td>
                                     <div style='display: flex; gap: 5px; justify-content: center;'>
                                         <button class='btnAcao editar' type='button' onclick=\"showModal('editarMotor', " . $linha['idmotor'] . ")\"><i class='bi bi-pencil-square'></i></button>
-                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('excluirMotor', " . $linha['idmotor'] . ",'')\"><i class='bi bi-trash'></i></button>
+                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('deletarMotor', " . $linha['idmotor'] . ",'')\"><i class='bi bi-trash'></i></button>
+                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('desativarMotor', " . $linha['idmotor'] . ",'')\"><i class='bi bi-x-lg'></i></button>
                                     </div>
                                   </td>";
                             echo "</tr>";

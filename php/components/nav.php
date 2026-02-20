@@ -24,7 +24,7 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
         </a>
 
         <!-- DASHBOARD -->
-        <a href="dashboard.php" class="<?php if ($atualmente_em == 'dashboard.php') echo 'ativo'; ?> links">
+        <a href="dashboard.php" style="display: none;" class="<?php if ($atualmente_em == 'dashboard.php') echo 'ativo'; ?> links">
             <i class="bi bi-speedometer2"></i> Dashboard
         </a>
 
@@ -91,6 +91,11 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
                     <i class="bi bi-tools"></i> Manuntenção
                 </a>
 
+                <a href="proxima_manuntencao.php"
+                    class="<?php if ($atualmente_em == 'proxima_manuntencao.php') echo 'ativo'; ?> links-sub">
+                    <i class="bi bi-tools"></i> Proxima Manuntenção
+                </a>
+
                 <a href="motores.php"
                     class="<?php if ($atualmente_em == 'motores.php') echo 'ativo'; ?> links-sub">
                     <i class="bi bi-wrench-adjustable-circle"></i> Motores
@@ -133,10 +138,10 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
 
     <!-- CONFIGURAÇÕES -->
     <div class="div-configs">
-        <div>
+        <div >
             <button onclick="changeTheme()" id="tema"></button>
 
-            <button id="notificacao" onclick="showModal('notificacao-modal')">
+            <button style="display: none;" id="notificacao" onclick="showModal('notificacao-modal')">
                 <i class="bi bi-bell-fill"></i>
                 <div class="div-noti">0</div>
             </button>
@@ -170,7 +175,7 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
     }
 </style>
 
-<!-- MANUTENCAO -->
+<!-- MAQUINAS -->
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -199,41 +204,7 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
 
         // Mantém aberto se estiver em Preventiva ou Corretiva
         const paginaAtual = window.location.pathname;
-        if (paginaAtual.includes("preventiva.php") || paginaAtual.includes("corretiva.php") || paginaAtual.includes("manuntencao.php")) {
-            abrirMenu();
-        }
-
-        //   MAQUINAS
-
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-        const btnMaquinas = document.getElementById("btn-maquinas");
-        const submenu = document.getElementById("submenu-maquinas");
-        const menuMaquinas = btnMaquinas.parentElement;
-
-        function abrirMenu() {
-            submenu.classList.add("aberto");
-            menuMaquinas.classList.add("aberto");
-            btnMaquinas.classList.add("ativo");
-        }
-
-        function fecharMenu() {
-            submenu.classList.remove("aberto");
-            menuMaquinas.classList.remove("aberto");
-            btnMaquinas.classList.remove("ativo");
-        }
-
-        // Toggle no clique
-        btnMaquinas.addEventListener("click", (e) => {
-            e.preventDefault();
-            submenu.classList.contains("aberto") ? fecharMenu() : abrirMenu();
-        });
-
-        // Mantém aberto se estiver em Preventiva ou Corretiva
-        const paginaAtual = window.location.pathname;
-        if (paginaAtual.includes("maquinas.php") || paginaAtual.includes("tipo_maquina.php") || paginaAtual.includes("consultar_maquina.php") || paginaAtual.includes("consultar_tipo_maquina.php") || paginaAtual.includes("requisitos_maquina.php")) {
+        if (paginaAtual.includes("motores.php") || paginaAtual.includes("maquinas.php") || paginaAtual.includes("manuntencao.php") || paginaAtual.includes("tipo_maquina.php") || paginaAtual.includes("requisitos_maquina.php")) {
             abrirMenu();
         }
 

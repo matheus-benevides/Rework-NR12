@@ -1,5 +1,6 @@
 /**
- * Configuração da API
+ * Configuração da API e manipulação de requisições.
+ * As APIs suportam o método OPTIONS para preflight CORS.
  */
 const API_URL_CURSO = '../apis/processa_cursos.php';
 
@@ -592,3 +593,340 @@ function abrirModalEdicaoAluno(id, nome, matricula, turma) {
 window.abrirModalEdicaoCurso = abrirModalEdicaoCurso;
 window.abrirModalEdicaoTurma = abrirModalEdicaoTurma;
 window.abrirModalEdicaoAluno = abrirModalEdicaoAluno;
+window.abrirModalEdicaoUnidade = abrirModalEdicaoUnidade;
+
+
+// --- UNIDADES ---
+
+const API_URL_UNIDADE = '../apis/processa_unidade.php';
+
+const formCadUnidade = document.getElementById('form-cad-unidade');
+const formEditUnidade = document.getElementById('form-edit-unidade');
+const btnConfirmaDesativarUnidade = document.getElementById('btn-confirmar-desativar-unidade');
+const btnConfirmaAtivarUnidade = document.getElementById('btn-confirmar-ativar-unidade');
+
+// 1. CADASTRAR UNIDADE (POST)
+if (formCadUnidade) {
+    formCadUnidade.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nome = document.getElementById('nome_unidade_cad').value;
+        const cidade = document.getElementById('cidade_unidade_cad').value;
+        const estado = document.getElementById('estado_unidade_cad').value;
+        const numero = document.getElementById('numero_unidade_cad').value;
+
+        if (!nome || !cidade || !estado) {
+            alert('Por favor, preencha nome, cidade e estado da unidade.');
+            return;
+        }
+
+        const dados = { nome, cidade, estado, numero };
+
+        try {
+            const response = await fetch(API_URL_UNIDADE, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('adicaoUnidade');
+                formCadUnidade.reset();
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao cadastrar unidade.');
+        }
+    });
+}
+
+// 2. EDITAR UNIDADE (PUT)
+if (formEditUnidade) {
+    formEditUnidade.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById('id_unidade_edit').value;
+        const nome = document.getElementById('nome_unidade_edit').value;
+        const cidade = document.getElementById('cidade_unidade_edit').value;
+        const estado = document.getElementById('estado_unidade_edit').value;
+        const numero = document.getElementById('numero_unidade_edit').value;
+
+        if (!id || !nome || !cidade || !estado) {
+            alert('Dados incompletos para edição da unidade.');
+            return;
+        }
+
+        const dados = { id, nome, cidade, estado, numero };
+
+        try {
+            const response = await fetch(API_URL_UNIDADE, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('edicaoUnidade');
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao editar unidade.');
+        }
+    });
+}
+
+// 3. DESATIVAR UNIDADE (PATCH)
+if (btnConfirmaDesativarUnidade) {
+    btnConfirmaDesativarUnidade.addEventListener('click', async () => {
+        const id = document.getElementById('id_unidade_desativar').value;
+        if (!id) return alert('ID não encontrado.');
+
+        try {
+            const response = await fetch(API_URL_UNIDADE, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, status: 'Inativo' })
+            });
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('desativarUnidade');
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao desativar unidade.');
+        }
+    });
+}
+
+// 4. ATIVAR UNIDADE (PATCH)
+if (btnConfirmaAtivarUnidade) {
+    btnConfirmaAtivarUnidade.addEventListener('click', async () => {
+        const id = document.getElementById('id_unidade_ativar').value;
+        if (!id) return alert('ID não encontrado.');
+
+        try {
+            const response = await fetch(API_URL_UNIDADE, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, status: 'Ativo' })
+            });
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('ativarUnidade');
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao ativar unidade.');
+        }
+    });
+}
+
+// 5. PREPARAR EDIÇÃO UNIDADE
+function abrirModalEdicaoUnidade(id, nome, cidade, estado, numero) {
+    const idEdit = document.getElementById('id_unidade_edit');
+    const nomeEdit = document.getElementById('nome_unidade_edit');
+    const cidadeEdit = document.getElementById('cidade_unidade_edit');
+    const estadoEdit = document.getElementById('estado_unidade_edit');
+    const numeroEdit = document.getElementById('numero_unidade_edit');
+
+    if (idEdit && nomeEdit && cidadeEdit && estadoEdit && numeroEdit) {
+        idEdit.value = id;
+        nomeEdit.value = nome;
+        cidadeEdit.value = cidade;
+        estadoEdit.value = estado;
+        numeroEdit.value = numero || '';
+        showModal('edicaoUnidade');
+    } else {
+        console.error('Elementos do modal de edição de unidade não encontrados.');
+    }
+}
+
+window.abrirModalEdicaoUnidade = abrirModalEdicaoUnidade;
+
+
+// --- SETORES ---
+
+const API_URL_SETOR = '../apis/processa_setores.php';
+
+const formCadSetor = document.getElementById('form-cad-setor');
+const formEditSetor = document.getElementById('form-edit-setor');
+const btnConfirmaDesativarSetor = document.getElementById('btn-confirmar-desativar-setor');
+const btnConfirmaAtivarSetor = document.getElementById('btn-confirmar-ativar-setor');
+
+// 1. CADASTRAR SETOR (POST)
+if (formCadSetor) {
+    formCadSetor.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nome = document.getElementById('nome_setor_cad').value;
+        const unidade = document.getElementById('unidade_setor_cad').value;
+
+        if (!nome || !unidade) {
+            alert('Por favor, preencha nome e unidade do setor.');
+            return;
+        }
+
+        const dados = { nome: nome, unidade_id: unidade };
+
+        try {
+            const response = await fetch(API_URL_SETOR, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('adicaoSetor');
+                formCadSetor.reset();
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar cadastrar setor.');
+        }
+    });
+}
+
+// 2. EDITAR SETOR (PUT)
+if (formEditSetor) {
+    formEditSetor.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById('id_setor_edit').value;
+        const nome = document.getElementById('nome_setor_edit').value;
+        const unidade = document.getElementById('unidade_setor_edit').value;
+
+        if (!id || !nome || !unidade) {
+            alert('Dados incompletos para edição do setor.');
+            return;
+        }
+
+        const dados = { id: id, nome: nome, unidade_id: unidade };
+
+        try {
+            const response = await fetch(API_URL_SETOR, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('editarSetor');
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar editar setor.');
+        }
+    });
+}
+
+// 3. DESATIVAR SETOR (PATCH)
+if (btnConfirmaDesativarSetor) {
+    btnConfirmaDesativarSetor.addEventListener('click', async () => {
+        const id = document.getElementById('id_setor_desativar').value;
+        if (!id) return alert('ID não encontrado.');
+
+        const dados = { id: id, status: 'Inativo' };
+
+        try {
+            const response = await fetch(API_URL_SETOR, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('desativarSetor');
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar desativar setor.');
+        }
+    });
+}
+
+// 4. ATIVAR SETOR (PATCH)
+if (btnConfirmaAtivarSetor) {
+    btnConfirmaAtivarSetor.addEventListener('click', async () => {
+        const id = document.getElementById('id_setor_ativar').value;
+        if (!id) return alert('ID não encontrado.');
+
+        const dados = { id: id, status: 'Ativo' };
+
+        try {
+            const response = await fetch(API_URL_SETOR, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('ativarSetor');
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar ativar setor.');
+        }
+    });
+}
+
+// 5. PREPARAR EDIÇÃO SETOR
+function abrirModalEdicaoSetor(id, nome, unidade) {
+    const idEdit = document.getElementById('id_setor_edit');
+    const nomeEdit = document.getElementById('nome_setor_edit');
+    const unidadeEdit = document.getElementById('unidade_setor_edit');
+
+    if (idEdit && nomeEdit && unidadeEdit) {
+        idEdit.value = id;
+        nomeEdit.value = nome;
+        unidadeEdit.value = unidade;
+        showModal('editarSetor');
+    } else {
+        console.error('Elementos do modal de edição de setor não encontrados.');
+    }
+}
+
+window.abrirModalEdicaoSetor = abrirModalEdicaoSetor;

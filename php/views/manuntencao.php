@@ -45,25 +45,30 @@
         <div class="div-btns-pages">
 
             <form action="" method="GET" style="display: flex; gap: 10px; align-items: center;">
-                <div class="box-pesquisar">
+                <div>
                     <?php
                     // Captura o valor atual para manter no input
                     $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
                     ?>
                     <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
                         placeholder="Pesquisar..." style="width: 1000%;">
-                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i class="bi bi-search"></i></button>
+                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i
+                            class="bi bi-search"></i></button>
                     <?php if ($busca_atual): ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px;"><i class="bi bi-x-lg"></i></a>
+                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i
+                                class="bi bi-x-lg"></i></a>
                     <?php endif; ?>
                     <div class="filtrar-status">
-
+                        <label for="">Status:</label>
+                        <select id="select-filtro-manuntencao" name="filtro-status" onchange="filtrarManuntencao()">
+                            <option value="todos">Todos</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
                         </select>
                     </div>
                 </div>
             </form>
-
-            <button class="btn" onclick="showModal('adicaoSetor')">Adicionar Manutenção <i
+            <button class="btn" onclick="showModal('adicaoManutencao')">Adicionar Manutenção <i
                     class="bi bi-plus-circle"></i></button>
         </div>
 
@@ -80,7 +85,7 @@
                     <th>Status</th>
                     <th>Ações</th>
                 </thead>
-                <tbody id="tabela-setores">
+                <tbody id="tabela-manuntencao">
                     <?php
 
                     if (!empty($busca_atual)) {
@@ -118,8 +123,8 @@
                             // Botões de Ação
                             echo "<td>
                                     <div>
-                                        <button class='btnAcao editar' type='button' onclick=\"showModal('editarManuntencao', " . $linha['idmanutencao'] . ")\"><i class='bi bi-pencil-square'></i></button>
-                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('excluirManuntencao', " . $linha['idmanutencao'] . ",'')\"><i class='bi bi-trash'></i></button>
+                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('desativarManutencao', " . $linha['idmanutencao'] . ")\"><i class='bi bi-x-lg'></i></button>
+                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('deletarManutencao', " . $linha['idmanutencao'] . ",'')\"><i class='bi bi-trash'></i></button>
                                     </div>
                                   </td>";
                             echo "</tr>";

@@ -3,7 +3,7 @@ require_once '../configs/conexao.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, PUT, PATCH");
+header("Access-Control-Allow-Methods: POST, PUT, PATCH, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -11,7 +11,7 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 $json_recebido = file_get_contents("php://input");
 $input = json_decode($json_recebido, true);
 
-if (json_last_error() !== JSON_ERROR_NONE && $metodo !== 'GET') {
+if (json_last_error() !== JSON_ERROR_NONE && $metodo !== 'OPTIONS') {
     http_response_code(400);
     echo json_encode(["mensagem" => "JSON inválido: " . json_last_error_msg()]);
     exit;
@@ -20,6 +20,11 @@ if (json_last_error() !== JSON_ERROR_NONE && $metodo !== 'GET') {
 $id = $input['id'] ?? null;
 
 switch ($metodo) {
+    case 'OPTIONS':
+        // PREFLIGHT CORS
+        http_response_code(200);
+        exit;
+
     case 'POST':
         // CADASTRAR
         $nome = $input['nome'] ?? null;

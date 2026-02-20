@@ -1,76 +1,96 @@
-<?php
-require_once("../configs/conexao.php");
-?>
+<?php require "../controllers/validar_acesso.php"; ?>
+<?php require '../components/modals/all_modals.php'; ?>
+
 <!DOCTYPE html>
-<html>
+<html lang="pt-br" data-tema="">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NR12 - Requisitos Máquinas</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <title>Requisitos - NR12</title>
+
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/nav.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/modal.css">
+
+    <link rel="stylesheet" href="../../css/modal.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../../assets/icons/favicon.ico" type="image/x-icon">
 </head>
-<?php 
-    $requisito_associados = []
-?>
+
 <body>
 
-    <div class="modal-fundo">
-        <h1 id="titulo">Associar Requisitos a tipo de Máquinas</h1>
-        <div class="container-requisitos">
-            <form action="" method="POST">
-                <label for="">Filtrar por tipo de requisito:</label>
-                <select name="select-requisitos" id="select-requisitos">
-                    <option value="Todos">Todos</option>
-                    <option value="Segurança">Segurança</option>
-                    <option value="Operacional">Operacional</option>
-                    <option value="Preventivo">Preventivo</option>
-                </select>
-                <br><br>
-                <label for="nome-requisito">Pesquisar por nome do requisito:</label>
-                <input type="text" name="nome-req" id="nome-req" placeholder="Digite o nome do requisito...">
-                <br><br>
-                <label for="tipo-maquina">
-                    <select name="select-tipo-maquina" id="select-tipo-maquina">
-                        <option value="" disabled selected>Selecione uma máquina...</option>
-                        <?php
-                        $sql = "SELECT 
-                                    m.idmaquina,
-                                    m.maquina_ni,
-                                    t.tipomaquina_nome 
-                                FROM maquina m
-                                INNER JOIN tipomaquina t ON t.idtipomaquina = m.tipomaquina_id
-                                ORDER BY m.maquina_ni ASC";
+    <?php require '../components/nav.php'; ?>
 
-                        $stmt = $conn->prepare($sql);
+    <section class="sec-main dontmove" style="align-items: center; justify-content: center;">
 
-                        if ($stmt) {
-                            $stmt->execute();
-                            $result = $stmt->get_result();
+        <div class="modal-box" style="width: 50em; height: auto">
+            <div class="modal-header">
+                <h3>Relacionar Requisitos</h3>
+            </div>
 
-                            while ($row = $result->fetch_assoc()) {
-                                $nome_exibicao = $row['maquina_ni'] . ' (Tipo: ' . $row['tipomaquina_nome'] . ')';
-                                echo '<option value="' . $row['idmaquina'] . '">' . htmlspecialchars($nome_exibicao) . '</option>';
-                            }
-                            $stmt->close();
-                        } else {
-                            echo '<option value="">Erro: ' . $conn->error . '</option>';
-                        }
-                        ?>
-                    </select>
-                </label>
-                <div class="checklist-requisito">
-                    <?php foreach ($requisitos as $requisito): ?>
-                        <label for="">
-                            <input type="checkbox" name="check-requisitos[]" value="<?php $requisito['idrequisitos'] ?>
-                            <?=(in_array($requisito, $requisito_associados)) ? 'checked' : '' ?>">
-                            <?= htmlspecialchars($requisito['requisito_topico']) ?>
-                        </label>     
-                <?php endforeach; ?>
+            <form id="form-suporte" class="modal-form">
+
+                <div class="modal-row">
+                    <div class="modal-input">
+                        <label for="filtro">Filtrar por Tipo de Requisitos: </label>
+                        <div class="input-wrapper">
+                            <select name="filtro" id="filtro">
+                                <option value="Todos" selected>Todos</option>
+                                <option value="Seguranca">Segurança</option>
+                                <option value="Operacional">Operacional</option>
+                                <option value="Operacional">Preventivo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-input">
+                        <label for="pesquisa">Pesquisar por Nome: </label>
+                        <div class="input-wrapper">
+                            <input type="text" name="pesquisa" id="pesquisa">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-row">
+                    <div class="modal-input">
+                        <label for="tipo">Tipo de Máquina: </label>
+                        <div class="input-wrapper">
+                            <select name="tipo" id="tipo">
+                                <?php $sql="SELECT * FROM tipo_maquina"; 
+                                $result = mysqli_query($conn, $sql);
+                                while($row = mysqli_fetch_assoc($result)){
+                                    echo "<option value='".$r   ow['idtipomaquina']."'>".$row['nome']."</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-input">
+                        <label for="">Setor: </label>
+                        <div class="input-wrapper">
+                            <?php $sql="SELECT "; ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-input">
+                    <label for="">Função: </label>
+                    <div class="input-wrapper">
+                        <input type="text" name="" id="" disabled value="<?php echo $permissao_usuario; ?>">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn-confirmar-full deletar" onclick="window.location.href='../actions/logout.php'">
+                        Sair <i class="bi bi-plus-lg"></i>
+                    </button>
                 </div>
             </form>
         </div>
-    </div>
+    </section>
+
+    <script src="../../js/scripts.js" defer></script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - NR12</title>
+  <title>Perfil - NR12</title>
 
   <link rel="stylesheet" href="../../css/global.css">
   <link rel="stylesheet" href="../../css/nav.css">
@@ -24,7 +24,7 @@
 
   <section class="sec-main dontmove" style="align-items: center; justify-content: center;">
 
-    <div class="modal-box" style="width: 80em; height: auto">
+    <div class="modal-box">
       <div class="modal-header">
         <h3>Perfil de Usuário</h3>
       </div>
@@ -98,7 +98,7 @@
         </div>
 
         <div class="modal-footer">
-          <button type="submit" class="btn-confirmar-full deletar">
+          <button type="submit" class="btn-confirmar-full deletar" onclick="window.location.href='../actions/logout.php'">
             Sair <i class="bi bi-plus-lg"></i>
           </button>
         </div>

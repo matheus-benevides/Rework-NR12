@@ -1,9 +1,9 @@
-<?php
+    <?php
 require_once '../configs/conexao.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, PUT, PATCH, DELETE");
+header("Access-Control-Allow-Methods: POST, PUT, PATCH, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -11,7 +11,7 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 $json_recebido = file_get_contents("php://input");
 $input = json_decode($json_recebido, true);
 
-if (json_last_error() !== JSON_ERROR_NONE && $metodo !== 'GET' && $metodo !== 'DELETE') {
+if (json_last_error() !== JSON_ERROR_NONE && $metodo !== 'OPTIONS' && $metodo !== 'DELETE') {
     http_response_code(400);
     echo json_encode(["mensagem" => "JSON inválido: " . json_last_error_msg()]);
     exit;
@@ -20,6 +20,11 @@ if (json_last_error() !== JSON_ERROR_NONE && $metodo !== 'GET' && $metodo !== 'D
 $id = $input['id'] ?? null;
 
 switch ($metodo) {
+    case 'OPTIONS':
+        // PREFLIGHT CORS
+        http_response_code(200);
+        exit;
+
     case 'POST':
         // CADASTRAR
         $nome = $input['nome'] ?? null;
@@ -102,18 +107,6 @@ switch ($metodo) {
     case 'DELETE':
         // DELETAR (HARD DELETE)
         // Check if ID is passed in body (for some clients) or query param
-        if (!$id && isset($_GET['id'])) {
-            $id = $_GET['id'];
-        }
-
-        // If still no ID (and it wasn't in the JSON body)
-        if (!$id) {
-            // Try to read input again if method is DELETE sometimes bodies are tricky, but our JS sends JSON
-            // Assuming $input is populated if body was sent.
-            if (!$id && $input && isset($input['id']))
-                $id = $input['id'];
-        }
-
         if (!$id) {
             http_response_code(400);
             echo json_encode(["mensagem" => "ID é obrigatório para deleção."]);

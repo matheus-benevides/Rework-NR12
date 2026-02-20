@@ -4,7 +4,7 @@
         min-height: 100%;
         height: 100%;
         background: var(--corFundo);
-        padding-left: 16%;
+        padding-left: 12%;
         padding-top: 3%;
         display: flex;
         flex-direction: column;
@@ -74,12 +74,22 @@
 
     @media (max-width: 768px) {
         .div-header {
-            font-size: var(--text-sm);
+            font-size: 11px;
+        }
+
+        .div-txt-header p{
+            margin-left: 0px;
+            text-align: center;
         }
 
         .div-txt-header p span:last-child {
             display: flex;
             font-size: 0px;
+
+        }
+
+        #msg_especial{
+            margin-right: 5px;
         }
 
         .div-img-header h2 {

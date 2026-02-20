@@ -52,10 +52,20 @@
                     ?>
                     <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
                         placeholder="Pesquisar..." style="width: 1000%;">
-                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i class="bi bi-search"></i></button>
+                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i
+                            class="bi bi-search"></i></button>
                     <?php if ($busca_atual): ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i class="bi bi-x-lg"></i></a>
+                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i
+                                class="bi bi-x-lg"></i></a>
                     <?php endif; ?>
+                    <div class="filtrar-status">
+                        <label for="">Status:</label>
+                        <select id="select-filtro-setor" name="filtro-status" onchange="filtrarSetor()">
+                            <option value="todos">Todos</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
                 </div>
             </form>
 
@@ -66,8 +76,10 @@
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
+                    <th>ID</th>
                     <th>Nome</th>
                     <th>Unidade</th>
+                    <th>Status</th>
                     <th>Ações</th>
                 </thead>
                 <tbody id="tabela-setores">
@@ -76,14 +88,16 @@
                     $sql = "SELECT 
                               setor.idsetor,
                               setor.setor_nome, 
-                              unidade.unidade_nome 
+                              setor.unidade_id,
+                              unidade.unidade_nome,
+                              setor.setor_status
                           FROM setor 
                           LEFT JOIN unidade ON setor.unidade_id = unidade.idunidade";
 
                     // 2. Se houver busca, adiciona o filtro WHERE ao final da query
                     if (!empty($busca_atual)) {
                         $termo_seguro = $conn->real_escape_string($busca_atual);
-                        $sql .= " WHERE setor.setor_nome LIKE '%$termo_seguro%'";
+                        $sql .= " WHERE setor.idsetor LIKE '%$termo_seguro%' OR setor.setor_nome LIKE '%$termo_seguro%' OR unidade.unidade_nome LIKE '%$termo_seguro%' OR setor.setor_status LIKE '%$termo_seguro%'";
                     }
 
                     // 3. Executa a query
@@ -92,21 +106,35 @@
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
+                            echo "<td>" . $linha["idsetor"] . "</td>";
                             echo "<td>" . $linha["setor_nome"] . "</td>";
                             echo "<td>" . $linha["unidade_nome"] . "</td>";
+
+                            $status = strtolower($linha["setor_status"]);
+                            $classe = ($status == 'ativo') ? 'status-ativo' : 'status-inativo';
+                            echo "<td><span class='$classe'>" . ($linha["setor_status"] ? $linha["setor_status"] : 'Ativo') . "</span></td>";
 
                             // Botões de Ação
                             echo "<td>
                                     <div style='display: flex; gap: 5px; justify-content: center;'>
-                                        <button class='btnAcao editar' type='button' onclick=\"showModal('editarSetor', " . $linha['idsetor'] . ")\"><i class='bi bi-pencil-square'></i></button>
-                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('desativarSetor', " . $linha['idsetor'] . ",'')\"><i class='bi bi-trash'></i></button>
-                                    </div>
+                                        <button class='btnAcao editar' type='button' 
+                                            onclick=\"abrirModalEdicaoSetor(" . $linha['idsetor'] . ", '" . addslashes($linha['setor_nome']) . "', '" . $linha['unidade_id'] . "')\">
+                                            <i class='bi bi-pencil-square'></i>
+                                        </button>";
+
+                            if ($status == 'inativo') {
+                                echo "<button class='btnAcao confirmar' type='button' style='background-color: #28a745;' onclick=\"showModal('ativarSetor', " . $linha['idsetor'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                            } else {
+                                echo "<button class='btnAcao deletar' type='button' onclick=\"showModal('desativarSetor', " . $linha['idsetor'] . ")\"><i class='bi bi-x-lg'></i></button>";
+                            }
+
+                            echo "</div>
                                   </td>";
                             echo "</tr>";
                         }
                     } else {
-                        // Colspan ajustado para 3
-                        echo "<tr><td colspan='3' style='text-align:center; padding:15px;'>Nenhum setor encontrado.</td></tr>";
+                        // Colspan ajustado para 5
+                        echo "<tr><td colspan='5' style='text-align:center; padding:15px;'>Nenhum setor encontrado.</td></tr>";
                     }
                     ?>
                 </tbody>
@@ -121,6 +149,7 @@
 
     </section>
 
+    <script src="../../js/processa.js" defer></script>
     <script src="../../js/scripts.js" defer></script>
 </body>
 

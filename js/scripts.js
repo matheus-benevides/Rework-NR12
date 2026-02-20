@@ -231,7 +231,7 @@ if (arrow != undefined) {
                     divImg.style.display = 'flex';
                     divConfig.style.display = 'flex';
                     navLinks.style.display = 'flex';
-                    main.style = 'padding-left: 16%';
+                    main.style = 'padding-left: 12%';
                     clearTimeout();
                 }, 65)
             }
@@ -240,7 +240,7 @@ if (arrow != undefined) {
                     divImg.style.display = 'flex';
                     divConfig.style.display = 'flex';
                     navLinks.style.display = 'flex';
-                    main.style = 'padding-left: 16%';
+                    main.style = 'padding-left: 35%';
                     clearTimeout();
                 }, 65)
             }
@@ -322,6 +322,8 @@ function showModal(qual, id) {
         if (id) document.getElementById("id_aluno_delete").value = id;
     } else if (qual == "adicaoTurma") {
         document.getElementById("adicaoTurma").style.display = "flex";
+    } else if (qual == "adicaoTurma") {
+        document.getElementById("adicaoTurma").style.display = "flex";
     } else if (qual == "edicaoTurma") {
         document.getElementById("edicaoTurma").style.display = "flex";
     } else if (qual == "deletarTurma") {
@@ -332,16 +334,24 @@ function showModal(qual, id) {
         if (id) document.getElementById("id_turma_ativar").value = id;
     } else if (qual == "adicaoUnidade") {
         document.getElementById("adicaoUnidade").style.display = "flex";
-    } else if (qual == "editarUnidade") {
-        document.getElementById("editarUnidade").style.display = "flex";
-    } else if (qual == "deletarUnidade") {
-        document.getElementById("deletarUnidade").style.display = "flex";
+    } else if (qual == "edicaoUnidade") {
+        document.getElementById("edicaoUnidade").style.display = "flex";
+    } else if (qual == "desativarUnidade") {
+        document.getElementById("desativarUnidade").style.display = "flex";
+        if (id) document.getElementById("id_unidade_desativar").value = id;
+    } else if (qual == "ativarUnidade") {
+        document.getElementById("ativarUnidade").style.display = "flex";
+        if (id) document.getElementById("id_unidade_ativar").value = id;
     } else if (qual == "adicaoSetor") {
         document.getElementById("adicaoSetor").style.display = "flex";
     } else if (qual == "editarSetor") {
         document.getElementById("editarSetor").style.display = "flex";
     } else if (qual == "desativarSetor") {
         document.getElementById("desativarSetor").style.display = "flex";
+        if (id) document.getElementById("id_setor_desativar").value = id;
+    } else if (qual == "ativarSetor") {
+        document.getElementById("ativarSetor").style.display = "flex";
+        if (id) document.getElementById("id_setor_ativar").value = id;
     } else if (qual == "adicaoColaborador") {
         document.getElementById("adicaoColaborador").style.display = "flex";
     } else if (qual == "editarColaborador") {
@@ -367,6 +377,18 @@ function showModal(qual, id) {
         document.getElementById("edicaoMaquina").style.display = "flex";
     } else if (qual == "desativarMotor") {
         document.getElementById('desativarMotor').style.display = "flex";
+    } else if (qual == "adicaoTipoMaquina") {
+        document.getElementById("adicaoTipoMaquina").style.display = "flex";
+    } else if (qual == "edicaoTipoMaquina") {
+        document.getElementById("edicaoTipoMaquina").style.display = "flex";
+    } else if (qual == "deletarTipoMaquina") {
+        document.getElementById("deletarTipoMaquina").style.display = "flex";
+    } else if (qual == "adicaoManutencao") {
+        document.getElementById("adicaoManutencao").style.display = "flex";
+    } else if (qual == "deletarManutencao") {
+        document.getElementById("deletarManutencao").style.display = "flex";
+    } else if (qual == "desativarManutencao") {
+        document.getElementById("desativarManutencao").style.display = "flex";
     } else if (qual == "notificacao-modal") {
         document.getElementById("notificacao-modal").style.display = "flex";
     } else if (qual == "adicaoSuporte") {
@@ -403,16 +425,20 @@ function closeModal(qual) {
         document.getElementById("ativarTurma").style.display = "none";
     } else if (qual == "adicaoUnidade") {
         document.getElementById("adicaoUnidade").style.display = "none";
-    } else if (qual == "editarUnidade") {
-        document.getElementById("editarUnidade").style.display = "none";
-    } else if (qual == "deletarUnidade") {
-        document.getElementById("deletarUnidade").style.display = "none";
+    } else if (qual == "edicaoUnidade") {
+        document.getElementById("edicaoUnidade").style.display = "none";
+    } else if (qual == "desativarUnidade") {
+        document.getElementById("desativarUnidade").style.display = "none";
+    } else if (qual == "ativarUnidade") {
+        document.getElementById("ativarUnidade").style.display = "none";
     } else if (qual == "adicaoSetor") {
         document.getElementById("adicaoSetor").style.display = "none";
     } else if (qual == "editarSetor") {
         document.getElementById("editarSetor").style.display = "none";
     } else if (qual == "desativarSetor") {
         document.getElementById("desativarSetor").style.display = "none";
+    } else if (qual == "ativarSetor") {
+        document.getElementById("ativarSetor").style.display = "none";
     } else if (qual == "adicaoColaborador") {
         document.getElementById("adicaoColaborador").style.display = "none";
     } else if (qual == "editarColaborador") {
@@ -439,7 +465,19 @@ function closeModal(qual) {
         document.getElementById("edicaoMaquina").style.display = "none";
     } else if (qual == "notificacao-modal") {
         document.getElementById("notificacao-modal").style.display = "none";
-    } else if(qual == "adicaoSuporte"){
+    } else if (qual == "adicaoTipoMaquina") {
+        document.getElementById("adicaoTipoMaquina").style.display = "none";
+    } else if (qual == "edicaoTipoMaquina") {
+        document.getElementById("edicaoTipoMaquina").style.display = "none";
+    } else if (qual == "deletarTipoMaquina") {
+        document.getElementById("deletarTipoMaquina").style.display = "none";
+    } else if (qual == "adicaoManutencao") {
+        document.getElementById("adicaoManutencao").style.display = "none";
+    } else if (qual == "deletarManutencao") {
+        document.getElementById("deletarManutencao").style.display = "none";
+    } else if (qual == "desativarManutencao") {
+        document.getElementById("desativarManutencao").style.display = "none";
+    } else if (qual == "adicaoSuporte") {
         document.getElementById("adicaoSuporte").style.display = "none";
     } else {
         document.getElementById("acesso").style.display = "none";
@@ -466,6 +504,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabelaCursos10 = document.getElementById("tabela-colaboradores");
     const tabelaCursos11 = document.getElementById("tabela-maquinas");
     const tabelaCursos12 = document.getElementById("tabela-tipo_maquinas");
+    const tabelaCursos13 = document.getElementById("tabela-manuntencao");
+    const tabelaCursos14 = document.getElementById("tabela-maquinas");
+    const tabelaCursos15 = document.getElementById("tabela-agendamento");
 
     // --- BLOCO 1 ---
     if (tabelaCursos1 != undefined) {
@@ -1194,11 +1235,208 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarPagina(1);
     }
 
-
-    // --- BLOCO 12 ---
-    if (tabelaCursos12 != undefined) { // Verificando tabela 11
+    // --- BLOCO 12 ---    
+    if (tabelaCursos12 != undefined) {
         let paginaAtual = 1;
         const linhas = Array.from(tabelaCursos12.getElementsByTagName("tr"));
+
+        const btnAnterior = document.getElementById("btn-ant");
+        const btnProximo = document.getElementById("btn-prox");
+
+        if (!btnAnterior || !btnProximo) {
+            console.error("Erro: Botões de paginação não encontrados.");
+            return;
+        }
+
+        function mostrarPagina(pagina) {
+            const inicio = (pagina - 1) * registrosPorPagina;
+            const fim = inicio + registrosPorPagina;
+
+            linhas.forEach((linha, index) => {
+                if (index >= inicio && index < fim) {
+                    linha.style.display = "";
+                } else {
+                    linha.style.display = "none";
+                }
+            });
+            atualizarBotoes();
+        }
+
+        function atualizarBotoes() {
+            if (paginaAtual === 1) {
+                btnAnterior.style.opacity = "0.3";
+                btnAnterior.disabled = true;
+                btnAnterior.style.pointerEvents = "none";
+            } else {
+                btnAnterior.style.opacity = "1";
+                btnAnterior.disabled = false;
+                btnAnterior.style.pointerEvents = "auto";
+            }
+
+            if (paginaAtual * registrosPorPagina >= linhas.length) {
+                btnProximo.style.opacity = "0.3";
+                btnProximo.disabled = true;
+                btnProximo.style.pointerEvents = "none";
+            } else {
+                btnProximo.style.opacity = "1";
+                btnProximo.disabled = false;
+                btnProximo.style.pointerEvents = "auto";
+            }
+        }
+
+        btnAnterior.addEventListener("click", function () {
+            if (paginaAtual > 1) {
+                paginaAtual--;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        btnProximo.addEventListener("click", function () {
+            if ((paginaAtual * registrosPorPagina) < linhas.length) {
+                paginaAtual++;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        mostrarPagina(1);
+    }
+
+    // --- BLOCO 13 ---    
+    if (tabelaCursos13 != undefined) {
+        let paginaAtual = 1;
+        const linhas = Array.from(tabelaCursos13.getElementsByTagName("tr"));
+
+        const btnAnterior = document.getElementById("btn-ant");
+        const btnProximo = document.getElementById("btn-prox");
+
+        if (!btnAnterior || !btnProximo) {
+            console.error("Erro: Botões de paginação não encontrados.");
+            return;
+        }
+
+        function mostrarPagina(pagina) {
+            const inicio = (pagina - 1) * registrosPorPagina;
+            const fim = inicio + registrosPorPagina;
+
+            linhas.forEach((linha, index) => {
+                if (index >= inicio && index < fim) {
+                    linha.style.display = "";
+                } else {
+                    linha.style.display = "none";
+                }
+            });
+            atualizarBotoes();
+        }
+
+        function atualizarBotoes() {
+            if (paginaAtual === 1) {
+                btnAnterior.style.opacity = "0.3";
+                btnAnterior.disabled = true;
+                btnAnterior.style.pointerEvents = "none";
+            } else {
+                btnAnterior.style.opacity = "1";
+                btnAnterior.disabled = false;
+                btnAnterior.style.pointerEvents = "auto";
+            }
+
+            if (paginaAtual * registrosPorPagina >= linhas.length) {
+                btnProximo.style.opacity = "0.3";
+                btnProximo.disabled = true;
+                btnProximo.style.pointerEvents = "none";
+            } else {
+                btnProximo.style.opacity = "1";
+                btnProximo.disabled = false;
+                btnProximo.style.pointerEvents = "auto";
+            }
+        }
+
+        btnAnterior.addEventListener("click", function () {
+            if (paginaAtual > 1) {
+                paginaAtual--;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        btnProximo.addEventListener("click", function () {
+            if ((paginaAtual * registrosPorPagina) < linhas.length) {
+                paginaAtual++;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        mostrarPagina(1);
+    }
+
+     // --- BLOCO 1 ---    
+    if (tabelaCursos13 != undefined) {
+        let paginaAtual = 1;
+        const linhas = Array.from(tabelaCursos13.getElementsByTagName("tr"));
+
+        const btnAnterior = document.getElementById("btn-ant");
+        const btnProximo = document.getElementById("btn-prox");
+
+        if (!btnAnterior || !btnProximo) {
+            console.error("Erro: Botões de paginação não encontrados.");
+            return;
+        }
+
+        function mostrarPagina(pagina) {
+            const inicio = (pagina - 1) * registrosPorPagina;
+            const fim = inicio + registrosPorPagina;
+
+            linhas.forEach((linha, index) => {
+                if (index >= inicio && index < fim) {
+                    linha.style.display = "";
+                } else {
+                    linha.style.display = "none";
+                }
+            });
+            atualizarBotoes();
+        }
+
+        function atualizarBotoes() {
+            if (paginaAtual === 1) {
+                btnAnterior.style.opacity = "0.3";
+                btnAnterior.disabled = true;
+                btnAnterior.style.pointerEvents = "none";
+            } else {
+                btnAnterior.style.opacity = "1";
+                btnAnterior.disabled = false;
+                btnAnterior.style.pointerEvents = "auto";
+            }
+
+            if (paginaAtual * registrosPorPagina >= linhas.length) {
+                btnProximo.style.opacity = "0.3";
+                btnProximo.disabled = true;
+                btnProximo.style.pointerEvents = "none";
+            } else {
+                btnProximo.style.opacity = "1";
+                btnProximo.disabled = false;
+                btnProximo.style.pointerEvents = "auto";
+            }
+        }
+
+        btnAnterior.addEventListener("click", function () {
+            if (paginaAtual > 1) {
+                paginaAtual--;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        btnProximo.addEventListener("click", function () {
+            if ((paginaAtual * registrosPorPagina) < linhas.length) {
+                paginaAtual++;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        mostrarPagina(1);
+    }
+
+    // --- BLOCO 15 ---
+    if (tabelaCursos15 != undefined) { // Verificando tabela 14
+        let paginaAtual = 1;
+        const linhas = Array.from(tabelaCursos15.getElementsByTagName("tr"));
 
         const btnAnterior = document.getElementById("btn-ant");
         const btnProximo = document.getElementById("btn-prox");
@@ -1263,8 +1501,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function filtrarTabela() {
-    const select1 = document.querySelector("#select-filtro-status");
+function filtrarCursos() {
+    const select1 = document.querySelector("#select-filtro-cursos");
     const linhas = document.querySelectorAll("#tabela-cursos tr");
 
     if (!select1) return;
@@ -1286,16 +1524,16 @@ function filtrarTabela() {
     });
 }
 
-function filtrarTabela2() {
-    const select2 = document.querySelector("#select-filtro-turmas");
-    const linhas = document.querySelectorAll("#tabela-turmas tr");
+function filtrarColaboradores() {
+    const select2 = document.querySelector("#select-filtro-colaboradores");
+    const linhas = document.querySelectorAll("#tabela-colaboradores tr");
 
     if (!select2) return;
 
     const filtro = select2.value.toLowerCase().trim();
 
     linhas.forEach(linha => {
-        const colunaStatus = linha.getElementsByTagName("td")[2];
+        const colunaStatus = linha.getElementsByTagName("td")[6];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();
@@ -1358,31 +1596,8 @@ function filtrarAlunos() {
 }
 
 function filtrarSetor() {
-    const select = document.getElementById("filtro-setor");
-    const filtro = select.value.toLowerCase();
-    const tabela = document.getElementById("tabela-setores");
-    const linhas = tabela.getElementsByTagName("tr");
-
-    for (let i = 1; i < linhas.length; i++) {
-        const linha = linhas[i];
-        const colunas = linha.getElementsByTagName("td");
-        const colunaStatus = colunas[3];
-
-        if (colunaStatus) {
-            const textoStatus = colunaStatus.textContent.toLowerCase().trim();
-
-            if (filtro === "todos" || textoStatus === filtro) {
-                linha.style.display = "";
-            } else {
-                linha.style.display = "none";
-            }
-        }
-    }
-}
-
-filtrarSetor = () => {
     const select = document.querySelector("#select-filtro-setor");
-    const linhas = document.querySelectorAll("#tabela-setores tr");
+    const linhas = document.querySelectorAll("#tabela-setor tr");
 
     if (!select) return;
 
@@ -1401,6 +1616,52 @@ filtrarSetor = () => {
             }
         }
     });
+}
+
+// function filtrarSetor() {
+//     const select = document.getElementById("filtro-setor");
+//     const filtro = select.value.toLowerCase();
+//     const tabela = document.getElementById("tabela-setores");
+//     const linhas = tabela.getElementsByTagName("tr");
+
+//     for (let i = 1; i < linhas.length; i++) {
+//         const linha = linhas[i];
+//         const colunas = linha.getElementsByTagName("td");
+//         const colunaStatus = colunas[3];
+
+//         if (colunaStatus) {
+//             const textoStatus = colunaStatus.textContent.toLowerCase().trim();
+
+//             if (filtro === "todos" || textoStatus === filtro) {
+//                 linha.style.display = "";
+//             } else {
+//                 linha.style.display = "none";
+//             }
+//         }
+//     }
+// }
+
+filtrarManuntencao = () => {
+    const select = document.querySelector("#select-filtro-manuntencao");
+    const linhas = document.querySelectorAll("#tabela-manuntencao tr");
+
+    if (!select) return;
+
+    const filtro = select.value.toLowerCase().trim();
+
+    linhas.forEach(linha => {
+        const colunaStatus = linha.getElementsByTagName("td")[7];
+
+        if (colunaStatus) {
+            const textoStatus = colunaStatus.textContent.toLowerCase().trim();
+
+            if (filtro === "todos" || textoStatus === filtro) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        }
+    });
 
     if (filtro === "") {
         linhas.forEach(linha => {
@@ -1408,6 +1669,7 @@ filtrarSetor = () => {
         });
     }
 }
+
 function filtrarMaquinas() {
     const select = document.querySelector("#select-filtro-maquinas");
     const linhas = document.querySelectorAll("#tabela-maquinas tr");
@@ -1431,6 +1693,55 @@ function filtrarMaquinas() {
         }
     });
 }
+
+function filtrarProximaManutencao() {
+    const select = document.querySelector("#select-filtro-agendamento");
+    const linhas = document.querySelectorAll("#tabela-agendamento tr");
+
+    if (!select) return;
+
+    const filtro = select.value.toLowerCase().trim();
+
+    linhas.forEach(linha => {
+        // O índice 6 refere-se à 7ª coluna (Status) da sua tabela
+        const colunaStatus = linha.getElementsByTagName("td")[4];
+
+        if (colunaStatus) {
+            const textoStatus = colunaStatus.textContent.toLowerCase().trim();
+
+            if (filtro === "todos" || textoStatus === filtro) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        }
+    });
+}
+
+function filtrarTipoMaquina() {
+    const select = document.querySelector("#select-filtro-tipo-maquina");
+    const linhas = document.querySelectorAll("#tabela-tipo_maquinas tr");
+
+    if (!select) return;
+
+    const filtro = select.value.toLowerCase().trim();
+
+    linhas.forEach(linha => {
+        // O índice 6 refere-se à 7ª coluna (Status) da sua tabela
+        const colunaStatus = linha.getElementsByTagName("td")[2];
+
+        if (colunaStatus) {
+            const textoStatus = colunaStatus.textContent.toLowerCase().trim();
+
+            if (filtro === "todos" || textoStatus === filtro) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const selectTurmas = document.querySelector("#select-filtro-turmas");
@@ -1471,7 +1782,7 @@ function lerQr(inputIndex) {
         // Preenche o input correspondente (0 para matrícula, 1 para NI)
         const inputs = document.querySelectorAll(".input");
         inputs[inputIndex].value = decodedText;
-        
+
         // Para a câmera e fecha o modal
         fecharScanner();
     };

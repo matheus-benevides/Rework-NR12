@@ -31,7 +31,7 @@
             </div>
             <div class="div-txt-header">
                 <p>
-                    <span id="msg_especial"></span> <?php echo $nome_usuario; ?>
+                    <span id="msg_especial"></span> <?php echo $nome_usuario; ?> 
                     <br>
                     <span>Esperamos que tenha uma ótima experiência em nosso sistema.</span>
                 </p>
@@ -56,6 +56,14 @@
                     <?php if ($busca_atual): ?>
                         <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i class="bi bi-x-lg"></i></a>
                     <?php endif; ?>
+                    <div class="filtrar-status">
+                        <label for="">Status:</label>
+                        <select id="select-filtro-colaboradores" name="filtro-status" onchange="filtrarColaboradores()">
+                            <option value="todos">Todos</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
                 </div>
             </form>
 
@@ -102,10 +110,10 @@
                             echo "<td>" . $linha["colaborador_nif"] . "</td>";
                             echo "<td>" . $linha["colaborador_email"] . "</td>";
                             echo "<td> ***** </td>";
-                            
+
                             $nome_setor = !empty($linha["setor_nome"]) ? $linha["setor_nome"] : "<span style='color: #999; font-style: italic;'>Sem setor</span>";
                             echo "<td>" . $nome_setor . "</td>";
-                            
+
                             $status = strtolower($linha["colaborador_status"]);
                             $classe = ($status == 'ativo') ? 'status-ativo' : 'status-inativo';
 

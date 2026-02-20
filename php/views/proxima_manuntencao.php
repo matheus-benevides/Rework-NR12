@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão de Unidades - NR12</title>
+    <title>Gestão de Agendamento - NR12</title>
 
     <link rel="stylesheet" href="../../css/global.css">
     <link rel="stylesheet" href="../../css/nav.css">
@@ -28,7 +28,7 @@
 
         <div class="div-header">
             <div class="div-img-header">
-                <h2>Painel de Unidade</h2>
+                <h2>Próximas Manuntenção</h2>
             </div>
             <div class="div-txt-header">
                 <p>
@@ -47,41 +47,52 @@
             <form action="" method="GET" style="display: flex; gap: 10px; align-items: center;">
                 <div>
                     <?php
+                    // Captura o valor atual para manter no input
                     $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
                     ?>
                     <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
                         placeholder="Pesquisar..." style="width: 1000%;">
-                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i
-                            class="bi bi-search"></i></button>
+                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i class="bi bi-search"></i></button>
                     <?php if ($busca_atual): ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i
-                                class="bi bi-x-lg"></i></a>
+                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i class="bi bi-x-lg"></i></a>
                     <?php endif; ?>
+                    <div class="filtrar-status">
+                        <label for="">Status:</label>
+                        <select id="select-filtro-agendamento" name="filtro-status" onchange="filtrarProximaManutencao()">
+                            <option value="todos">Todos</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
                 </div>
             </form>
 
-            <button class="btn" onclick="showModal('adicaoUnidade')">Adicionar Unidade <i
+            <button class="btn" onclick="showModal('adicaoMaquina')">Adicionar Próxima Manuntenção<i
                     class="bi bi-plus-circle"></i></button>
         </div>
 
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Cidade</th>
-                    <th>Estado</th>
-                    <th>Número</th>
+                    <th>Modelo</th>
+                    <th>Ano</th>
+                    <th>Intervalo</th>
+                    <th>Proxima Manuntenção</th>
                     <th>Status</th>
                     <th>Ações</th>
                 </thead>
-                <tbody id="tabela-unidade">
+                <tbody id="tabela-agendamento">
                     <?php
-                    $sql = "SELECT idunidade, unidade_nome, unidade_cidade, unidade_estado, unidade_numero, unidade_status FROM unidade";
 
                     if (!empty($busca_atual)) {
                         $termo_seguro = $conn->real_escape_string($busca_atual);
-                        $sql .= " WHERE idunidade LIKE '%$termo_seguro%' OR unidade_nome LIKE '%$termo_seguro%' OR unidade_cidade LIKE '%$termo_seguro%' OR unidade_estado LIKE '%$termo_seguro%' OR unidade_numero LIKE '%$termo_seguro%' OR unidade_status LIKE '%$termo_seguro%'";
+
+                        $sql = "SELECT * FROM maquina WHERE 
+                                maquina_modelo LIKE '%$termo_seguro%' OR
+                                intervalo_manutencao LIKE '%$termo_seguro%' OR 
+                                data_proxima_manutencao LIKE '%$termo_seguro%'";
+                    } else {
+                        $sql = "SELECT * FROM maquina";
                     }
 
                     $resultado = $conn->query($sql);
@@ -89,35 +100,31 @@
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $linha["idunidade"] . "</td>";
-                            echo "<td>" . $linha["unidade_nome"] . "</td>";
-                            echo "<td>" . $linha["unidade_cidade"] . "</td>";
-                            echo "<td>" . $linha["unidade_estado"] . "</td>";
-                            echo "<td>" . ($linha["unidade_numero"] ?? '-') . "</td>";
+                            echo "<td>" . $linha["maquina_modelo"] . "</td>";
+                            echo "<td>" . $linha["maquina_ano"] . "</td>";
+                            echo "<td>" . $linha["intervalo_manutencao"] . "</td>";
+                            echo "<td>" . $linha["data_proxima_manutencao"] . "</td>";
 
-                            $status = strtolower($linha["unidade_status"]);
-                            $classe = ($status == 'ativo') ? 'status-ativo' : 'status-inativo';
-                            echo "<td><span class='$classe'>" . $linha["unidade_status"] . "</span></td>";
-
-                            echo "<td>
-                                    <div style='display: flex; gap: 5px; justify-content: center;'>
-                                        <button class='btnAcao editar' type='button' 
-                                            onclick=\"abrirModalEdicaoUnidade(" . $linha['idunidade'] . ", '" . addslashes($linha['unidade_nome']) . "', '" . addslashes($linha['unidade_cidade']) . "', '" . addslashes($linha['unidade_estado']) . "', '" . addslashes($linha['unidade_numero']) . "')\">
-                                            <i class='bi bi-pencil-square'></i>
-                                        </button>";
+                            $status = strtolower($linha["maquina_status"]);
 
                             if ($status == 'ativo') {
-                                echo "<button class='btnAcao deletar' type='button' onclick=\"showModal('desativarUnidade', " . $linha['idunidade'] . ")\"><i class='bi bi-x-lg'></i></button>";
+                                $classe = 'status-ativo';
                             } else {
-                                echo "<button class='btnAcao confirmar' type='button' style='background-color: #28a745;' onclick=\"showModal('ativarUnidade', " . $linha['idunidade'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                                $classe = 'status-inativo';
                             }
 
-                            echo "</div>
+                            echo "<td><span class='$classe'>" . $linha["maquina_status"] . "</span></td>";
+                            // Botões de Ação
+                            echo "<td>
+                                    <div>
+                                        <button class='btnAcao editar' type='button' onclick=\"showModal('editarMaquina', " . $linha['idmaquina'] . ")\"><i class='bi bi-pencil-square'></i></button>
+                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('excluirMaquina', " . $linha['idmaquina'] . ",'')\"><i class='bi bi-trash'></i></button>
+                                    </div>
                                   </td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='7' style='text-align:center; padding:15px;'>Nenhuma unidade encontrada.</td></tr>";
+                        echo "<tr><td colspan='8' style='text-align:center; padding:15px;'>Nenhuma máquina encontrada.</td></tr>";
                     }
                     ?>
                 </tbody>
@@ -132,7 +139,6 @@
 
     </section>
 
-    <script src="../../js/processa.js" defer></script>
     <script src="../../js/scripts.js" defer></script>
 </body>
 

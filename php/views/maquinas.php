@@ -58,7 +58,7 @@
                     <?php endif; ?>
                     <div class="filtrar-status">
                         <label for="">Status:</label>
-                        <select id="select-filtro-turmas" name="filtro-status" onchange="filtrarTurmas()">
+                        <select id="select-filtro-maquinas" name="filtro-status" onchange="filtrarMaquinas()">
                             <option value="todos">Todos</option>
                             <option value="ativo">Ativo</option>
                             <option value="inativo">Inativo</option>
@@ -101,7 +101,7 @@
 
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
-                            echo "<tr>";
+                            echo "<str>";
                             echo "<td>" . $linha["idmaquina"] . "</td>";
                             echo "<td>" . $linha["maquina_ni"] . "</td>";
                             echo "<td>" . $linha["maquina_fabricante"] . "</td>";

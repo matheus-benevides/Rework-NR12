@@ -28,19 +28,22 @@ switch ($metodo) {
     case 'POST':
         // CADASTRAR
         $nome = $input['nome'] ?? null;
+        $cidade = $input['cidade'] ?? null;
+        $estado = $input['estado'] ?? null;
+        $numero = $input['numero'] ?? null;
 
-        if (!$nome) {
+        if (!$nome || !$cidade || !$estado) {
             http_response_code(400);
-            echo json_encode(["mensagem" => "Nome do curso é obrigatório."]);
+            echo json_encode(["mensagem" => "Todos os campos (Nome, Cidade, Estado) são obrigatórios."]);
             exit;
         }
 
-        $stmt = $conn->prepare("INSERT INTO curso (curso_nome, curso_status) VALUES (?, 'Ativo')");
-        $stmt->bind_param("s", $nome);
+        $stmt = $conn->prepare("INSERT INTO unidade (unidade_nome, unidade_cidade, unidade_estado, unidade_numero, unidade_status) VALUES (?, ?, ?, ?, 'Ativo')");
+        $stmt->bind_param("ssss", $nome, $cidade, $estado, $numero);
 
         if ($stmt->execute()) {
             http_response_code(201);
-            echo json_encode(["mensagem" => "Curso criado com sucesso.", "id" => $conn->insert_id]);
+            echo json_encode(["mensagem" => "Unidade criada com sucesso.", "id" => $conn->insert_id]);
         } else {
             http_response_code(500);
             echo json_encode(["mensagem" => "Erro ao cadastrar: " . $stmt->error]);
@@ -52,24 +55,27 @@ switch ($metodo) {
         // ATUALIZAR
         if (!$id) {
             http_response_code(400);
-            echo json_encode(["mensagem" => "ID é obrigatório."]);
+            echo json_encode(["mensagem" => "ID é obrigatório para atualização."]);
             exit;
         }
 
         $nome = $input['nome'] ?? null;
+        $cidade = $input['cidade'] ?? null;
+        $estado = $input['estado'] ?? null;
+        $numero = $input['numero'] ?? null;
 
-        if (!$nome) {
+        if (!$nome || !$cidade || !$estado) {
             http_response_code(400);
-            echo json_encode(["mensagem" => "Nome do curso é obrigatório."]);
+            echo json_encode(["mensagem" => "Todos os campos (Nome, Cidade, Estado) são obrigatórios."]);
             exit;
         }
 
-        $stmt = $conn->prepare("UPDATE curso SET curso_nome = ? WHERE idcurso = ?");
-        $stmt->bind_param("si", $nome, $id);
+        $stmt = $conn->prepare("UPDATE unidade SET unidade_nome = ?, unidade_cidade = ?, unidade_estado = ?, unidade_numero = ? WHERE idunidade = ?");
+        $stmt->bind_param("ssssi", $nome, $cidade, $estado, $numero, $id);
 
         if ($stmt->execute()) {
             http_response_code(200);
-            echo json_encode(["mensagem" => "Curso atualizado com sucesso."]);
+            echo json_encode(["mensagem" => "Unidade atualizada com sucesso."]);
         } else {
             http_response_code(500);
             echo json_encode(["mensagem" => "Erro ao atualizar: " . $stmt->error]);
@@ -78,22 +84,21 @@ switch ($metodo) {
         break;
 
     case 'PATCH':
-        // DESATIVAR (SOFT DELETE)
+        // ALTERAR STATUS (SOFT DELETE/REACTIVATE)
         if (!$id) {
             http_response_code(400);
-            echo json_encode(["mensagem" => "ID é obrigatório."]);
+            echo json_encode(["mensagem" => "ID é obrigatório para alteração de status."]);
             exit;
         }
 
-        // Verifica se foi enviado um status específico, senão assume 'Inativo'
         $status = $input['status'] ?? 'Inativo';
 
-        $stmt = $conn->prepare("UPDATE curso SET curso_status = ? WHERE idcurso = ?");
+        $stmt = $conn->prepare("UPDATE unidade SET unidade_status = ? WHERE idunidade = ?");
         $stmt->bind_param("si", $status, $id);
 
         if ($stmt->execute()) {
             http_response_code(200);
-            echo json_encode(["mensagem" => "Status do curso alterado para $status."]);
+            echo json_encode(["mensagem" => "Status da unidade alterado para $status."]);
         } else {
             http_response_code(500);
             echo json_encode(["mensagem" => "Erro ao alterar status: " . $stmt->error]);

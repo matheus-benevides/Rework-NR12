@@ -60,7 +60,7 @@
                     <?php endif; ?>
                     <div class="filtrar-status">
                         <label for="">Status:</label>
-                        <select id="select-filtro-turmas" name="filtro-status" onchange="filtrarTurmas()">
+                        <select id="select-filtro-alunos" name="filtro-status" onchange="filtrarAlunos()">
                             <option value="todos">Todos</option>
                             <option value="ativo">Ativo</option>
                             <option value="inativo">Inativo</option>
