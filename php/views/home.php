@@ -25,21 +25,7 @@
 
     <section class="sec-main">
 
-        <div class="div-header">
-            <div class="div-img-header">
-                <h2>Home</h2>
-            </div>
-            <div class="div-txt-header">
-                <p>
-                    <span id="msg_especial"></span> <?php echo $nome_usuario; ?>
-                    <br>
-                    <span>Esperamos que o tenha uma ótima experiencia em nosso sistema.</span>
-                </p>
-                <div class="avatar">
-                    <i class="bi bi-person"></i>
-                </div>
-            </div>
-        </div>
+        <?php require '../components/header.php'; ?>
 
         <div class="card-box1">
             <div class="card-box-filho">

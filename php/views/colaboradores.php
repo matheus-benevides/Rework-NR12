@@ -25,37 +25,27 @@
 
     <section class="sec-main">
 
-        <div class="div-header">
-            <div class="div-img-header">
-                <h2>Colaboradores</h2>
-            </div>
-            <div class="div-txt-header">
-                <p>
-                    <span id="msg_especial"></span> <?php echo $nome_usuario; ?> 
-                    <br>
-                    <span>Esperamos que tenha uma ótima experiência em nosso sistema.</span>
-                </p>
-                <div class="avatar">
-                    <i class="bi bi-person"></i>
-                </div>
-            </div>
-        </div>
-
+        <?php require '../components/header.php'; ?>
 
         <div class="div-btns-pages">
 
-            <form action="" method="GET" style="display: flex; gap: 10px; align-items: center;">
-                <div>
+            <form action="" method="GET" class="form-pesquisa">
+                <div class="search-container">
                     <?php
                     // Captura o valor atual para manter no input
                     $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
                     ?>
-                    <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
-                        placeholder="Pesquisar..." style="width: 1000%;">
-                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i class="bi bi-search"></i></button>
-                    <?php if ($busca_atual): ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i class="bi bi-x-lg"></i></a>
-                    <?php endif; ?>
+                    <div class="box-pesquisa">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" name="search" id="pesquisa"
+                            value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar..."
+                            class="input-pesquisa">
+
+                        <?php if ($busca_atual): ?>
+                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i
+                                    class="bi bi-x-lg"></i></a>
+                        <?php endif; ?>
+                    </div>
                     <div class="filtrar-status">
                         <label for="">Status:</label>
                         <select id="select-filtro-colaboradores" name="filtro-status" onchange="filtrarColaboradores()">
@@ -64,6 +54,8 @@
                             <option value="inativo">Inativo</option>
                         </select>
                     </div>
+                    <!-- Hidden submit button to allow Enter to search -->
+                    <button type="submit" style="display: none;"></button>
                 </div>
             </form>
 
@@ -121,12 +113,19 @@
                             echo "<td>" . $linha["colaborador_permissao"] . "</td>";
 
                             echo "<td>
-                                    <div style='display: flex; gap: 5px; justify-content: center;'>
-                                        <button class='btnAcao editar' title='Editar' type='button' onclick=\"showModal('editarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-pencil-square'></i></button>
-                                        <button class='btnAcao deletar' title='Deletar' type='button' onclick=\"showModal('deletarColaborador', " . $linha['idcolaborador'] . ",'usuario')\"><i class='bi bi-trash'></i></button>
-                                        <button class='btnAcao ferramentas' title='Desativar' type='button' onclick=\"showModal('desativarColaborador', " . $linha['idcolaborador'] . ",'usuario')\"><i class='bi bi-x-lg'></i></button>
-                                        <button class='btnAcao clipes' title='Redefinir Senha' type='button' onclick=\"showModal('resetPass', " . $linha['idcolaborador'] . ",'usuario')\"><i class='bi bi-arrow-counterclockwise'></i></button>
-                                    </div>
+                                    <div style='display: flex; gap: 5px; justify-content: center;'>";
+
+                            // Edit
+                            echo "<button class='btnAcao editar' title='Editar' type='button' onclick=\"abrirModalEdicaoColaborador(" . $linha['idcolaborador'] . ", '" . addslashes($linha['colaborador_nome']) . "', '" . addslashes($linha['colaborador_email']) . "', '" . addslashes($linha['colaborador_permissao']) . "', '" . addslashes($linha['colaborador_nif']) . "', '" . $linha['setor_id'] . "')\"><i class='bi bi-pencil-square'></i></button>";
+
+                            // Ativar / Desativar
+                            if ($status == 'ativo') {
+                                echo "<button class='btnAcao ferramentas' title='Desativar' type='button' onclick=\"showModal('desativarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-x-lg'></i></button>";
+                            } else {
+                                echo "<button class='btnAcao clipes' style='background-color: var(--corSuccess);' title='Ativar' type='button' onclick=\"showModal('ativarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                            }
+
+                            echo "  </div>
                                   </td>";
                             echo "</tr>";
                         }

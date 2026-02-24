@@ -22,17 +22,7 @@
 
     <section class="sec-main">
 
-        <div class="div-header">
-            <div class="div-img-header">
-                <h2>Documentação da NR12</h2>
-            </div>
-            <div class="div-txt-header">
-                <p>
-
-                </p>
-
-            </div>
-        </div>
+        <?php require '../components/header.php'; ?>
 
         <div class="card-box1">
             <div class="card-box-filho">

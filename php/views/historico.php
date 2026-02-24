@@ -27,33 +27,26 @@
 
     <section class="sec-main">
 
-        <div class="div-header">
-            <div class="div-img-header">
-                <h2>Painel de Controle de Logs</h2>
-            </div>
-            <div class="div-txt-header">
-                <p>
-                    <span id="msg_especial"></span> <?php echo $nome_usuario; ?>
-                    <br>
-                    <span>Esperamos que tenha uma ótima experiência em nosso sistema.</span>
-                </p>
-                <div class="avatar">
-                    <i class="bi bi-person"></i>
-                </div>
-            </div>
-        </div>
+        <?php require '../components/header.php'; ?>
 
         <div class="div-btns-pages logs-div">
-            <form action="" method="GET">
-                <div style="width: 75.5dvw;">
+                        <form action="" method="GET" class="form-pesquisa">
+                <div class="search-container">
                     <?php
+                    // Captura o valor atual para manter no input
                     $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
                     ?>
-                    <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar por nome, IP ou comando...">
-                    <button type="submit" class="botao-acoes confirmar"><i class="bi bi-search"></i></button>
-                    <?php if ($busca_atual): ?>
-                        <a href="log.php" class="botao-acoes deletar"><i class="bi bi-x-lg"></i></a>
-                    <?php endif; ?>
+                    <div class="box-pesquisa">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
+                            placeholder="Pesquisar por nome, IP ou comando..." class="input-pesquisa">
+                        
+                        <?php if ($busca_atual): ?>
+                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
+                        <?php endif; ?>
+                    </div>
+                    <!-- Hidden submit button to allow Enter to search -->
+                    <button type="submit" style="display: none;"></button>
                 </div>
             </form>
         </div>

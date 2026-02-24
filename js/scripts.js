@@ -513,6 +513,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabelaCursos13 = document.getElementById("tabela-manuntencao");
     const tabelaCursos14 = document.getElementById("tabela-maquinas");
     const tabelaCursos15 = document.getElementById("tabela-agendamento");
+    const tabelaCursos16 = document.getElementById("tabela-motores");
 
     // --- BLOCO 1 ---
     if (tabelaCursos1 != undefined) {
@@ -1373,10 +1374,10 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarPagina(1);
     }
 
-    // --- BLOCO 1 ---    
-    if (tabelaCursos13 != undefined) {
+    // --- BLOCO 14 ---    
+    if (tabelaCursos14 != undefined) {
         let paginaAtual = 1;
-        const linhas = Array.from(tabelaCursos13.getElementsByTagName("tr"));
+        const linhas = Array.from(tabelaCursos14.getElementsByTagName("tr"));
 
         const btnAnterior = document.getElementById("btn-ant");
         const btnProximo = document.getElementById("btn-prox");
@@ -1439,10 +1440,76 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarPagina(1);
     }
 
-    // --- BLOCO 15 ---
-    if (tabelaCursos15 != undefined) { // Verificando tabela 14
+    // --- BLOCO 14 ---    
+    if (tabelaCursos15 != undefined) {
         let paginaAtual = 1;
         const linhas = Array.from(tabelaCursos15.getElementsByTagName("tr"));
+
+        const btnAnterior = document.getElementById("btn-ant");
+        const btnProximo = document.getElementById("btn-prox");
+
+        if (!btnAnterior || !btnProximo) {
+            console.error("Erro: Botões de paginação não encontrados.");
+            return;
+        }
+
+        function mostrarPagina(pagina) {
+            const inicio = (pagina - 1) * registrosPorPagina;
+            const fim = inicio + registrosPorPagina;
+
+            linhas.forEach((linha, index) => {
+                if (index >= inicio && index < fim) {
+                    linha.style.display = "";
+                } else {
+                    linha.style.display = "none";
+                }
+            });
+            atualizarBotoes();
+        }
+
+        function atualizarBotoes() {
+            if (paginaAtual === 1) {
+                btnAnterior.style.opacity = "0.3";
+                btnAnterior.disabled = true;
+                btnAnterior.style.pointerEvents = "none";
+            } else {
+                btnAnterior.style.opacity = "1";
+                btnAnterior.disabled = false;
+                btnAnterior.style.pointerEvents = "auto";
+            }
+
+            if (paginaAtual * registrosPorPagina >= linhas.length) {
+                btnProximo.style.opacity = "0.3";
+                btnProximo.disabled = true;
+                btnProximo.style.pointerEvents = "none";
+            } else {
+                btnProximo.style.opacity = "1";
+                btnProximo.disabled = false;
+                btnProximo.style.pointerEvents = "auto";
+            }
+        }
+
+        btnAnterior.addEventListener("click", function () {
+            if (paginaAtual > 1) {
+                paginaAtual--;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        btnProximo.addEventListener("click", function () {
+            if ((paginaAtual * registrosPorPagina) < linhas.length) {
+                paginaAtual++;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        mostrarPagina(1);
+    }
+
+    // --- BLOCO 16 ---
+    if (tabelaCursos16 != undefined) { // Verificando tabela 14
+        let paginaAtual = 1;
+        const linhas = Array.from(tabelaCursos1.getElementsByTagName("tr"));
 
         const btnAnterior = document.getElementById("btn-ant");
         const btnProximo = document.getElementById("btn-prox");
@@ -1588,6 +1655,30 @@ function filtrarAlunos() {
     linhas.forEach(linha => {
         // Índice 4 confirmado (5ª coluna)
         const colunaStatus = linha.getElementsByTagName("td")[4];
+
+        if (colunaStatus) {
+            const textoStatus = colunaStatus.textContent.toLowerCase().trim();
+
+            if (filtro === "todos" || textoStatus === filtro) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        }
+    });
+}
+
+function filtrarMotores() {
+    const select = document.querySelector("#select-filtro-motores");
+    const linhas = document.querySelectorAll("#tabela-motores tr");
+
+    if (!select) return;
+
+    const filtro = select.value.toLowerCase().trim();
+
+    linhas.forEach(linha => {
+        // Índice 4 confirmado (5ª coluna)
+        const colunaStatus = linha.getElementsByTagName("td")[5];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();

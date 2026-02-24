@@ -930,3 +930,184 @@ function abrirModalEdicaoSetor(id, nome, unidade) {
 }
 
 window.abrirModalEdicaoSetor = abrirModalEdicaoSetor;
+// --- COLABORADORES ---
+
+const API_URL_COLABORADOR = '../apis/processa_colaboradores.php';
+
+const formCadColaborador = document.getElementById('form-cad-colaborador');
+const formEditColaborador = document.getElementById('form-edit-colaborador');
+const btnConfirmaDesativarColaborador = document.getElementById('btn-confirmar-deletar-colaborador');
+const btnConfirmaAtivarColaborador = document.getElementById('btn-confirmar-ativar-colaborador');
+
+// 1. CADASTRAR COLABORADOR (POST)
+if (formCadColaborador) {
+    formCadColaborador.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nome = document.getElementById('nome_colaborador_cad').value;
+        const email = document.getElementById('email_colaborador_cad').value;
+        const senha = document.getElementById('senha_colaborador_cad').value;
+        const nif = document.getElementById('nif_colaborador_cad').value;
+        const tipo = document.getElementById('tipo_colaborador_cad').value;
+        const setor = document.getElementById('setor_colaborador_cad').value;
+
+        if (!nome || !email || !nif || !tipo || !setor) {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            return;
+        }
+
+        const dados = { nome, email, senha, nif, tipo, setor };
+
+        try {
+            const response = await fetch(API_URL_COLABORADOR, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('adicaoColaborador');
+                formCadColaborador.reset();
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar cadastrar colaborador.');
+        }
+    });
+}
+
+// 2. EDITAR COLABORADOR (PUT)
+if (formEditColaborador) {
+    formEditColaborador.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById('id_colaborador_edit').value;
+        const nome = document.getElementById('nome_colaborador_edit').value;
+        const email = document.getElementById('email_colaborador_edit').value;
+        const senha = document.getElementById('senha_colaborador_edit').value; // Opcional
+        const nif = document.getElementById('nif_colaborador_edit').value;
+        const tipo = document.getElementById('tipo_colaborador_edit').value;
+        const setor = document.getElementById('setor_colaborador_edit').value;
+
+        if (!id || !nome || !email || !nif || !tipo || !setor) {
+            alert('Dados incompletos para edição do colaborador.');
+            return;
+        }
+
+        const dados = { id, nome, email, senha, nif, tipo, setor };
+
+        try {
+            const response = await fetch(API_URL_COLABORADOR, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('editarColaborador');
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar editar colaborador.');
+        }
+    });
+}
+
+
+// 3. DESATIVAR COLABORADOR (PATCH)
+if (btnConfirmaDesativarColaborador) {
+    btnConfirmaDesativarColaborador.addEventListener('click', async () => {
+        const id = document.getElementById('id_colaborador_delete').value;
+        if (!id) return alert('ID não encontrado.');
+
+        const dados = { id: id, status: 'Inativo' };
+
+        try {
+            const response = await fetch(API_URL_COLABORADOR, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('desativarColaborador');
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar desativar colaborador.');
+        }
+    });
+}
+
+// 4. ATIVAR COLABORADOR (PATCH)
+if (btnConfirmaAtivarColaborador) {
+    btnConfirmaAtivarColaborador.addEventListener('click', async () => {
+        const id = document.getElementById('id_colaborador_ativar').value;
+        if (!id) return alert('ID não encontrado.');
+
+        const dados = { id: id, status: 'Ativo' };
+
+        try {
+            const response = await fetch(API_URL_COLABORADOR, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.mensagem);
+                closeModal('ativarColaborador');
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao ativar colaborador.');
+        }
+    });
+}
+
+// 5. PREPARAR EDIÇÃO COLABORADOR
+function abrirModalEdicaoColaborador(id, nome, email, tipo, nif, setor) {
+    const idEdit = document.getElementById('id_colaborador_edit');
+    const nomeEdit = document.getElementById('nome_colaborador_edit');
+    const emailEdit = document.getElementById('email_colaborador_edit');
+    const tipoEdit = document.getElementById('tipo_colaborador_edit');
+    const nifEdit = document.getElementById('nif_colaborador_edit');
+    const setorEdit = document.getElementById('setor_colaborador_edit');
+
+    if (idEdit && nomeEdit && emailEdit && tipoEdit && nifEdit && setorEdit) {
+        idEdit.value = id;
+        nomeEdit.value = nome;
+        emailEdit.value = email;
+        tipoEdit.value = tipo;
+        nifEdit.value = nif;
+        setorEdit.value = setor;
+        showModal('editarColaborador');
+    } else {
+        console.error('Elementos do modal de edição de colaborador não encontrados.');
+    }
+}
+
+window.abrirModalEdicaoColaborador = abrirModalEdicaoColaborador;

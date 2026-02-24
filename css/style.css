@@ -134,8 +134,6 @@ hr {
 }
 
 
-
-
 .card-box-filho h1 {
     color: var(--corBase);
     width: 100%;
@@ -240,6 +238,7 @@ hr {
 
 .tabela-bg table,
 .tabela-bg2 table {
+    background: radial-gradient(var(--corFundo)0%,var(--corFundo2)100%);
     border-collapse: collapse;
     text-align: center;
     width: 100%;
@@ -266,10 +265,7 @@ hr {
     height: 50px;
     color: var(--corTxt3);
     transition: 0s;
-
-    &:nth-child(even) {
-        background-color: var(--corFundo);
-    }
+    border-bottom: 1px solid var(--corBordas);
 
     &:hover {
         background: var(--hoverTr);
@@ -289,8 +285,6 @@ hr {
     position: relative;
     box-shadow: var(--sombra);
 }
-
-
 
 @media (max-width: 768px) {
 
@@ -410,6 +404,9 @@ hr {
     background: none;
     color: var(--corBase);
     cursor: pointer;
+    &:hover{
+        background: var(--corBordas);
+    }
 }
 
 .div-btns-pages {
@@ -419,26 +416,77 @@ hr {
     justify-content: space-between;
 }
 
-.div-btns-pages div {
+.form-pesquisa {
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding: 5px;
-    background: var(--corFundo2);
-    border-radius: 5px;
-    width: 60dvw;
-    /* box-shadow: var(--sombra); */
-    color: var(--corTxt3);
+    margin: 0;
 }
 
-.div-btns-pages div input {
-    width: 2500px;
-    padding: 10px;
-    border: none;
-    border-bottom: 2px solid var(--corBordas);
-    border-radius: 5px 5px 0px 0px;
-    background: var(--corFundo);
-    color: var(--corTxt3);
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Spacing between search input and select */
+    position: relative;
+    width: auto;
+}
+
+.box-pesquisa {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* 1. Input styling */
+.input-pesquisa {
+    width: 350px !important;
+    max-width: 100% !important;
+    padding: 10px 15px 10px 45px !important;
+    /* padding-left space for icon */
+    border: 1px solid #d1d5db !important;
+    /* light gray border */
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    color: #4b5563 !important;
+    font-size: 14px !important;
+    outline: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    margin: 0 !important;
+}
+
+.input-pesquisa::placeholder {
+    color: #9ca3af !important;
+}
+
+/* 2. Icon inside input */
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* 3. Delete / Clear Button */
+.btn-clear-search {
+    position: absolute;
+    right: 14px;
+    /* Right side inside the 350px input */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ef4444 !important;
+    /* red */
+    font-size: 16px !important;
+    z-index: 10;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-clear-search:hover {
+    color: #dc2626 !important;
 }
 
 @media (max-width: 768px) {
@@ -479,10 +527,28 @@ hr {
 
     .div-btns-pages {
         padding: 5px;
+        flex-wrap: wrap;
+        gap: 15px;
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .div-btns-pages div {
-        padding: 5px;
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .box-pesquisa {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .input-pesquisa {
+        width: 100% !important;
+    }
+
+    .btn-clear-search {
+        right: 14px;
     }
 
     .div-tabelas {
@@ -490,16 +556,24 @@ hr {
         top: 35%;
     }
 
-    .btn {
-        width: 45px;
-        justify-content: space-between;
+    .div-btns-pages>.btn {
+        width: auto !important;
+        /* overrides previous 45px broken logic */
+        align-self: flex-start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        font-size: var(--text-sm) !important;
+        padding: 10px 15px;
     }
 
-    .btn:first-of-type {
-        font-size: 0px;
+    .div-btns-pages>.btn:first-of-type {
+        font-size: var(--text-sm) !important;
+        /* reveal the text again */
     }
 
-    .btn i {
+    .div-btns-pages>.btn i {
         font-size: var(--text-sm);
     }
 
@@ -524,20 +598,6 @@ select {
     cursor: pointer;
 }
 
-#link-user {
-    color: var(--corTxt3);
-    text-decoration: none;
-}
-
-.add-image {
-    display: flex;
-    background-color: white;
-    border-color: #000000 1px solid;
-    border-radius: 5px;
-    padding: 5px;
-    left: 50%;
-    cursor: pointer;
-}
 
 /* Topo da PREVENTIVA */
 /* Container dos cards */
@@ -664,312 +724,12 @@ select {
     font-size: var(--text-xl);
 }
 
-/* --- ESTILOS DE MANUTENÇÃO PREVENTIVA --- */
-
-/* Dashboard de Indicadores */
-.dashboard-row {
-    margin-bottom: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-.col-md-3 {
-    flex: 1;
-    min-width: 200px;
-}
-
-.col-md-4 {
-    flex: 1;
-    min-width: 1000px;
-}
-
-.card-dash {
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-    padding: 20px;
-    transition: 0.3s;
-    background: #fff;
-    border-left: 6px solid #ccc;
-    cursor: pointer;
-    text-align: left;
-}
-
-.card-dash:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
-}
-
-.card-ok {
-    border-left-color: var(--status-ok);
-}
-
-.card-warning {
-    border-left-color: var(--status-warning);
-}
-
-.card-danger {
-    border-left-color: var(--status-danger);
-}
-
-.card-dash small {
-    font-weight: bold;
-    color: #888;
-    text-transform: uppercase;
-    font-size: 11px;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.card-dash h2 {
-    font-weight: 800;
-    margin: 5px 0 0 0;
-    color: #333;
-    font-size: 2em;
-    display: inline-block;
-}
-
-.card-dash i {
-    float: right;
-    font-size: 2em;
-    opacity: 0.8;
-}
-
-/* Badges de Status e Frequência */
-.badge-status {
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: white;
-}
-
-.bg-danger {
-    background-color: var(--status-danger);
-}
-
-.bg-warning {
-    background-color: var(--status-warning);
-    color: #333;
-}
-
-.bg-success {
-    background-color: var(--status-ok);
-}
-
-.badge-freq {
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-size: 9px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.badge-mensal {
-    background: #e8f5e9;
-    color: #2e7d32;
-}
-
-.badge-trimestral {
-    background: #e3f2fd;
-    color: #0d47a1;
-}
-
-.badge-semestral {
-    background: #f3e5f5;
-    color: #4a148c;
-}
-
-.badge-anual {
-    background: #fff3e0;
-    color: #e65100;
-}
-
-/* Auxiliares */
-.highlight-red {
-    background-color: #f8d7da !important;
-    color: #721c24 !important;
-    font-weight: bold;
-    border-radius: 5px;
-    padding: 2px 5px;
-}
-
-.highlight-yellow {
-    background-color: #fff3cd !important;
-    color: #856404 !important;
-    font-weight: bold;
-    border-radius: 5px;
-    padding: 2px 5px;
-}
-
-.row-hidden {
-    display: none !important;
-}
-
-.panel-title {
-    color: var(--senai-red);
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 5px;
-}
-
-/* Button Action Checklist */
-.btnAcao.checklist {
-    background-color: var(--senai-red);
-    color: white;
-}
-
-.btnAcao.checklist:hover {
-    background-color: var(--senai-dark-red);
-}
-
-/* GERENCIADOR DE ORDEM DE SERVIÇO */
-.card-table {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    padding: 25px;
-    margin-top: 30px;
-    width: 90%;
-    /* Força ocupar toda a largura */
-    box-sizing: border-box;
-    /* Garante que o padding não estoure a tela */
-    overflow-x: auto;
-}
-
-/* Tabela */
-.custom-table {
-    width: 100%;
-    border-collapse: separate;
-    /* Permite espaçamento melhor */
-    border-spacing: 0 5px;
-    /* Pequeno respiro entre linhas */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.custom-table th {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    color: #9aa0ac;
-    font-weight: 700;
-    padding: 15px;
-    /* border-bottom: 2px solid #000000; */
-    text-align: center;
-}
-
-.custom-table td {
-    padding: 20px 15px;
-    /* Aumentei o padding para ficar mais espaçado */
-    vertical-align: middle;
-    border-bottom: 1px solid #f5f5f5;
-    color: #333;
-    font-size: 0.95rem;
-}
-
-/* Coluna Equipamento e Técnico */
-.col-info strong {
-    display: block;
-    font-size: 1rem;
-    color: #2c3e50;
-    margin-bottom: 4px;
-}
-
-.col-info span,
-.sub-text {
-    display: block;
-    font-size: 0.8rem;
-    color: #888;
-}
-
-.gestor-highlight {
-    color: #4a90e2;
-    font-size: 0.75rem;
-    margin-top: 2px;
-}
-
-/* Status Badges */
-.status-badge {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    display: inline-block;
-    letter-spacing: 0.5px;
-}
-
-.status-solicitada {
-    background-color: #e9ecef;
-    color: #495057;
-}
-
-.status-execucao {
-    background-color: #fff3cd;
-    color: #d88d00;
-}
-
-.status-concluida {
-    background-color: #d1e7dd;
-    color: #0f5132;
-}
-
-/* Ações */
-.btn-aprovar {
-    background: transparent;
-    border: 1px solid #4a90e2;
-    color: #4a90e2;
-    padding: 6px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-.btn-aprovar:hover {
-    background: #4a90e2;
-    color: #fff;
-}
-
-.btn-acao-dark {
-    background-color: #2d2d2d;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    color: #f1c40f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.btn-acao-dark:hover {
-    background-color: #000;
-    transform: scale(1.05);
-}
-
-.aguardando-text {
-    color: #aaa;
-    font-style: italic;
-}
-
-/* Ajuste do Título Workflow para ficar parecido com a imagem */
-.workflow-title {
-    color: #d9534f;
-    /* Um tom avermelhado/laranja */
-    font-weight: 800;
-}
-
 .status-ativo {
     background-color: var(--confirmar);
     /* verde bootstrap */
     color: var(--txtClaro);
-    padding: 5px 10px;
-    border-radius: 20px;
+    padding: 10px;
+    border-radius: 5px;
     font-size: 13px;
     font-weight: 500;
 }
@@ -978,19 +738,71 @@ select {
     background-color: var(--corBase);
     /* vermelho bootstrap */
     color: var(--txtClaro);
-    padding: 5px 10px;
-    border-radius: 20px;
+    padding: 10px;
+    border-radius: 5px;
     font-size: 13px;
     font-weight: 500;
 }
 
+/* STATUS */
+
+/* .filtrar-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 8px 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    width: auto !important;
+    margin-bottom: 0px;
+}
+
+.filtrar-status label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    text-transform: uppercase;
+    margin: 0;
+} */
+
 .filtrar-status {
     display: flex;
     align-items: center;
-    justify-content: right;
     gap: 10px;
-    margin-bottom: 0px;
-    width: 30%;
+    background: #ffffff;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 8px 14px;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+
+/* efeito hover */
+.filtrar-status:hover {
+    border-color: #dc3545;
+}
+
+/* label */
+.filtrar-status label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* select */
+.filtrar-status select {
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    font-size: 14px;
+    color: #111827;
+    outline: none;
+    cursor: pointer;
 }
 
 #select-filtro-setor,
@@ -1003,22 +815,69 @@ select {
 #select-filtro-agendamento,
 #select-filtro-agendamento,
 #select-filtro-manuntencao,
+#select-filtro-motores,
 #select-filtro-tipo-maquina,
 #select-filtro-unidade {
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid var(--corBordas);
-    background-color: var(--corFundo);
-    color: var(--corTxt3);
+    border: none !important;
+    background: transparent !important;
+    color: #111827 !important;
+    font-size: 14px !important;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
-.box-pesquisar {
-    display: inline-flex;
+
+.box-pesquisa {
+    position: relative;
+    display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    width: 45.6%;
+    width: 500px; /* aumentei a largura */
 }
+
+.input-pesquisa {
+    width: 100% !important;
+    padding: 12px 45px 12px 45px !important;
+    border-radius: 10px !important;
+    border: 1.5px solid #d1d5db !important;
+    background: #f9fafb !important;
+    font-size: 14px !important;
+    color: #374151 !important;
+    transition: 0.2s ease;
+    outline: none !important;
+}
+
+/* Foco mais elegante */
+.input-pesquisa:focus {
+    background: #ffffff !important;
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 3px rgba(220,53,69,0.12);
+}
+
+/* Ícone alinhado corretamente */
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #9ca3af;
+    pointer-events: none;
+}
+
+/* Botão limpar */
+.btn-clear-search {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #dc3545 !important;
+} 
+/* estilo de tabela nova */
 
 .avatar-profile {
     display: flex;

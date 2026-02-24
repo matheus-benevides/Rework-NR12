@@ -26,27 +26,38 @@
         display: flex;
         align-items: center;
         /* border: 2px solid #fff; */
-        border-radius: 25px 25px 0px 0px;
+        /* border-radius: 25px 25px 0px 0px; */
+        border-radius: 7px;
         justify-content: space-between;
-        padding: 20px;
-        border-bottom: 2px solid var(--corBordas);
+        padding: 15px;
+        border: 1px solid var(--corBordas);
         background: var(--corFundo2);
         font-size: var(--text-lg);
         color: var(--corTxt3);
         cursor: default;
+        box-shadow: var(--sombra);
     }
 
     .div-img-header {
         color: var(--corBase);
         width: 25%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
     .div-txt-header {
+        background: var(--corFundo);
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid var(--corBordas);
+
+    }
+
+    .div-txt-header p{
         display: flex;
-        text-align: right;
-        align-items: center;
-        justify-content: space-around;
-        gap: 20px;
+        gap: 10px;
+        align-items: center ;
     }
 
     .avatar {
@@ -55,11 +66,12 @@
         justify-content: center;
         font-weight: bold;
         border-radius: 50%;
-        background: var(--corFundo2);
+        background: var(--corFundo);
         box-shadow: var(--sombra2);
-        width: 75px;
-        height: 75px;
-        font-size: var(--text-4xl);
+        width: 50px;
+        height: 50px;
+        font-size: var(--text-2xl);
+        border: 1px solid var(--corBordas);
         color: var(--corBase);
         /* background: linear-gradient(180deg, var(--corBase), var(--corDestaque)); */
         transition: all 0.3s ease;

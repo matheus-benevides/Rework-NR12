@@ -58,11 +58,11 @@ require_once '../configs/conexao.php';
 <div class="modal-fundo" id="desativarCurso" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Desativar Curso</h3>
+            <h3>Ativar Curso</h3>
             <button onclick="closeModal('desativarCurso')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer desativar?</p>
+            <p>Tem certeza que quer ativar este curso?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="hidden" id="id_curso_delete">
@@ -75,11 +75,11 @@ require_once '../configs/conexao.php';
 <div class="modal-fundo" id="ativarCurso" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Ativar Curso</h3>
+            <h3>Desativar Curso</h3>
             <button onclick="closeModal('ativarCurso')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer ativar este curso?</p>
+            <p>Tem certeza que quer desativar?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="hidden" id="id_curso_ativar">
@@ -658,7 +658,7 @@ require_once '../configs/conexao.php';
             <button onclick="closeModal('desativarUnidade')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer desativar esta unidade?</p>
+            <p>Tem certeza que quer ativar esta unidade?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="hidden" id="id_unidade_desativar">
@@ -677,7 +677,7 @@ require_once '../configs/conexao.php';
             <button onclick="closeModal('ativarUnidade')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer ativar esta unidade?</p>
+            <p>Tem certeza que quer desativar esta unidade?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="hidden" id="id_unidade_ativar">
@@ -828,26 +828,26 @@ require_once '../configs/conexao.php';
             <button class="" onclick="closeModal('adicaoColaborador')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form action="../actions/colaborador/registrar.php" class="modal-form" method="POST">
+        <form id="form-cad-colaborador" class="modal-form">
 
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="nome" name="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome" placeholder="Ex: Matheus dos Ateus">
+                    <label for="nome_colaborador_cad">Nome:</label>
+                    <input type="text" name="nome" id="nome_colaborador_cad" placeholder="Ex: Matheus dos Ateus" required>
                 </div>
             </div>
 
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="email">Email:</label>
-                        <input type="text" name="email" id="email" placeholder="exemplo@email.com">
+                        <label for="email_colaborador_cad">Email:</label>
+                        <input type="email" name="email" id="email_colaborador_cad" placeholder="exemplo@email.com" required>
                     </div>
                 </div>
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="senha">Senha:</label>
-                        <input type="password" name="senha" id="senha" placeholder="*****">
+                        <label for="senha_colaborador_cad">Senha:</label>
+                        <input type="text" name="senha" id="senha_colaborador_cad" value="senaisp" readonly style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
                     </div>
                 </div>
             </div>
@@ -867,17 +867,17 @@ require_once '../configs/conexao.php';
                 </div>
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="nif">NIF:</label>
-                        <input type="text" name="nif" id="nif" placeholder="10042006SENAI">
+                        <label for="nif_colaborador_cad">NIF:</label>
+                        <input type="text" name="nif" id="nif_colaborador_cad" placeholder="10042006SENAI" required>
                     </div>
                 </div>
             </div>
 
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="setor">Setor:</label>
-                    <select name="setor" id="setor">
-                        <option value="sem Valor" disabled selected>Selecione um setor</option>
+                    <label for="setor_colaborador_cad">Setor:</label>
+                    <select name="setor" id="setor_colaborador_cad" required>
+                        <option value="" disabled selected>Selecione um setor</option>
                         <?php
                         $buscar = "SELECT * FROM setor";
                         $resultado = $conn->query($buscar);
@@ -908,26 +908,27 @@ require_once '../configs/conexao.php';
             <button class="" onclick="closeModal('editarColaborador')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form action="../actions/colaborador/editar.php" class="modal-form" method="POST">
+        <form id="form-edit-colaborador" class="modal-form">
+            <input type="hidden" id="id_colaborador_edit">
 
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="nome" name="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome" placeholder="Ex: Matheus dos Ateus">
+                    <label for="nome_colaborador_edit">Nome:</label>
+                    <input type="text" name="nome" id="nome_colaborador_edit" placeholder="Ex: Matheus dos Ateus" required>
                 </div>
             </div>
 
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="email">Email:</label>
-                        <input type="text" name="email" id="email" placeholder="exemplo@email.com">
+                        <label for="email_colaborador_edit">Email:</label>
+                        <input type="email" name="email" id="email_colaborador_edit" placeholder="exemplo@email.com" required>
                     </div>
                 </div>
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="senha">Senha:</label>
-                        <input type="password" name="senha" id="senha" placeholder="*****">
+                        <label for="senha_colaborador_edit">Nova Senha (opcional):</label>
+                        <input type="password" name="senha" id="senha_colaborador_edit" placeholder="Deixe em branco para manter">
                     </div>
                 </div>
             </div>
@@ -947,17 +948,17 @@ require_once '../configs/conexao.php';
                 </div>
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="nif">NIF:</label>
-                        <input type="text" name="nif" id="nif" placeholder="10042006SENAI">
+                        <label for="nif_colaborador_edit">NIF:</label>
+                        <input type="text" name="nif" id="nif_colaborador_edit" placeholder="10042006SENAI" required>
                     </div>
                 </div>
             </div>
 
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="setor">Setor:</label>
-                    <select name="setor" id="setor">
-                        <option value="sem Valor" disabled selected>Selecione um setor</option>
+                    <label for="setor_colaborador_edit">Setor:</label>
+                    <select name="setor" id="setor_colaborador_edit" required>
+                        <option value="" disabled selected>Selecione um setor</option>
                         <?php
                         $buscar = "SELECT * FROM setor";
                         $resultado = $conn->query($buscar);
@@ -980,24 +981,43 @@ require_once '../configs/conexao.php';
     </form>
 </div>
 
-<!-- Deletar Colaborador -->
-<div class="modal-fundo" id="deletarColaborador" style="display: none;">
+<!-- Desativar Colaborador (Renomeado e Ajustado) -->
+<div class="modal-fundo" id="desativarColaborador" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Deletar Colaborador</h3>
-            <button onclick="closeModal('deletarColaborador')"><i class="bi bi-x-lg"></i></button>
+            <h3>Desativar Colaborador</h3>
+            <button onclick="closeModal('desativarColaborador')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer deletar colaborador?</p>
+            <p>Tem certeza que quer desativar este colaborador?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
-            <button onclick="closeModal('deletarColaborador')" type="button" class="btn-confirmar-full confirmar"
+            <input type="hidden" id="id_colaborador_delete">
+            <button id="btn-confirmar-deletar-colaborador" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('desativarColaborador')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
     </div>
+</div>
+
+<!-- Ativar Colaborador (NOVO) -->
+<div class="modal-fundo" id="ativarColaborador" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Ativar Colaborador</h3>
+            <button onclick="closeModal('ativarColaborador')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer ativar este colaborador?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="hidden" id="id_colaborador_ativar">
+            <button id="btn-confirmar-ativar-colaborador" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('ativarColaborador')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
 </div>
 
 <!-- Desativar Colaborador -->

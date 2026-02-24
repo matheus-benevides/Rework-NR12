@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/header.css">
     <link rel="stylesheet" href="../../css/modal.css">
+    <link rel="stylesheet" href="../../css/bootstrap-like.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
@@ -26,37 +27,25 @@
 
     <section class="sec-main">
 
-        <div class="div-header">
-            <div class="div-img-header">
-                <h2>Painel de Unidade</h2>
-            </div>
-            <div class="div-txt-header">
-                <p>
-                    <span id="msg_especial"></span> <?php echo $nome_usuario; ?>
-                    <br>
-                    <span>Esperamos que tenha uma ótima experiência em nosso sistema.</span>
-                </p>
-                <div class="avatar">
-                    <i class="bi bi-person"></i>
-                </div>
-            </div>
-        </div>
-
+        <?php require '../components/header.php'; ?>
+        
         <div class="div-btns-pages">
 
-            <form action="" method="GET" style="display: flex; gap: 10px; align-items: center;">
-                <div>
+                        <form action="" method="GET" class="form-pesquisa">
+                <div class="search-container">
                     <?php
+                    // Captura o valor atual para manter no input
                     $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
                     ?>
-                    <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
-                        placeholder="Pesquisar..." style="width: 1000%;">
-                    <button type="submit" class="botao-acoes confirmar" style="width: 420px;"><i
-                            class="bi bi-search"></i></button>
-                    <?php if ($busca_atual): ?>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="botao-acoes deletar" style="width: 420px"><i
-                                class="bi bi-x-lg"></i></a>
-                    <?php endif; ?>
+                    <div class="box-pesquisa">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
+                            placeholder="Pesquisar..." class="input-pesquisa">
+                        
+                        <?php if ($busca_atual): ?>
+                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
+                        <?php endif; ?>
+                    </div>
                     <div class="filtrar-status">
                         <label for="">Status:</label>
                         <select id="select-filtro-unidade" name="filtro-status" onchange="filtrarUnidade()">
@@ -65,6 +54,8 @@
                             <option value="inativo">Inativo</option>
                         </select>
                     </div>
+                    <!-- Hidden submit button to allow Enter to search -->
+                    <button type="submit" style="display: none;"></button>
                 </div>
             </form>
 

@@ -75,22 +75,31 @@
                         </div>
                     </div>
                     <div class="modal-input">
-                        <label for="setor">Setor: </label>
+                        <label for="requisitos">Requisitos: </label>
                         <div class="input-wrapper">
-                            <select name="setor" id="setor">
+                            <select name="requisitos" id="requisitos">
                                 <option value="">Selecione...</option>
+
+                                
                                 <?php
-                                    $sql = "SELECT idsetor, setor_nome FROM setores ORDER BY setor_nome";
+                                /*CREATE TABLE requisitos (
+  idrequisitos int(11) NOT NULL,
+  requisito_topico varchar(255) NOT NULL,
+  tipo_req enum('Seguranca','Operacional','Preventivo') NOT NULL,
+  requisitos_status enum('Ativo','Inativo') NOT NULL DEFAULT 'Ativo'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;*/
+                                    $sql = "SELECT idtipomaquina, tipomaquina_nome FROM tipomaquina ORDER BY tipomaquina_nome";
                                     $stmt = $conn->prepare($sql);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
                                     
                                     if ($result->num_rows > 0) {
                                         while ($resultado = $result->fetch_assoc()) {
-                                            echo '<option value="'.$resultado['idsetor'].'">'.$resultado['setor_nome'].'</option>';
+                                            echo '<option value="'.$resultado['idtipomaquina'].'">'.$resultado['tipomaquina_nome'].'</option>';
                                         }
                                     }
                                 ?>
+                              
                             </select>
                         </div>
                     </div>
