@@ -149,7 +149,7 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
 
         <button
             onclick="window.location.href='../actions/logout.php'"
-            class="btn sair"
+            class="sair"
             onmouseover="changeSairBtn('open')"
             onmouseleave="changeSairBtn('closed')">
             Sair <i class="bi bi-door-closed-fill"></i>

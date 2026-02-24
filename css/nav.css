@@ -13,18 +13,22 @@
 }
 
 .botao-fechar button {
-    aspect-ratio: 1 / 1;
     position: absolute;
     left: 92%;
     top: 50%;
+    border-radius: 50%;
     font-size: 2.5rem;
-    background-color: var(--corDestaque);
-    border: var(--corTxt3);
-    color: var(--corFundo);
+    border: none;
+    background-color: var(--corFundo);
+    color: var(--corDestaque);
+    border: 2px solid var(--corFundo);
     z-index: 999;
     cursor: pointer;
-    border-radius: 50%;
-    width: 50px;
+    transition: all 0.5s;
+    &:hover{
+        scale: 1.1;
+        color: var(--corTxt3);
+    }
 }
 
 .div-links {
@@ -152,6 +156,8 @@
     flex-direction: column;
     align-items: center;
     gap: 25px;
+    border-top: 1px solid var(--txtClaro);
+    padding-top: 5px;
 }
 
 .div-configs div {
