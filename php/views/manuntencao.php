@@ -30,7 +30,7 @@
 
         <div class="div-btns-pages">
 
-                        <form action="" method="GET" class="form-pesquisa">
+            <form action="" method="GET" class="form-pesquisa">
                 <div class="search-container">
                     <?php
                     // Captura o valor atual para manter no input
@@ -40,7 +40,7 @@
                         <i class="bi bi-search search-icon"></i>
                         <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
                             placeholder="Pesquisar..." class="input-pesquisa">
-                        
+
                         <?php if ($busca_atual): ?>
                             <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
                         <?php endif; ?>
@@ -78,12 +78,32 @@
                     <?php
 
                     if (!empty($busca_atual)) {
+
                         $termo_seguro = $conn->real_escape_string($busca_atual);
 
-                        $sql = "SELECT * FROM manutencao WHERE 
-                                setor_nome LIKE '%$termo_seguro%'";
+                        $sql = "SELECT 
+                           mtn.*,
+                           mq.maquina_modelo,
+                           col.colaborador_nome
+                       FROM manutencao mtn
+                       INNER JOIN maquina mq
+                           ON mtn.maquina_id = mq.idmaquina
+                       INNER JOIN colaborador col
+                           ON mtn.colaborador_id = col.idcolaborador
+                       WHERE mtn.manutencao_estado LIKE '%$termo_seguro%'
+                          OR mtn.tipo_manutencao LIKE '%$termo_seguro%'
+                          OR col.colaborador_nome LIKE '%$termo_seguro%'";
                     } else {
-                        $sql = "SELECT * FROM manutencao ";
+
+                        $sql = "SELECT 
+                           mtn.*,
+                           mq.maquina_modelo,
+                           col.colaborador_nome
+                       FROM manutencao mtn
+                       INNER JOIN maquina mq
+                           ON mtn.maquina_id = mq.idmaquina
+                       INNER JOIN colaborador col
+                           ON mtn.colaborador_id = col.idcolaborador";
                     }
 
                     $resultado = $conn->query($sql);
@@ -92,8 +112,8 @@
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . $linha["manutencao_data"] . "</td>";
-                            echo "<td>" . $linha["maquina_id"] . "</td>";
-                            echo "<td>" . $linha["colaborador_id"] . "</td>";
+                            echo "<td>" . ($linha["maquina_modelo"] ?? 'Máquina não encontrada') . "</td>";
+                            echo "<td>" . ($linha["colaborador_nome"] ?? 'Colaborador não encontrado') . "</td>";
                             echo "<td>" . $linha["manutencao_estado"] . "</td>";
                             echo "<td>" . $linha["manutencao_descricao"] . "</td>";
                             echo "<td>" . $linha["tipo_manutencao"] . "</td>";

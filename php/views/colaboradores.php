@@ -66,7 +66,6 @@
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
-                    <th>ID</th>
                     <th>Nome</th>
                     <th>NIF</th>
                     <th>Email</th>
@@ -97,7 +96,6 @@
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $linha["idcolaborador"] . "</td>";
                             echo "<td>" . $linha["colaborador_nome"] . "</td>";
                             echo "<td>" . $linha["colaborador_nif"] . "</td>";
                             echo "<td>" . $linha["colaborador_email"] . "</td>";
@@ -122,7 +120,7 @@
                             if ($status == 'ativo') {
                                 echo "<button class='btnAcao ferramentas' title='Desativar' type='button' onclick=\"showModal('desativarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-x-lg'></i></button>";
                             } else {
-                                echo "<button class='btnAcao clipes' style='background-color: var(--corSuccess);' title='Ativar' type='button' onclick=\"showModal('ativarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                                echo "<button class='btnAcao clipes' style='background-color: #28a745;' title='Ativar' type='button' onclick=\"showModal('ativarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-check-lg'></i></button>";
                             }
 
                             echo "  </div>

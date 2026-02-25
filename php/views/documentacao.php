@@ -1,4 +1,5 @@
 <?php require "../controllers/validar_acesso.php"; ?>
+<?php require '../components/modals/all_modals.php'; ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-tema="">
 

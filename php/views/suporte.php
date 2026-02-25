@@ -63,7 +63,6 @@
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
-                    <th>ID</th>
                     <th>Colaborador</th>
                     <th>Descrição</th>
                     <th>Onde</th>
@@ -102,7 +101,6 @@
                         if ($permissao_usuario == "Adm") {
                             while ($linha = $resultado->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<td>" . $linha["idsolicitacao_erro"] . "</td>";
                                 echo "<td>" . $linha["colaborador_nome"] . "</td>";
                                 echo "<td>" . $linha["desc_erro"] . "</td>";
                                 echo "<td>" . $linha["onde"] . "</td>";

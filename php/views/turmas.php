@@ -65,7 +65,6 @@
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
-                    <th>ID</th>
                     <th>Turma</th>
                     <th>Período</th>
                     <th>Início</th>
@@ -100,7 +99,6 @@
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $linha["idturmas"] . "</td>";
                             echo "<td>" . $linha["turma_nome"] . "</td>";
                             echo "<td>" . $linha["turma_periodo"] . "</td>";
                             echo "<td>" . $linha["turma_inicio"] . "</td>";

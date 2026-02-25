@@ -64,7 +64,6 @@
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
-                    <th>ID</th>
                     <th>Curso</th>
                     <th>Status</th>
                     <th>Ações</th>
@@ -92,7 +91,6 @@
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $linha["idcurso"] . "</td>";
                             echo "<td>" . $linha["curso_nome"] . "</td>";
 
                             $status = strtolower($linha["curso_status"]);

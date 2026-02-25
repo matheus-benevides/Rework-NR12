@@ -40,8 +40,8 @@ body {
     --editar: oklch(74.6% 0.16 232.661);
     --editarHover: oklch(58.8% 0.158 241.966);
 
-    --ferramentas: oklch(70.2% 0.183 293.541);
-    --ferramentasHover: oklch(60.6% 0.25 292.717);
+    --ferramentas: oklch(62.476% 0.25289 28.919);
+    --ferramentasHover: oklch(59.123% 0.23572 27.395);
 
     --clipes: oklch(75% 0.183 55.934);
     --clipesHover: oklch(76.9% 0.188 70.08);
@@ -65,7 +65,7 @@ html[data-tema='escuro'] {
     --corTxt3: #FFF;
 
     --corBordas: #75757586;
-
+    --corBarra: #2a2c36;
 }
 
 html[data-tema='claro'] {
@@ -73,10 +73,11 @@ html[data-tema='claro'] {
     --corFundo2: #ffffff;
     --sombra: 0 2px 10px rgba(0,0,0,.05);
     --sombra2: 0 2px 10px rgba(0,0,0,.05);
-
+    
     --corTxt2: #1e1e1e;
     --corTxt: #FFFFFF;
     --corTxt3: #000;
-
+    
     --corBordas: #e0e0e0;
+    --corBarra: #ca2525;
 }

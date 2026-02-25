@@ -66,7 +66,6 @@
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
-                    <th>ID</th>
                     <th>Nome</th>
                     <th>Cidade</th>
                     <th>Estado</th>
@@ -88,7 +87,6 @@
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $linha["idunidade"] . "</td>";
                             echo "<td>" . $linha["unidade_nome"] . "</td>";
                             echo "<td>" . $linha["unidade_cidade"] . "</td>";
                             echo "<td>" . $linha["unidade_estado"] . "</td>";

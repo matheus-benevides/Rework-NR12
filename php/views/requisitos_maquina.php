@@ -6,14 +6,14 @@
 $requisitos_associados = [];
 if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
     $tipomaquina_id = $_POST['tipo'];
-    
+
     // Usando a conexão $conn que você já possui no projeto
     $sql_assoc = "SELECT requisitos_id FROM tipomaquina_requisito WHERE tipomaquina_id = ?";
     $stmt_assoc = $conn->prepare($sql_assoc);
     $stmt_assoc->bind_param("i", $tipomaquina_id);
     $stmt_assoc->execute();
     $res_assoc = $stmt_assoc->get_result();
-    
+
     while ($row = $res_assoc->fetch_assoc()) {
         $requisitos_associados[] = $row['requisitos_id'];
     }
@@ -38,17 +38,23 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
 
     <style>
         #lista-requisitos {
-            background: #f4f4f4; 
-            padding: 15px; 
-            border-radius: 8px; 
-            border: 1px solid #ddd; 
-            max-height: 200px; 
-            overflow-y: auto; 
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            max-height: 200px;
+            overflow-y: auto;
             min-height: 60px;
         }
 
-        #lista-requisitos::-webkit-scrollbar { width: 6px; }
-        #lista-requisitos::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
+        #lista-requisitos::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #lista-requisitos::-webkit-scrollbar-thumb {
+            background: #bbb;
+            border-radius: 10px;
+        }
 
         .checklist-container {
             width: 100%;
@@ -56,11 +62,11 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
             overflow-y: auto;
             border: 1px solid #ccc;
             border-radius: 4px;
-            background-color: #fcfcfc;
+            background-color: var(--corFundo2);
             padding: 10px;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-
+        
         .checklist-item {
             display: flex;
             align-items: flex-start;
@@ -68,22 +74,29 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
             padding: 8px 5px;
             border-bottom: 1px solid #eee;
             transition: background 0.2s;
+            border-radius: 5px 5px 0 0;
         }
-
-        .checklist-item:last-child { border-bottom: none; }
-        .checklist-item:hover { background-color: #f0f7ff; }
-
+        
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+        
+        .checklist-item:hover {
+            background-color: var(--hoverTr);
+        }
+        
         .checklist-item input[type="checkbox"] {
             width: 18px;
             height: 18px;
             margin-top: 2px;
             cursor: pointer;
+            accent-color: var(--corDestaque);
         }
-
+        
         .checklist-item label {
             cursor: pointer;
             font-size: 14px;
-            color: #333;
+            color: var(--corTxt3);
             line-height: 1.4;
             font-weight: 500;
         }
@@ -97,13 +110,20 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
             padding: 10px;
             border-radius: 4px;
             border: 1px solid #eee;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -156,41 +176,41 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
                                 if ($result->num_rows > 0) {
                                     while ($resultado = $result->fetch_assoc()) {
                                         $selected = (isset($_POST['tipo']) && $_POST['tipo'] == $resultado['idtipomaquina']) ? 'selected' : '';
-                                        echo '<option value="' . $resultado['idtipomaquina'] . '" '.$selected.'>' . $resultado['tipomaquina_nome'] . '</option>';
+                                        echo '<option value="' . $resultado['idtipomaquina'] . '" ' . $selected . '>' . $resultado['tipomaquina_nome'] . '</option>';
                                     }
                                 }
                                 ?>
                             </select>
                         </div>
                     </div>
+                </div>
 
-                    <div class="modal-input" style="width: 100%;">
-                        <label>Requisitos:</label>
-                        <div class="checklist-container" id="container-principal">
-                            <?php
-                            $sql = "SELECT idrequisitos, requisito_topico, tipo_req FROM requisitos WHERE requisitos_status = 'Ativo' ORDER BY idrequisitos";
-                            $stmt = $conn->prepare($sql);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
+                <div class="modal-input">
+                    <label>Requisitos:</label>
+                    <div class="checklist-container" id="container-principal">
+                        <?php
+                        $sql = "SELECT idrequisitos, requisito_topico, tipo_req FROM requisitos WHERE requisitos_status = 'Ativo' ORDER BY idrequisitos";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
-                            if ($result->num_rows > 0) {
-                                while ($resultado = $result->fetch_assoc()) {
-                                    $id = $resultado['idrequisitos'];
-                                    $texto = $resultado['requisito_topico'];
-                                    $tipo = $resultado['tipo_req'];
-                                    
-                                    // Verifica se o requisito já está associado
-                                    $checked = in_array($id, $requisitos_associados) ? 'checked' : '';
+                        if ($result->num_rows > 0) {
+                            while ($resultado = $result->fetch_assoc()) {
+                                $id = $resultado['idrequisitos'];
+                                $texto = $resultado['requisito_topico'];
+                                $tipo = $resultado['tipo_req'];
 
-                                    echo "
+                                // Verifica se o requisito já está associado
+                                $checked = in_array($id, $requisitos_associados) ? 'checked' : '';
+
+                                echo "
                                     <div class='checklist-item' data-tipo='$tipo'>
                                         <input type='checkbox' name='requisitos_selecionados[]' value='$id' id='req_$id' data-nome='$texto' $checked onclick='atualizarListaSelecionados(this)'>
                                         <label for='req_$id'>$texto</label>
                                     </div>";
-                                }
                             }
-                            ?>
-                        </div>
+                        }
+                        ?>
                     </div>
                 </div>
 
@@ -203,17 +223,8 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
                     </div>
                 </div>
 
-                <div class="modal-row">
-                    <div class="modal-input">
-                        <label for="funcao">Função: </label>
-                        <div class="input-wrapper">
-                            <input type="text" name="funcao" id="funcao" disabled value="<?php echo $permissao_usuario; ?>">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="modal-row" style="justify-content: flex-end;">
-                    <button type="submit" name="associar_requisitos" class="btn-save" style="background: #28a745; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">
+                <div class="modal-footer">
+                    <button type="submit" name="associar_requisitos" class="btn-confirmar-full confirmar" style="background: #28a745; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">
                         Salvar Associação
                     </button>
                 </div>
@@ -242,7 +253,7 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
                 if (placeholder) placeholder.remove();
 
                 // Evita duplicar se a função for chamada duas vezes
-                if(!document.getElementById('selecionado-' + id)) {
+                if (!document.getElementById('selecionado-' + id)) {
                     const div = document.createElement('div');
                     div.id = 'selecionado-' + id;
                     div.className = 'selecionado-wrapper';
@@ -304,4 +315,5 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
 
     <script src="../../js/scripts.js" defer></script>
 </body>
+
 </html>

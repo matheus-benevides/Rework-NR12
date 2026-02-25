@@ -30,7 +30,7 @@
         <?php require '../components/header.php'; ?>
 
         <div class="div-btns-pages logs-div">
-                        <form action="" method="GET" class="form-pesquisa">
+            <form action="" method="GET" class="form-pesquisa">
                 <div class="search-container">
                     <?php
                     // Captura o valor atual para manter no input
@@ -40,7 +40,7 @@
                         <i class="bi bi-search search-icon"></i>
                         <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
                             placeholder="Pesquisar por nome, IP ou comando..." class="input-pesquisa">
-                        
+
                         <?php if ($busca_atual): ?>
                             <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
                         <?php endif; ?>
@@ -54,7 +54,6 @@
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
-                    <th>ID</th>
                     <th>Máquina (NI)</th>
                     <th>Aluno</th>
                     <th>Colaborador</th>
@@ -65,23 +64,37 @@
                 <tbody id="tabela-historico">
                     <?php
                     if (!empty($busca_atual)) {
+
                         $termo_seguro = $conn->real_escape_string($busca_atual);
-                        $sql = "SELECT h.*, a.aluno_nome 
-                                FROM historico h 
-                                LEFT JOIN aluno a ON h.aluno_id = a.idaluno 
-                                WHERE h.historicoid LIKE '%$termo_seguro%' OR 
-                                      h.historico_status LIKE '%$termo_seguro%'";
-                    } else {
+
                         $sql = "SELECT 
-                                    h.*,
-                                    a.aluno_nome,
-                                    c.colaborador_nome
-                                FROM historico h
-                                LEFT JOIN aluno a 
-                                    ON h.aluno_id = a.idaluno
-                                INNER JOIN colaborador c 
-                                    ON h.colaborador_id = c.idcolaborador;
-                                ";
+                                h.*,
+                                a.aluno_nome,
+                                c.colaborador_nome,
+                                m.maquina_modelo
+                            FROM historico h
+                            LEFT JOIN aluno a 
+                                ON h.aluno_id = a.idaluno
+                            INNER JOIN colaborador c 
+                                ON h.colaborador_id = c.idcolaborador
+                            INNER JOIN maquina m
+                                ON h.maquina_id = m.idmaquina
+                            WHERE h.historicoid LIKE '%$termo_seguro%' 
+                               OR h.historico_status LIKE '%$termo_seguro%'";
+                    } else {
+
+                        $sql = "SELECT 
+                                h.*,
+                                a.aluno_nome,
+                                c.colaborador_nome,
+                                m.maquina_modelo
+                            FROM historico h
+                            LEFT JOIN aluno a 
+                                ON h.aluno_id = a.idaluno
+                            INNER JOIN colaborador c 
+                                ON h.colaborador_id = c.idcolaborador
+                            INNER JOIN maquina m
+                                ON h.maquina_id = m.idmaquina";
                     }
 
                     $resultado = $conn->query($sql);
@@ -89,8 +102,7 @@
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $linha["historicoid"] . "</td>";
-                            echo "<td>" . $linha["maquina_id"] . "</td>";
+                            echo "<td>" . $linha["maquina_modelo"] . "</td>";
 
                             if (isset($linha["aluno_nome"])) {
                                 echo "<td>" . $linha["aluno_nome"] . "</td>";

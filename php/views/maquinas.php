@@ -65,7 +65,6 @@
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
-                    <th>ID</th>
                     <th>NI</th>
                     <th>Fabricante</th>
                     <th>Modelo</th>
@@ -93,7 +92,6 @@
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<str>";
-                            echo "<td>" . $linha["idmaquina"] . "</td>";
                             echo "<td>" . $linha["maquina_ni"] . "</td>";
                             echo "<td>" . $linha["maquina_fabricante"] . "</td>";
                             echo "<td>" . $linha["maquina_modelo"] . "</td>";

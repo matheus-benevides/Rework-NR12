@@ -477,6 +477,8 @@ function closeModal(qual) {
         document.getElementById("adicaoAluno").style.display = "flex";
     } else if (qual == "adicaoSuporte") {
         document.getElementById("adicaoSuporte").style.display = "none";
+    } else if (qual == "sucesso") {
+        document.getElementById("sucesso").style.display = "none";
     } else {
         document.getElementById("acesso").style.display = "none";
     }
@@ -1708,7 +1710,7 @@ function filtrarCursos() {
     const filtro = select1.value.toLowerCase().trim();
 
     linhas.forEach(linha => {
-        const colunaStatus = linha.getElementsByTagName("td")[2];
+        const colunaStatus = linha.getElementsByTagName("td")[1];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();
@@ -1731,7 +1733,7 @@ function filtrarColaboradores() {
     const filtro = select2.value.toLowerCase().trim();
 
     linhas.forEach(linha => {
-        const colunaStatus = linha.getElementsByTagName("td")[6];
+        const colunaStatus = linha.getElementsByTagName("td")[5];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();
@@ -1755,7 +1757,7 @@ function filtrarTurmas() {
     const filtro = select.value.toLowerCase().trim();
 
     linhas.forEach(linha => {
-        const colunaStatus = linha.getElementsByTagName("td")[7];
+        const colunaStatus = linha.getElementsByTagName("td")[6];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();
@@ -1779,7 +1781,7 @@ function filtrarAlunos() {
 
     linhas.forEach(linha => {
         // Índice 4 confirmado (5ª coluna)
-        const colunaStatus = linha.getElementsByTagName("td")[4];
+        const colunaStatus = linha.getElementsByTagName("td")[3];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();
@@ -1803,7 +1805,7 @@ function filtrarSuporte() {
 
     linhas.forEach(linha => {
         // Índice 5 confirmado (6ª coluna)
-        const colunaStatus = linha.getElementsByTagName("td")[5];
+        const colunaStatus = linha.getElementsByTagName("td")[4];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();
@@ -1844,14 +1846,14 @@ function filtrarMotores() {
 
 function filtrarSetor() {
     const select = document.querySelector("#select-filtro-setor");
-    const linhas = document.querySelectorAll("#tabela-setor tr");
+    const linhas = document.querySelectorAll("#tabela-setores tr");
 
     if (!select) return;
 
     const filtro = select.value.toLowerCase().trim();
 
     linhas.forEach(linha => {
-        const colunaStatus = linha.getElementsByTagName("td")[3];
+        const colunaStatus = linha.getElementsByTagName("td")[2];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();
@@ -1864,29 +1866,6 @@ function filtrarSetor() {
         }
     });
 }
-
-// function filtrarSetor() {
-//     const select = document.getElementById("filtro-setor");
-//     const filtro = select.value.toLowerCase();
-//     const tabela = document.getElementById("tabela-setores");
-//     const linhas = tabela.getElementsByTagName("tr");
-
-//     for (let i = 1; i < linhas.length; i++) {
-//         const linha = linhas[i];
-//         const colunas = linha.getElementsByTagName("td");
-//         const colunaStatus = colunas[3];
-
-//         if (colunaStatus) {
-//             const textoStatus = colunaStatus.textContent.toLowerCase().trim();
-
-//             if (filtro === "todos" || textoStatus === filtro) {
-//                 linha.style.display = "";
-//             } else {
-//                 linha.style.display = "none";
-//             }
-//         }
-//     }
-// }
 
 filtrarManuntencao = () => {
     const select = document.querySelector("#select-filtro-manuntencao");
@@ -1927,7 +1906,7 @@ function filtrarMaquinas() {
 
     linhas.forEach(linha => {
         // O índice 6 refere-se à 7ª coluna (Status) da sua tabela
-        const colunaStatus = linha.getElementsByTagName("td")[6];
+        const colunaStatus = linha.getElementsByTagName("td")[5];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();

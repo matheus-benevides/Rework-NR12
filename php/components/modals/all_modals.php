@@ -58,11 +58,11 @@ require_once '../configs/conexao.php';
 <div class="modal-fundo" id="desativarCurso" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Ativar Curso</h3>
+            <h3>Desativar Curso</h3>
             <button onclick="closeModal('desativarCurso')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer ativar este curso?</p>
+            <p>Tem certeza que quer desativar?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="hidden" id="id_curso_delete">
@@ -75,11 +75,11 @@ require_once '../configs/conexao.php';
 <div class="modal-fundo" id="ativarCurso" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Desativar Curso</h3>
+            <h3>Ativar Curso</h3>
             <button onclick="closeModal('ativarCurso')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer desativar?</p>
+            <p>Ativar esse Curso?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="hidden" id="id_curso_ativar">
@@ -658,7 +658,7 @@ require_once '../configs/conexao.php';
             <button onclick="closeModal('desativarUnidade')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer ativar esta unidade?</p>
+            <p>Tem certeza que quer desativar esta unidade?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="hidden" id="id_unidade_desativar">
@@ -677,7 +677,7 @@ require_once '../configs/conexao.php';
             <button onclick="closeModal('ativarUnidade')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer desativar esta unidade?</p>
+            <p>Tem certeza que quer ativar esta unidade?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="hidden" id="id_unidade_ativar">
@@ -1652,7 +1652,7 @@ require_once '../configs/conexao.php';
 
 <!-- Adicionar Suporte -->
 <div class="modal-fundo" id="adicaoSuporte">
-    <div class="modal-box" style="width: 80%; height: auto">
+    <div class="modal-box">
         <div class="modal-header">
             <h3>Suporte</h3>
             <button class="" onclick="closeModal('adicaoSuporte')"><i class="bi bi-x-lg"></i></button>
@@ -1806,6 +1806,18 @@ require_once '../configs/conexao.php';
             <div id="total-notificacoes" style="display:none;">
                 <?= $totalNoti ?>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-fundo" id="sucesso">
+    <div class="modal-box" id="sucesso-box">
+        <div class="modal-header">
+            <h5 id="sucesso-txt">Sucesso</h5>
+            <button style='color: var(--txtClaro); font-size: var(--text-base)' onclick="closeModal('sucesso')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="modal-row">
+            <p id="sucesso-txt" style="font-size: var(--text-sm);">A operação de <?php echo $_GET['sucesso'] ?> foi concluida com sucesso.</p>
         </div>
     </div>
 </div>

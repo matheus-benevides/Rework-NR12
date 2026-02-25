@@ -139,7 +139,7 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
     <!-- CONFIGURAÇÕES -->
     <div class="div-configs">
         <div >
-            <button onclick="changeTheme()" id="tema"></button>
+            <button onclick="changeTheme()" id="tema">I got Black, i got White, what you want?</button>
 
             <button style="display: none;" id="notificacao" onclick="showModal('notificacao-modal')">
                 <i class="bi bi-bell-fill"></i>

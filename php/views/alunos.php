@@ -29,7 +29,7 @@
 
         <div class="div-btns-pages">
 
-                        <form action="" method="GET" class="form-pesquisa">
+            <form action="" method="GET" class="form-pesquisa">
                 <div class="search-container">
                     <?php
                     // Captura o valor atual para manter no input
@@ -39,7 +39,7 @@
                         <i class="bi bi-search search-icon"></i>
                         <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
                             placeholder="Pesquisar..." class="input-pesquisa">
-                        
+
                         <?php if ($busca_atual): ?>
                             <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
                         <?php endif; ?>
@@ -60,11 +60,10 @@
             <button class="btn" onclick="showModal('adicaoAluno')">Adicionar Aluno <i
                     class="bi bi-plus-circle"></i></button>
         </div>
-
+        
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
-                    <th>ID Aluno</th>
                     <th>Nome</th>
                     <th>Matrícula</th>
                     <th>Turmas</th>
@@ -92,7 +91,6 @@
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $linha["idaluno"] . "</td>";
                             echo "<td>" . $linha["aluno_nome"] . "</td>";
                             echo "<td>" . $linha["aluno_matricula"] . "</td>";
 
@@ -132,7 +130,7 @@
         </div>
 
     </section>
-
+    
     <script src="../../js/scripts.js" defer></script>
     <script src="../../js/processa.js" defer></script>
 </body>

@@ -7,26 +7,6 @@
     justify-content: center;
 }
 
-.sair{
-    padding: 6px 15px;
-    width: 230px;
-    height: 45px;
-    cursor: pointer;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: none;
-    font-weight: bold;
-    color: var(--corTxt3);
-    background: var(--corFundo);
-    font-size: var(--text-base);
-
-    &:hover {
-        background: var(--corFundo2);
-    }
-}
-
 .btn {
     padding: 6px 15px;
     width: 230px;
@@ -247,26 +227,15 @@ hr {
     font-size: var(--text-4xl);
 }
 
-.tabela-bg {
-    width: 90%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: var(--corFundo2);
-    border-radius: 10px;
-    position: relative;
-    box-shadow: var(--sombra);
-}
-
 .tabela-bg table,
 .tabela-bg2 table {
-    background: radial-gradient(var(--corFundo)0%,var(--corFundo2)100%);
+    background: radial-gradient(var(--corFundo) 0%, var(--corFundo2) 100%);
     border-collapse: collapse;
     text-align: center;
     width: 100%;
     overflow: hidden;
     position: absolute;
+    
 }
 
 .tabela-bg table thead,
@@ -274,26 +243,32 @@ hr {
     /* background: linear-gradient(360deg, var(--corDestaque), var(--corBase)); */
     background: var(--corDestaque);
     color: var(--corTxt);
+    text-transform: uppercase;
+    font-weight: 500;
 }
 
 .tabela-bg table thead th,
 .tabela-bg2 table thead th {
     padding: 15px;
     min-width: 160px;
-
 }
 
 .tabela-bg table tbody tr,
 .tabela-bg2 table tbody tr {
     height: 50px;
     color: var(--corTxt3);
-    transition: 0s;
+    transition: all 0.3s ease; /* adiciona transição suave para hover */
     border-bottom: 1px solid var(--corBordas);
+}
 
-    &:hover {
-        background: var(--hoverTr);
-        color: var(--corTxt3);
-    }
+
+
+.tabela-bg table tbody tr:hover,
+.tabela-bg2 table tbody tr:hover {
+    background: var(--hoverTr);
+    color: var(--corTxt3);
+    transform: scale(1.01);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .tabela-bg2 {
@@ -439,6 +414,8 @@ hr {
     justify-content: space-between;
 }
 
+/* PESQUISA CSS */
+
 .form-pesquisa {
     display: flex;
     align-items: center;
@@ -452,12 +429,14 @@ hr {
     /* Spacing between search input and select */
     position: relative;
     width: auto;
+    background: var(--corFundo);
 }
 
 .box-pesquisa {
     position: relative;
     display: flex;
     align-items: center;
+    background: var(--corFundo);
 }
 
 /* 1. Input styling */
@@ -469,7 +448,7 @@ hr {
     border: 1px solid #d1d5db !important;
     /* light gray border */
     border-radius: 8px !important;
-    background: #ffffff !important;
+    background: var(--corFundo) !important;
     color: #4b5563 !important;
     font-size: 14px !important;
     outline: none;
@@ -508,10 +487,31 @@ hr {
     text-decoration: none;
 }
 
+/* "X" (Direita) */
+.btn-clear-search {
+    position: absolute;
+    right: 14px !important; /* Fixa no canto direito */
+    left: auto !important;  /* Anula qualquer herança que force o ícone para a esquerda */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ef4444 !important; /* Vermelho */
+    font-size: 18px !important;
+    z-index: 10;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+}
+
+
 .btn-clear-search:hover {
     color: #dc2626 !important;
 }
 
+/* Aq */
 @media (max-width: 768px) {
 
     .div-btns-pages form {
@@ -619,8 +619,338 @@ hr {
 
 select {
     cursor: pointer;
+} 
+
+/* Aq */
+@media (max-width: 768px) {
+
+    .div-btns-pages form {
+        flex-direction: column;
+    }
+
+    .div-header {
+        font-size: var(--text-sm);
+    }
+
+    .div-txt-header p span:last-child {
+        font-size: 0px;
+    }
+
+    .div-header {
+        font-size: var(--text-sm);
+    }
+
+    .div-txt-header p span:last-child {
+        font-size: 0px;
+    }
+
+    .card {
+        width: 100%;
+        max-height: 180px;
+        justify-content: sp;
+    }
+
+    .card-box {
+        flex-direction: row;
+    }
+
+    .card-info-tutorial {
+        font-size: var(--text-sm);
+    }
+
+    .div-btns-pages {
+        padding: 5px;
+        flex-wrap: wrap;
+        gap: 15px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .box-pesquisa {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .input-pesquisa {
+        width: 100% !important;
+    }
+
+    .btn-clear-search {
+        right: 14px;
+    }
+
+    .div-tabelas {
+        position: relative;
+        top: 35%;
+    }
+
+    .div-btns-pages>.btn {
+        width: auto !important;
+        /* overrides previous 45px broken logic */
+        align-self: flex-start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        font-size: var(--text-sm) !important;
+        padding: 10px 15px;
+    }
+
+    .div-btns-pages>.btn:first-of-type {
+        font-size: var(--text-sm) !important;
+        /* reveal the text again */
+    }
+
+    .div-btns-pages>.btn i {
+        font-size: var(--text-sm);
+    }
+
+    .card-info-tutorial {
+        margin-top: 0px;
+    }
+
+    .quick-actions {
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-quick {
+        width: 100%;
+    }
 }
 
+select {
+    cursor: pointer;
+} 
+/* Aq */
+@media (max-width: 768px) {
+
+    .div-btns-pages form {
+        flex-direction: column;
+    }
+
+    .div-header {
+        font-size: var(--text-sm);
+    }
+
+    .div-txt-header p span:last-child {
+        font-size: 0px;
+    }
+
+    .div-header {
+        font-size: var(--text-sm);
+    }
+
+    .div-txt-header p span:last-child {
+        font-size: 0px;
+    }
+
+    .card {
+        width: 100%;
+        max-height: 180px;
+        justify-content: sp;
+    }
+
+    .card-box {
+        flex-direction: row;
+    }
+
+    .card-info-tutorial {
+        font-size: var(--text-sm);
+    }
+
+    .div-btns-pages {
+        padding: 5px;
+        flex-wrap: wrap;
+        gap: 15px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .box-pesquisa {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .input-pesquisa {
+        width: 100% !important;
+    }
+
+    .btn-clear-search {
+        right: 14px;
+    }
+
+    .div-tabelas {
+        position: relative;
+        top: 35%;
+    }
+
+    .div-btns-pages>.btn {
+        width: auto !important;
+        /* overrides previous 45px broken logic */
+        align-self: flex-start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        font-size: var(--text-sm) !important;
+        padding: 10px 15px;
+    }
+
+    .div-btns-pages>.btn:first-of-type {
+        font-size: var(--text-sm) !important;
+        /* reveal the text again */
+    }
+
+    .div-btns-pages>.btn i {
+        font-size: var(--text-sm);
+    }
+
+    .card-info-tutorial {
+        margin-top: 0px;
+    }
+
+    .quick-actions {
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-quick {
+        width: 100%;
+    }
+}
+
+select {
+    cursor: pointer;
+} 
+
+/* Aq */
+@media (max-width: 768px) {
+
+    .div-btns-pages form {
+        flex-direction: column;
+    }
+
+    .div-header {
+        font-size: var(--text-sm);
+    }
+
+    .div-txt-header p span:last-child {
+        font-size: 0px;
+    }
+
+    .div-header {
+        font-size: var(--text-sm);
+    }
+
+    .div-txt-header p span:last-child {
+        font-size: 0px;
+    }
+
+    .card {
+        width: 100%;
+        max-height: 180px;
+        justify-content: sp;
+    }
+
+    .card-box {
+        flex-direction: row;
+    }
+
+    .card-info-tutorial {
+        font-size: var(--text-sm);
+    }
+
+    .div-btns-pages {
+        padding: 5px;
+        flex-wrap: wrap;
+        gap: 15px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .box-pesquisa {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .input-pesquisa {
+        width: 100% !important;
+    }
+
+    .btn-clear-search {
+        right: 14px;
+    }
+
+    .div-tabelas {
+        position: relative;
+        top: 35%;
+    }
+
+    .div-btns-pages>.btn {
+        width: auto !important;
+        /* overrides previous 45px broken logic */
+        align-self: flex-start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        font-size: var(--text-sm) !important;
+        padding: 10px 15px;
+    }
+
+    .div-btns-pages>.btn:first-of-type {
+        font-size: var(--text-sm) !important;
+        /* reveal the text again */
+    }
+
+    .div-btns-pages>.btn i {
+        font-size: var(--text-sm);
+    }
+
+    .card-info-tutorial {
+        margin-top: 0px;
+    }
+
+    .quick-actions {
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-quick {
+        width: 100%;
+    }
+}
+
+select {
+    cursor: pointer;
+} 
+
+/* ------------------------------------------------------------- */
 
 /* Topo da PREVENTIVA */
 /* Container dos cards */
