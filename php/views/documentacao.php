@@ -68,9 +68,9 @@
                     <h2>Objetivos Principais</h2>
                     <ul class="doc-list">
                         <li><i class="bi bi-check2-circle"></i> Proteger a saúde e a integridade física dos
-                            trabalhadores;</li>
+                            trabalhadores.</li>
                         <li><i class="bi bi-check2-circle"></i> Estabelecer requisitos para a utilização segura de
-                            máquinas;</li>
+                            máquinas.</li>
                         <li><i class="bi bi-check2-circle"></i> Promover a melhoria contínua das condições de trabalho.
                         </li>
                     </ul>

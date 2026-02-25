@@ -388,6 +388,10 @@ function showModal(qual, id) {
         document.getElementById("adicaoAluno").style.display = "none";
     } else if (qual == "adicaoSuporte") {
         document.getElementById("adicaoSuporte").style.display = "flex";
+    } else if (qual == "changePassword") {
+        document.getElementById("changePassword").style.display = "flex";
+    } else if (qual == "sucesso") {
+        document.getElementById("sucesso").style.display = "flex";
     }
 }
 
@@ -477,10 +481,23 @@ function closeModal(qual) {
         document.getElementById("adicaoAluno").style.display = "flex";
     } else if (qual == "adicaoSuporte") {
         document.getElementById("adicaoSuporte").style.display = "none";
+    } else if (qual == "changePassword") {
+        document.getElementById("changePassword").style.display = "none";
     } else if (qual == "sucesso") {
         document.getElementById("sucesso").style.display = "none";
     } else {
-        document.getElementById("acesso").style.display = "none";
+        const acesso = document.getElementById("acesso");
+        if (acesso) acesso.style.display = "none";
+    }
+}
+
+function exibirSucesso(mensagem) {
+    const msgElement = document.getElementById("sucesso-msg");
+    if (msgElement) {
+        msgElement.innerText = mensagem;
+        showModal('sucesso');
+    } else {
+        alert(mensagem); // Fallback caso o modal não exista na página
     }
 }
 
@@ -489,6 +506,13 @@ function resetarSenha(id) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Verificar se há uma mensagem de sucesso pendente do reload anterior
+    const pendingMsg = sessionStorage.getItem('pendingSuccessMessage');
+    if (pendingMsg) {
+        exibirSucesso(pendingMsg);
+        sessionStorage.removeItem('pendingSuccessMessage');
+    }
+
     const registrosPorPagina = 10;
 
     // Declaração de todas as tabelas
@@ -1631,7 +1655,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         mostrarPagina(1);
     }
-    
+
 
     // --- BLOCO 17 ---
     if (tabelaCursos17 != undefined) { // Verificando tabela 14
@@ -2058,4 +2082,63 @@ function fecharScanner() {
     } else {
         container.style.display = 'none';
     }
+}
+
+const dropArea = document.querySelector(".modal-input");
+const fileInput = document.getElementById("arquivo");
+const labelArquivo = document.getElementById("label-arquivo");
+
+// Tipos permitidos
+const tiposPermitidos = [
+  "text/csv",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+];
+
+// Clique abre o input
+dropArea.addEventListener("click", () => {
+  fileInput.click();
+});
+
+// Quando seleciona pelo input
+fileInput.addEventListener("change", () => {
+  if (fileInput.files.length > 0) {
+    validarArquivo(fileInput.files[0]);
+  }
+});
+
+// Drag & Drop
+dropArea.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropArea.style.borderColor = "var(--corDestaque)";
+  dropArea.style.background = "var(--corFundo2)";
+});
+
+dropArea.addEventListener("dragleave", () => {
+  dropArea.style.borderColor = "var(--corBase)";
+  dropArea.style.background = "var(--corFundo)";
+});
+
+dropArea.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropArea.style.borderColor = "var(--corBase)";
+  dropArea.style.background = "var(--corFundo)";
+
+  const arquivo = e.dataTransfer.files[0];
+  if (arquivo) {
+    fileInput.files = e.dataTransfer.files;
+    validarArquivo(arquivo);
+  }
+});
+
+// Validação
+function validarArquivo(arquivo) {
+  if (!tiposPermitidos.includes(arquivo.type)) {
+    alert("Arquivo inválido. Envie um .csv, .xls ou .xlsx");
+    fileInput.value = "";
+    labelArquivo.textContent = "Arraste ou Pressione o Arquivo.";
+    return;
+  }
+
+  labelArquivo.textContent = `Arquivo selecionado: ${arquivo.name}`;
 }

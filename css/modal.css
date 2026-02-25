@@ -218,6 +218,11 @@ h1 {
     box-sizing: border-box;
 }
 
+.modal-input select option {
+    background: var(--corFundo2);
+    color: var(--corTxt3);
+}
+
 .modal-input input::placeholder {
     color: var(--corBordas);
 }
@@ -355,13 +360,15 @@ h1 {
     justify-content: flex-end;
     align-items: flex-end;
 
-    padding: 20; /* sem área extra */
+    padding: 20;
+    /* sem área extra */
     z-index: 9999;
 
-    pointer-events: none; /* não bloqueia cliques atrás */
+    pointer-events: none;
+    /* não bloqueia cliques atrás */
 
-    animation: toastIn 0.45s cubic-bezier(.22,.61,.36,1),
-               toastOut 0.4s ease-in-out 3.2s forwards;
+    animation: toastIn 0.45s cubic-bezier(.22, .61, .36, 1),
+        toastOut 0.4s ease-in-out 3.2s forwards;
 }
 
 /* ENTRADA */
@@ -370,6 +377,7 @@ h1 {
         transform: translateY(-15px) scale(0.95);
         opacity: 0;
     }
+
     to {
         transform: translateY(0) scale(1);
         opacity: 1;
@@ -394,9 +402,10 @@ h1 {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 
-    pointer-events: auto; /* botão clicável */
+    pointer-events: auto;
+    /* botão clicável */
 }
 
 #sucesso-txt {

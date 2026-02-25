@@ -60,23 +60,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $erro = "Usuário inativo. Contate o administrador.";
                 header("Location: ../../index.php?erro=usuarioI");
             }
-            // Validação de senha (mantive sua lógica de 1==1 e senha padrão)
-            else if (1 == 1) {
-                if ($colaborador['senha_padrao'] == 1 && $senha == 'senaisp') {
-                    $_SESSION['redefinir_senha'] = true;
-                } else {
-                    $_SESSION['user_id'] = $colaborador['idcolaborador'];
-                    $_SESSION['colaborador_email'] = $colaborador['colaborador_email'];
-                    $_SESSION['colaborador_permissao'] = $colaborador['colaborador_permissao'];
-                    $_SESSION['colaborador_nome'] = $colaborador['colaborador_nome'];
-                    header("Location: ../views/home.php");
-                    exit;
-                }
+            // Validação de senha
+            if (password_verify($senha, $colaborador['senha'])) {
+                $_SESSION['user_id'] = $colaborador['idcolaborador'];
+                $_SESSION['colaborador_email'] = $colaborador['colaborador_email'];
+                $_SESSION['colaborador_permissao'] = $colaborador['colaborador_permissao'];
+                $_SESSION['colaborador_nome'] = $colaborador['colaborador_nome'];
+                $_SESSION['user_senha_padrao'] = $colaborador['senha_padrao'];
+                header("Location: ../views/home.php");
+                exit;
             } else {
                 header("Location: ../../index.php?erro=senha");
             }
         } else {
             header("Location: ../../index.php?erro=email");
         }
+    } else {
+        header("Location: ../../index.php?erro=erro");
     }
+} else {
+    header("Location: ../../index.php");
 }

@@ -69,6 +69,21 @@
     </section>
 
     <script src="../../js/scripts.js" defer></script>
+    <script src="../../js/processa.js" defer></script>
+
+    <?php if (isset($_SESSION['user_senha_padrao']) && $_SESSION['user_senha_padrao'] == 1) { ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const modal = document.getElementById('changePassword');
+                if (modal) {
+                    modal.style.display = 'flex';
+                }
+            });
+        </script>
+    <?php }
+    ; ?>
+
+    
 </body>
 
 </html>

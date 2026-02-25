@@ -82,7 +82,7 @@
                             motor_fabricante LIKE '%$termo_seguro%' OR
                             motor_modelo LIKE '%$termo_seguro%' OR
                             motor_potencia LIKE '%$termo_seguro%' OR
-                            motor_tensão LIKE '%$termo_seguro%' OR
+                            `motor_tensão` LIKE '%$termo_seguro%' OR
                             motor_corrente LIKE '%$termo_seguro%'";
                     } else {
                         $sql = "SELECT * FROM motor";

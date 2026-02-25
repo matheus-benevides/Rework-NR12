@@ -36,11 +36,13 @@
                     ?>
                     <div class="box-pesquisa">
                         <i class="bi bi-search search-icon"></i>
-                        <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
-                            placeholder="Pesquisar..." class="input-pesquisa">
+                        <input type="text" name="search" id="pesquisa"
+                            value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar..."
+                            class="input-pesquisa">
 
                         <?php if ($busca_atual): ?>
-                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
+                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i
+                                    class="bi bi-x-lg"></i></a>
                         <?php endif; ?>
                     </div>
                     <div class="filtrar-status">
@@ -120,11 +122,10 @@
 
                                 if ($permissao_usuario == "Adm") {
                                     if ($status != 'resolvido') {
-                                        echo "<td><div style='display: flex; gap: 5px; justify-content: center;'>" . "<button type='button' onclick='showModal('resolverSuporte'," . $linha['idsolicitacao_erro'] . "' class='btnAcao confirmar'><i class='bi bi-check-lg'></i></button>";
-                                        echo "<button type='button' class='btnAcao confirmar' onclick='showModal('observarSuporte'," . $linha['idsolicitacao_erro'] . "')'><i class='bi bi-eye-fill'></i></button>";
+                                        echo "<td><div style='display: flex; gap: 5px; justify-content: center;'><button type='button' onclick=\"resolverSuporte(" . $linha['idsolicitacao_erro'] . ")\" class='btnAcao confirmar' title='Resolver'><i class='bi bi-check-lg'></i></button>";
                                         echo "</div></td>";
                                     } else {
-                                        echo "<td><div style='display: flex; gap: 5px; justify-content: center;'><button type='button' class='btnAcao clipes'><i class='bi bi-shield-fill'></i></button></td>";
+                                        echo "<td><div style='display: flex; gap: 5px; justify-content: center;'><button type='button' class='btnAcao clipes' title='Concluído'><i class='bi bi-shield-fill'></i></button></td>";
                                     }
                                 }
                                 echo "</tr>";
@@ -138,7 +139,6 @@
                             $resultado = $conn->query($sql);
                             while ($linha = $resultado->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<td>" . $linha["idsolicitacao_erro"] . "</td>";
                                 echo "<td>" . $linha["colaborador_nome"] . "</td>";
                                 echo "<td>" . $linha["desc_erro"] . "</td>";
                                 echo "<td>" . $linha["onde"] . "</td>";
@@ -158,20 +158,19 @@
 
                                 if ($permissao_usuario == "Adm") {
                                     if ($status != 'resolvido') {
-                                        echo "<td><div style='display: flex; gap: 5px; justify-content: center;'>" . "<button type='button' onclick='showModal('resolverSuporte'," . $linha['idsolicitacao_erro'] . "' class='btnAcao confirmar'><i class='bi bi-check-lg'></i></button>";
-                                        echo "<button type='button' class='btnAcao confirmar' onclick='showModal('observarSuporte'," . $linha['idsolicitacao_erro'] . "')'><i class='bi bi-eye-fill'></i></button>";
+                                        echo "<td><div style='display: flex; gap: 5px; justify-content: center;'><button type='button' onclick=\"resolverSuporte(" . $linha['idsolicitacao_erro'] . ")\" class='btnAcao confirmar' title='Resolver'><i class='bi bi-check-lg'></i></button>";
                                         echo "</div></td>";
                                     } else {
-                                        echo "<td><div style='display: flex; gap: 5px; justify-content: center;'><button type='button' class='btnAcao clipes'><i class='bi bi-shield-fill'></i></button></td>";
+                                        echo "<td><div style='display: flex; gap: 5px; justify-content: center;'><button type='button' class='btnAcao clipes' title='Concluído'><i class='bi bi-shield-fill'></i></button></td>";
                                     }
                                 } else {
-                                    echo "<td><div style='display: flex; gap: 5px; justify-content: center;'><button type='button' class='btnAcao confirmar' onclick='showModal('observarSuporte'," . $linha['idsolicitacao_erro'] . "')'><i class='bi bi-eye-fill'></i></button></div></td>";
+                                    echo "<td>---</td>";
                                 }
                                 echo "</tr>";
                             }
                         }
                     } else {
-                        echo "<tr><td colspan='9' style='text-align:center; padding:15px;'>Nenhuma turma encontrada.</td></tr>";
+                        echo "<tr><td colspan='9' style='text-align:center; padding:15px;'>Nenhuma solicitação de suporte encontrada.</td></tr>";
                     }
                     ?>
                 </tbody>
@@ -187,6 +186,7 @@
     </section>
 
     <script src="../../js/scripts.js" defer></script>
+    <script src="../../js/processa.js" defer></script>
 </body>
 
 </html>

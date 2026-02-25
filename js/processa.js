@@ -3,6 +3,7 @@
  * As APIs suportam o método OPTIONS para preflight CORS.
  */
 const API_URL_CURSO = '../apis/processa_cursos.php';
+const API_URL_SUPORTE = '../apis/processa_suporte.php';
 
 // --- ELEMENTOS DO DOM ---
 
@@ -44,10 +45,8 @@ if (formCadCurso) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('adicaoCurso');
-                formCadCurso.reset();
-                location.reload(); // Recarrega para mostrar o novo curso
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+                location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
             }
@@ -94,8 +93,7 @@ if (formEditCurso) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('edicaoCurso');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -131,8 +129,7 @@ if (btnConfirmaDelete) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('desativarCurso');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -169,8 +166,7 @@ if (btnConfirmaAtivar) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('ativarCurso');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -245,9 +241,7 @@ if (formCadTurma) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('adicaoTurma');
-                formCadTurma.reset();
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -313,8 +307,7 @@ if (formEditTurma) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('edicaoTurma');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -350,8 +343,7 @@ if (btnConfirmaDeleteTurma) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('deletarTurma');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -387,8 +379,7 @@ if (btnConfirmaAtivarTurma) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('ativarTurma');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -436,9 +427,7 @@ if (formCadAluno) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('adicaoAluno');
-                formCadAluno.reset();
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -477,8 +466,7 @@ if (formEditAluno) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('edicaoAluno');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -504,9 +492,9 @@ if (btnConfirmaDesativarAluno) {
             });
             const result = await response.json();
             if (response.ok) {
-                alert(result.mensagem);
+                exibirSucesso(result.mensagem);
                 closeModal('desativarAluno');
-                location.reload();
+                setTimeout(() => location.reload(), 1500);
             } else {
                 alert('Erro: ' + result.mensagem);
             }
@@ -531,8 +519,7 @@ if (btnConfirmaAtivarAluno) {
             });
             const result = await response.json();
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('ativarAluno');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -558,8 +545,7 @@ if (btnConfirmaDeletarAluno) {
             });
             const result = await response.json();
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('deletarAluno');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -632,9 +618,7 @@ if (formCadUnidade) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('adicaoUnidade');
-                formCadUnidade.reset();
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -674,8 +658,7 @@ if (formEditUnidade) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('edicaoUnidade');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -701,8 +684,7 @@ if (btnConfirmaDesativarUnidade) {
             });
             const result = await response.json();
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('desativarUnidade');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -728,8 +710,7 @@ if (btnConfirmaAtivarUnidade) {
             });
             const result = await response.json();
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('ativarUnidade');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -798,9 +779,7 @@ if (formCadSetor) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('adicaoSetor');
-                formCadSetor.reset();
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -838,8 +817,7 @@ if (formEditSetor) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('editarSetor');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -869,8 +847,7 @@ if (btnConfirmaDesativarSetor) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('desativarSetor');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -900,8 +877,7 @@ if (btnConfirmaAtivarSetor) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('ativarSetor');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -968,9 +944,7 @@ if (formCadColaborador) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('adicaoColaborador');
-                formCadColaborador.reset();
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -1012,8 +986,7 @@ if (formEditColaborador) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('editarColaborador');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -1044,8 +1017,7 @@ if (btnConfirmaDesativarColaborador) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('desativarColaborador');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -1075,8 +1047,7 @@ if (btnConfirmaAtivarColaborador) {
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.mensagem);
-                closeModal('ativarColaborador');
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
                 location.reload();
             } else {
                 alert('Erro: ' + result.mensagem);
@@ -1111,3 +1082,154 @@ function abrirModalEdicaoColaborador(id, nome, email, tipo, nif, setor) {
 }
 
 window.abrirModalEdicaoColaborador = abrirModalEdicaoColaborador;
+
+// --- TROCA DE SENHA OBRIGATÓRIA ---
+
+const formChangePassword = document.getElementById('form-change-password');
+
+if (formChangePassword) {
+    formChangePassword.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nova_senha = document.getElementById('nova_senha').value;
+        const confirmar_senha = document.getElementById('confirmar_senha').value;
+
+        if (nova_senha !== confirmar_senha) {
+            alert('As senhas não coincidem!');
+            return;
+        }
+
+        if (nova_senha.length < 4) {
+            alert('A senha deve ter pelo menos 4 caracteres.');
+            return;
+        }
+
+        const dados = {
+            action: 'change_password',
+            nova_senha: nova_senha
+        };
+
+        try {
+            const response = await fetch(API_URL_COLABORADOR, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar alterar senha.');
+        }
+    });
+}
+
+// --- SUPORTE ---
+
+const formSuporte = document.getElementById('form-suporte');
+
+if (formSuporte) {
+    formSuporte.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id_colaborador = document.getElementById('id_colaborador_suporte_cad').value;
+        const onde = document.getElementById('onde').value;
+        const tipo = document.querySelector('select[tipo]').value;
+        const urgenciaEle = document.querySelector('input[name="urgencia"]:checked');
+        const desc_erro = document.getElementById('desc_suporte_cad').value;
+
+        if (!onde || !tipo || !urgenciaEle || !desc_erro) {
+            alert('Por favor, preencha todos os campos do suporte.');
+            return;
+        }
+
+        const dados = {
+            id_colaborador: id_colaborador,
+            onde: onde,
+            tipo: tipo,
+            urgencia: urgenciaEle.value,
+            desc_erro: desc_erro
+        };
+
+        try {
+            const response = await fetch(API_URL_SUPORTE, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar enviar suporte.');
+        }
+    });
+}
+
+async function resolverSuporte(id) {
+    if (!confirm('Deseja marcar esta solicitação como resolvida?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(API_URL_SUPORTE, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: id })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+            location.reload();
+        } else {
+            alert('Erro: ' + result.mensagem);
+        }
+    } catch (error) {
+        console.error('Erro na requisição:', error);
+        alert('Erro de conexão ao tentar resolver suporte.');
+    }
+}
+
+window.resolverSuporte = resolverSuporte;
+
+async function resetarSenha(id) {
+    if (!id) return alert('ID inválido.');
+
+    try {
+        const response = await fetch(API_URL_COLABORADOR, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: id, reset_password: true })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+            location.reload();
+        } else {
+            alert('Erro: ' + result.mensagem);
+        }
+    } catch (error) {
+        console.error('Erro na requisição:', error);
+        alert('Erro de conexão ao tentar resetar senha.');
+    }
+}
+
+window.resetarSenha = resetarSenha;

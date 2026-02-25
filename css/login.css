@@ -1,201 +1,285 @@
-.body_login::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 40%;
-    height: 30%;
-    background: linear-gradient(to bottom right, #ba2323, #fc2323);
-    clip-path: polygon(0 0, 100% 0, 0 100%);
-    z-index: 1;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root {
+    --senai-red: #ff2b2b;
+    --senai-red-dark: #000000;
+    --bg-dark: #0a0a0b;
+    --glass-bg: #111114;
+    /* Fallback sólido */
+    --glass-bg-rgba: rgba(15, 15, 18, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --sombra-glow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.body_login::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 50%;
-    height: 40%;
-    background: linear-gradient(to top left, #ba2323, #fc2323);
-    clip-path: polygon(100% 0, 100% 100%, 0 100%);
-    z-index: 1;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 
-
-/* Tela De Login */
-.login-bg {
+body,
+html {
     width: 100%;
     height: 100%;
-    background: linear-gradient(98deg, var(--corDestaque), var(--corBase));
+    overflow: hidden;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+}
+
+/* Background Shapes */
+.login-bg {
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 50%, #ffffff 0%, #fcfcfc 100%);
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
 }
 
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.login-bg::before {
+    content: "";
+    position: absolute;
+    top: -10%;
+    left: -5%;
+    width: 45%;
+    height: 45%;
+    background: linear-gradient(135deg, var(--senai-red-dark), transparent);
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    opacity: 0.15;
+    filter: blur(40px);
+    z-index: 0;
+}
+
+.login-bg::after {
+    content: "";
+    position: absolute;
+    bottom: -5%;
+    right: -5%;
+    width: 50%;
+    height: 50%;
+    background: linear-gradient(315deg, var(--senai-red-dark), transparent);
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    opacity: 0.15;
+    filter: blur(40px);
+    z-index: 0;
+}
+
+/* Login Container */
 .login-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 40%;
-    min-width: 420px;
-    height: 620px;
-    padding: 5px;
-    border-radius: 25px;
-    background: var(--corFundo);
-    box-shadow: var(--sombra);
+    position: relative;
+    z-index: 100;
+    /* Sempre no topo */
+    width: 90%;
+    max-width: 440px;
+    padding: 40px;
+    background: var(--glass-bg);
+    background: var(--glass-bg-rgba);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--sombra-glow);
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .login-form {
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+    gap: 30px;
 }
 
 .div-img {
-    width: 85%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    top: 0%;
-}
-
-img {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
-.div-msg-erro {
-    width: 75%;
-    border-radius: 15px 15px 0px 0px;
-    padding: 20px;
-    color: var(--corTxt);
-    font-weight: bold;
-    background: var(--corBase);
-    text-align: center;
+#senai-logo {
+    max-width: 250px;
+    filter: drop-shadow(0 0 10px rgba(255, 43, 43, 0.2));
+    transition: var(--transition-smooth);
 }
 
+#senai-logo:hover {
+    transform: scale(1.05);
+}
+
+/* Inputs Section */
 .div-inputs-chefe {
-    width: 100%;
-    height: 50%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
     flex-direction: column;
+    gap: 20px;
 }
 
 .div-input {
-    border: 2px solid var(--corDestaque);
-    width: 65%;
-    padding: 10px;
-    border-radius: 5px;
-    justify-content: space-around;
+    position: relative;
     display: flex;
     align-items: center;
-    box-shadow: var(--sombra);
-    font-size: var(--fontLg);
-    color: var(--corTxt3);
-
-    &:focus-within {
-        background: var(--corDestaque);
-        color: var(--corTxt3);
-    }
-
-    &:focus-within button {
-        color: var(--corTxt3);
-    }
-
-    &:focus-within .input::placeholder {
-        color: var(--corTxt3);
-    }
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 0 16px;
+    height: 56px;
+    transition: var(--transition-smooth);
 }
 
-.div-input button {
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: var(--text-xl);
-    background: transparent;
-    border: none;
-    color: var(--corDestaque);
+.div-input:focus-within {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--senai-red);
+    box-shadow: 0 0 15px rgba(255, 43, 43, 0.15);
 }
 
-.login-form label {
-    color: var(--corTxt3);
+.div-input i {
+    color: var(--senai-red);
+    /* Ícones agora em vermelho para destaque */
+    font-size: 1.2rem;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.div-input:focus-within i {
+    color: var(--senai-red);
 }
 
 .input {
-    padding: 15px;
+    flex: 1;
+    /* Ocupa o espaço disponível sem empurrar os outros */
     background: transparent;
-    border-radius: 5px 5px 0px 0px;
-    width: 80%;
     border: none;
     outline: none;
-    font-weight: bold;
-    color: var(--corTxt3);
-    border-bottom: 2px solid transparent;
-
-    &::placeholder {
-        color: var(--corTxt3);
-    }
-
-    &:focus {
-        border-color: var(--corBase);
-        color: var(--corTxt3);
-    }
+    padding: 10px 0;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 400;
 }
 
-.div-btn {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-    gap: 10px;
+.input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
 }
 
-.div-btn #trocarForm {
-    background: none;
+/* Eye and Scan Buttons */
+.btnEsp {
+    background: transparent;
     border: none;
-    color: var(--corBase);
+    color: var(--text-secondary);
     cursor: pointer;
+    font-size: 1.2rem;
+    padding: 8px;
+    margin-left: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
 
-    &:hover {
-        text-decoration: underline;
-    }
+.btnEsp:hover {
+    color: var(--senai-red);
+}
+
+/* Action Buttons */
+.div-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
 }
 
 .btn {
-    padding: 6px 15px;
-    width: 230px;
-    height: 45px;
-    cursor: pointer;
-    border-radius: 5px;
+    width: 100%;
+    height: 52px;
+    background: linear-gradient(135deg, var(--senai-red), var(--senai-red-dark));
+    color: white;
     border: none;
-    font-weight: bold;
-    color: var(--corTxt);
-    background: var(--corBase);
-    font-size: var(--text-base);
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-
-    &:hover {
-        background: var(--corDestaque);
-    }
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 8px 20px rgba(255, 43, 43, 0.3);
+    transition: var(--transition-smooth);
 }
 
-@media (max-width: 768px) {
-    .login-box{
-        scale: 0.8;   
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(255, 43, 43, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+#trocarForm {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    align-self: center;
+    text-align: center;
+}
+
+#trocarForm:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Error Messages (if any) */
+.div-msg-erro {
+    background: rgba(255, 43, 43, 0.15);
+    border: 1px solid var(--senai-red);
+    color: #ffd6d6;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+/* Media Queries */
+@media (max-width: 480px) {
+    .login-box {
+        width: 95%;
+        padding: 30px 20px;
     }
 
-    .body_login::after, .body_login::before{
+    .login-bg::before,
+    .login-bg::after {
         display: none;
     }
-
 }

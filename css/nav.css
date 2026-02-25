@@ -10,6 +10,8 @@
     z-index: 999;
     background: var(--corBarra);
     padding: 20px 0px;
+    border-right: 1px solid var(--corBordas);
+    box-shadow: var(--sombra);
 }
 
 .botao-fechar button {
@@ -143,8 +145,8 @@
 }
 
 .links-sub.ativo {
-    background: var(--corFundo);
-    color: var(--corDestaque);
+    background: var();
+    color: var();
 }
 
 /* ===================== */
@@ -210,7 +212,7 @@
 }
 
 #tema:hover {
-    color: var(--txtEscuro);
+    color: var(--hoverTr);
     transform: rotate(360deg);
 }
 

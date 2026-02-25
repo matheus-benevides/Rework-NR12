@@ -25,10 +25,40 @@ switch ($metodo) {
         exit;
 
     case 'POST':
-        // CADASTRAR
+        // CADASTRAR OU TROCAR SENHA PRÓPRIA
+        $action = $input['action'] ?? null;
+
+        if ($action === 'change_password') {
+            session_start();
+            $user_id = $_SESSION['user_id'] ?? null;
+            $nova_senha = $input['nova_senha'] ?? null;
+
+            if (!$user_id || !$nova_senha) {
+                http_response_code(400);
+                echo json_encode(["mensagem" => "Sessão expirada ou senha não informada."]);
+                exit;
+            }
+
+            $senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE colaborador SET senha = ?, senha_padrao = 0 WHERE idcolaborador = ?");
+            $stmt->bind_param("si", $senha_hash, $user_id);
+
+            if ($stmt->execute()) {
+                $_SESSION['user_senha_padrao'] = 0; // Atualiza sessão
+                http_response_code(200);
+                echo json_encode(["mensagem" => "Senha alterada com sucesso!"]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["mensagem" => "Erro ao alterar senha: " . $stmt->error]);
+            }
+            $stmt->close();
+            exit;
+        }
+
+        // ... resto do código de CADASTRAR ...
         $nome = $input['nome'] ?? null;
         $email = $input['email'] ?? null;
-        $senha = $input['senha'] ?? 'senaisp'; // Default se não enviado
+        $senha = 'senaisp'; // Default se não enviado
         $nif = $input['nif'] ?? null;
         $tipo = $input['tipo'] ?? null;
         $setor = $input['setor'] ?? null;
@@ -41,7 +71,7 @@ switch ($metodo) {
 
         $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-        $stmt = $conn->prepare("INSERT INTO colaborador (colaborador_nome, colaborador_email, colaborador_senha, colaborador_nif, colaborador_permissao, setor_id, colaborador_status) VALUES (?, ?, ?, ?, ?, ?, 'Ativo')");
+        $stmt = $conn->prepare("INSERT INTO colaborador (colaborador_nome, colaborador_email, senha, colaborador_nif, colaborador_permissao, setor_id, colaborador_status, senha_padrao) VALUES (?, ?, ?, ?, ?, ?, 'Ativo', 1)");
         $stmt->bind_param("sssssi", $nome, $email, $senha_hash, $nif, $tipo, $setor);
 
         if ($stmt->execute()) {
@@ -78,7 +108,7 @@ switch ($metodo) {
         if (!empty($senha)) {
             // Atualiza com senha nova
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("UPDATE colaborador SET colaborador_nome = ?, colaborador_email = ?, colaborador_senha = ?, colaborador_nif = ?, colaborador_permissao = ?, setor_id = ? WHERE idcolaborador = ?");
+            $stmt = $conn->prepare("UPDATE colaborador SET colaborador_nome = ?, colaborador_email = ?, senha = ?, colaborador_nif = ?, colaborador_permissao = ?, setor_id = ?, senha_padrao = 0 WHERE idcolaborador = ?");
             $stmt->bind_param("sssssii", $nome, $email, $senha_hash, $nif, $tipo, $setor, $id);
         } else {
             // Atualiza sem mexer na senha
@@ -97,24 +127,34 @@ switch ($metodo) {
         break;
 
     case 'PATCH':
-        // ALTERAR STATUS
+        // ALTERAR STATUS OU RESETAR SENHA
         if (!$id) {
             http_response_code(400);
             echo json_encode(["mensagem" => "ID é obrigatório."]);
             exit;
         }
 
-        $status = $input['status'] ?? 'Inativo';
+        $status = $input['status'] ?? null;
+        $reset_password = $input['reset_password'] ?? false;
 
-        $stmt = $conn->prepare("UPDATE colaborador SET colaborador_status = ? WHERE idcolaborador = ?");
-        $stmt->bind_param("si", $status, $id);
+        if ($reset_password) {
+            $senha_fixa = password_hash('senaisp', PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE colaborador SET senha = ?, senha_padrao = 1 WHERE idcolaborador = ?");
+            $stmt->bind_param("si", $senha_fixa, $id);
+            $msg_sucesso = "Senha resetada para 'senaisp'.";
+        } else {
+            $status = $status ?? 'Inativo';
+            $stmt = $conn->prepare("UPDATE colaborador SET colaborador_status = ? WHERE idcolaborador = ?");
+            $stmt->bind_param("si", $status, $id);
+            $msg_sucesso = "Status do colaborador alterado para $status.";
+        }
 
         if ($stmt->execute()) {
             http_response_code(200);
-            echo json_encode(["mensagem" => "Status do colaborador alterado para $status."]);
+            echo json_encode(["mensagem" => $msg_sucesso]);
         } else {
             http_response_code(500);
-            echo json_encode(["mensagem" => "Erro ao alterar status: " . $stmt->error]);
+            echo json_encode(["mensagem" => "Erro na operação: " . $stmt->error]);
         }
         $stmt->close();
         break;

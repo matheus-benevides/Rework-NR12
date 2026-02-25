@@ -374,11 +374,16 @@ require_once '../configs/conexao.php';
             <button class="" onclick="closeModal('alunosLote')"><i class="bi bi-x-lg"></i></button>
         </div>
         <form id="form-cad-aluno" class="modal-form">
-            <div class="modal-input">
-                <label for="arquivo">Selecione o arquivo CSV:</label>
-                <div class="input-wrapper">
-                    <input type="file" id="arquivo" accept=".csv">
+            <label for="arquivo" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input">
+                    <i style="font-size: var(--text-4xl); color: var(--corDestaque)" class="bi bi-cloud-arrow-up-fill"></i>
+                    <p id="label-arquivo">Arraste ou Pressione o Arquivo.</p>
+                    <p>Somente arquivos .csv, .xlsx e .xls</p>
+                    <input type="file" name="arquivo" id="arquivo" accept=".csv, .xlsx, .xls">
                 </div>
+            </label>
+            <div class="modal-input">
+                
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i> </button>
@@ -833,7 +838,8 @@ require_once '../configs/conexao.php';
             <div class="modal-input">
                 <div class="input-wrapper">
                     <label for="nome_colaborador_cad">Nome:</label>
-                    <input type="text" name="nome" id="nome_colaborador_cad" placeholder="Ex: Matheus dos Ateus" required>
+                    <input type="text" name="nome" id="nome_colaborador_cad" placeholder="Ex: Matheus dos Ateus"
+                        required>
                 </div>
             </div>
 
@@ -841,13 +847,15 @@ require_once '../configs/conexao.php';
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="email_colaborador_cad">Email:</label>
-                        <input type="email" name="email" id="email_colaborador_cad" placeholder="exemplo@email.com" required>
+                        <input type="email" name="email" id="email_colaborador_cad" placeholder="exemplo@email.com"
+                            required>
                     </div>
                 </div>
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="senha_colaborador_cad">Senha:</label>
-                        <input type="text" name="senha" id="senha_colaborador_cad" value="senaisp" readonly style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
+                        <input type="password" name="senha" id="senha_colaborador_cad" value="senaisp" readonly
+                            style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
                     </div>
                 </div>
             </div>
@@ -855,8 +863,8 @@ require_once '../configs/conexao.php';
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="tipo">Tipo de Colaborador:</label>
-                        <select name="tipo" id="tipo">
+                        <label for="tipo_colaborador_cad">Tipo de Colaborador:</label>
+                        <select name="tipo" id="tipo_colaborador_cad">
                             <option value="sem Valor" disabled selected>Selecione o tipo de colaborador</option>
                             <option value="Adm">ADM</option>
                             <option value="Professor">Professor</option>
@@ -914,7 +922,8 @@ require_once '../configs/conexao.php';
             <div class="modal-input">
                 <div class="input-wrapper">
                     <label for="nome_colaborador_edit">Nome:</label>
-                    <input type="text" name="nome" id="nome_colaborador_edit" placeholder="Ex: Matheus dos Ateus" required>
+                    <input type="text" name="nome" id="nome_colaborador_edit" placeholder="Ex: Matheus dos Ateus"
+                        required>
                 </div>
             </div>
 
@@ -922,13 +931,15 @@ require_once '../configs/conexao.php';
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="email_colaborador_edit">Email:</label>
-                        <input type="email" name="email" id="email_colaborador_edit" placeholder="exemplo@email.com" required>
+                        <input type="email" name="email" id="email_colaborador_edit" placeholder="exemplo@email.com"
+                            required>
                     </div>
                 </div>
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="senha_colaborador_edit">Nova Senha (opcional):</label>
-                        <input type="password" name="senha" id="senha_colaborador_edit" placeholder="Deixe em branco para manter">
+                        <label for="senha_colaborador_edit">Senha:</label>
+                        <input type="password" name="senha" id="senha_colaborador_edit" readonly
+                            style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
                     </div>
                 </div>
             </div>
@@ -936,8 +947,8 @@ require_once '../configs/conexao.php';
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
-                        <label for="tipo">Tipo de Colaborador:</label>
-                        <select name="tipo" id="tipo">
+                        <label for="tipo_colaborador_edit">Tipo de Colaborador:</label>
+                        <select name="tipo" id="tipo_colaborador_edit">
                             <option value="sem Valor" disabled selected>Selecione o tipo de colaborador</option>
                             <option value="Adm">ADM</option>
                             <option value="Professor">Professor</option>
@@ -1032,8 +1043,7 @@ require_once '../configs/conexao.php';
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('desativarColaborador')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
@@ -1662,7 +1672,8 @@ require_once '../configs/conexao.php';
             <div class="modal-input">
                 <label for="colaborador_nome">Colaborador:</label>
                 <div class="input-wrapper">
-                    <input type="text" id="nome_aluno_edit" value="<?php echo $nome_usuario; ?>" disabled>
+                    <input type="text" id="colaborador_suporte_cad" value="<?php echo $nome_usuario; ?>" disabled>
+                    <input type="hidden" id="id_colaborador_suporte_cad" value="<?php echo $id_usuario; ?>">
                 </div>
             </div>
             <div class="modal-row">
@@ -1670,7 +1681,8 @@ require_once '../configs/conexao.php';
                     <label for="onde">Onde:</label>
                     <div class="input-wrapper">
                         <select name="onde" id="onde">
-                            <option value="sem Valor" disabled selected>Selecione em qual parte foi encontrada um erro</option>
+                            <option value="sem Valor" disabled selected>Selecione em qual parte foi encontrada um erro
+                            </option>
                             <option value="Sistema">Login</option>
                             <option value="Maquina">Dashboard</option>
                             <option value="Outros">Cursos</option>
@@ -1697,10 +1709,10 @@ require_once '../configs/conexao.php';
                     <div class="input-wrapper">
                         <select name="tipo" id="" tipo>
                             <option value="sem Valor" disabled selected>Selecione um Tipo</option>
-                            <option value="">Erro de Sistema</option>
-                            <option value="">Dúvida</option>
-                            <option value="">Solicitação de Ajuste</option>
-                            <option value="">Incidente</option>
+                            <option value="Erro de Sistema">Erro de Sistema</option>
+                            <option value="Dúvida">Dúvida</option>
+                            <option value="Solicitação de Ajuste">Solicitação de Ajuste</option>
+                            <option value="Incidente">Incidente</option>
                         </select>
                     </div>
                 </div>
@@ -1708,7 +1720,8 @@ require_once '../configs/conexao.php';
             <div class="modal-row">
                 <div class="modal-input">
                     <label for="urgencia">Urgência:</label>
-                    <div class="input-wrapper" style="display: flex; flex-direction: row; justify-content: space-around">
+                    <div class="input-wrapper"
+                        style="display: flex; flex-direction: row; justify-content: space-around">
                         <div style="display: flex; gap: 10px; color: var(--corBase); font-size: var(--text-md)">
                             <input type="radio" name="urgencia" id="urgencia" value="Critica"><span>Crítica</span>
                         </div>
@@ -1722,14 +1735,16 @@ require_once '../configs/conexao.php';
                             <input type="radio" name="urgencia" id="urgencia" value="Baixa"><span>Baixa</span>
                         </div>
                     </div>
-                    <span style="color: var(--corBase); margin-top: 10px; padding-left: 10px;">Você consideraria qual nível de urgência para esse erro ou dúvida?</span>
+                    <span style="color: var(--corBase); margin-top: 10px; padding-left: 10px;">Você consideraria qual
+                        nível de urgência para esse erro ou dúvida?</span>
                 </div>
             </div>
 
             <div class="modal-input">
                 <label for="descricao">Descrição:</label>
                 <div class="input-wrapper">
-                    <textarea style="min-height: 180px; max-height: 180px;" name="" id="" placeholder="Descreva com poucas palavras o erro ou dúvida."></textarea>
+                    <textarea style="min-height: 180px; max-height: 180px;" name="descricao" id="desc_suporte_cad"
+                        placeholder="Descreva com poucas palavras o erro ou dúvida."></textarea>
                 </div>
             </div>
 
@@ -1810,14 +1825,49 @@ require_once '../configs/conexao.php';
     </div>
 </div>
 
-<div class="modal-fundo" id="sucesso">
+<div class="modal-fundo" id="sucesso" style="display: none;">
     <div class="modal-box" id="sucesso-box">
         <div class="modal-header">
             <h5 id="sucesso-txt">Sucesso</h5>
-            <button style='color: var(--txtClaro); font-size: var(--text-base)' onclick="closeModal('sucesso')"><i class="bi bi-x-lg"></i></button>
+            <button style='color: var(--txtClaro); font-size: var(--text-base)' onclick="closeModal('sucesso')"><i
+                    class="bi bi-x-lg"></i></button>
         </div>
         <div class="modal-row">
-            <p id="sucesso-txt" style="font-size: var(--text-sm);">A operação de <?php echo $_GET['sucesso'] ?> foi concluida com sucesso.</p>
+            <p id="sucesso-msg" style="font-size: var(--text-sm);">A operação de
+                <?php echo $_GET['sucesso'] ?? 'sucesso' ?> foi
+                concluida com sucesso.
+            </p>
         </div>
+    </div>
+</div>
+
+<div class="modal-fundo" id="changePassword" style="display: none;">
+    <div class="modal-box" style="width: 500px; max-width: 90%;">
+        <div class="modal-header">
+            <h3>Trocar Senha</h3>
+        </div>
+        <form id="form-change-password" class="modal-form">
+            <div class="modal-row" style="margin-bottom: 20px; color: var(--corTxt3); text-align: center; padding: 0 10px;">
+                <p style="font-size: var(--text-sm);">Por motivos de segurança, você deve alterar sua senha padrão.</p>
+            </div>
+            <div class="modal-input">
+                <div class="input-wrapper">
+                    <label for="nova_senha">Nova Senha:</label>
+                    <input type="password" name="nova_senha" id="nova_senha" required placeholder="Nova Senha">
+                </div>
+            </div>
+            <div class="modal-input">
+                <div class="input-wrapper">
+                    <label for="confirmar_senha">Confirmar Senha:</label>
+                    <input type="password" name="confirmar_senha" id="confirmar_senha" required
+                        placeholder="Confirme a Senha">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">
+                    Alterar Senha <i class="bi bi-check-lg"></i>
+                </button>
+            </div>
+        </form>
     </div>
 </div>

@@ -123,6 +123,9 @@
                                 echo "<button class='btnAcao clipes' style='background-color: #28a745;' title='Ativar' type='button' onclick=\"showModal('ativarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-check-lg'></i></button>";
                             }
 
+                            // Reset Senha
+                            echo "<button class='btnAcao deletar' type='button' style='background-color: #ffc107; color: #000;' title='Resetar Senha' onclick=\"showModal('resetPass', " . $linha['idcolaborador'] . ")\"><i class='bi bi-key-fill'></i></button>";
+
                             echo "  </div>
                                   </td>";
                             echo "</tr>";
@@ -143,6 +146,7 @@
     </section>
 
     <script src="../../js/scripts.js" defer></script>
+    <script src="../../js/processa.js" defer></script>
 </body>
 
 </html>
