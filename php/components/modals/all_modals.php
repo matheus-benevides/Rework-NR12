@@ -854,8 +854,7 @@ require_once '../configs/conexao.php';
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="senha_colaborador_cad">Senha:</label>
-                        <input type="password" name="senha" id="senha_colaborador_cad" value="senaisp" readonly
-                            style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
+                        <input type="password" name="senha" id="senha_colaborador_cad" value="senaisp" readonly>
                     </div>
                 </div>
             </div>
@@ -938,8 +937,7 @@ require_once '../configs/conexao.php';
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="senha_colaborador_edit">Senha:</label>
-                        <input type="password" name="senha" id="senha_colaborador_edit" readonly
-                            style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
+                        <input type="password" name="senha" id="senha_colaborador_edit" readonly>
                     </div>
                 </div>
             </div>
@@ -1029,25 +1027,6 @@ require_once '../configs/conexao.php';
         </div>
     </div>
 </div>
-</div>
-
-<!-- Desativar Colaborador -->
-<div class="modal-fundo" id="desativarColaborador" style="display: none;">
-    <div class="modal-box" style="width: 400px; padding: 20px;">
-        <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Desativar Colaborador</h3>
-            <button onclick="closeModal('desativarColaborador')"><i class="bi bi-x-lg"></i></button>
-        </div>
-        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer desativar colaborador?</p>
-        </div>
-        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
-            <button onclick="closeModal('desativarColaborador')" type="button" class="btn-confirmar-full confirmar"
-                style="background-color: var(--corBase);">Não</button>
-        </div>
-    </div>
 </div>
 
 <!-- Resetar Senha Colaborador -->

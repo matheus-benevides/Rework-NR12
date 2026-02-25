@@ -411,7 +411,7 @@ hr {
 }
 
 .div-btns-pages {
-    width: 86%;
+    width: 90%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -432,7 +432,7 @@ hr {
     /* Spacing between search input and select */
     position: relative;
     width: auto;
-    background: var(--corFundo2);
+    background: transparent;
 }
 
 .box-pesquisa {
@@ -1196,8 +1196,8 @@ select {
 
 /* Foco mais elegante */
 .input-pesquisa:focus {
-    background: #ffffff !important;
-    border-color: #dc3545 !important;
+    background: var(--corFundo2) !important;
+    border-color: var(--corBase) !important;
     box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.12);
 }
 

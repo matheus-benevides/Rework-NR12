@@ -1,6 +1,6 @@
 <?php require "php/components/modals/acesso_negado.php"; ?>
 <!DOCTYPE html>
-<html lang="pt-br" data-tema="">
+<html lang="pt-br" data-tema="light">
 <!-- NÃO TIRA O DATA-TEMA DE JEITO NENHUM -->
 
 <head>
@@ -9,10 +9,9 @@
     <title>Login - SENAI MANUTENÇÃO</title>
 
     <!-- Estilização, BootstrapIcons e Favicon -->
-    <!-- Ajustado para style.css na raiz conforme estrutura do projeto -->
-     <link rel="stylesheet" href="css/login.css">
-     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     
@@ -22,6 +21,14 @@
 </head>
 
 <body class="body_login">
+
+    <div class="theme-switch-wrapper">
+        <div class="theme-toggle-btn" id="theme-toggle" onclick="toggleTheme()" title="Mudar clima">
+            <div class="toggle-thumb">
+                <i class="bi bi-sun-fill" id="theme-icon"></i>
+            </div>
+        </div>
+    </div>
 
     <?php
 if (isset($_GET['erro'])) {
@@ -41,11 +48,10 @@ if (isset($_GET['erro'])) {
 ?>
 
     <div class="login-bg">
-        <!-- Div de partículas injetada para o fundo interativo -->
-       <div id="particles-js"></div>    
+        <div id="particles-js"></div>
         <div class="login-box">
             <form class="login-form" action="php/actions/auth_login.php" method="POST">
-                <div class="div-img" id="">
+                <div class="div-img">
                     <img src="assets/imgs/senailogo1.png" alt="Logo Senai" id="senai-logo" style="width: 70%;">
                 </div>
                 <?php if (isset($erro))
@@ -62,7 +68,7 @@ if (isset($_GET['erro'])) {
                         <button type="button" onclick="showPass()" id="btnEyeLogin" class="btnEsp"><i class="bi bi-eye-fill"></i></button>
                     </div>
 
-                    <div class="div-btn">   
+                    <div class="div-btn">
                         <button type="submit" class="btn">Entrar <i class="bi bi-box-arrow-in-right"></i></button>
                         <button type="button" id="trocarForm" onclick="trocarForm1()">Entrar como aluno</button>
                     </div>
@@ -79,28 +85,57 @@ if (isset($_GET['erro'])) {
         </div>
     </div>
 
-     
-
     <!-- Carregando Js na página -->
-   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#030303" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.5, "random": false },
-                "size": { "value": 3, "random": true },
-                "line_linked": { "enable": true, "distance": 150, "color": "#ec0b0b", "opacity": 0.4, "width": 1 },
-                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
-                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
-            },
-            "retina_detect": true
-        });
+        const root = document.documentElement;
+        const themeIcon = document.getElementById('theme-icon');
+
+        function initParticles(color) {
+            if (window.pJSDom && window.pJSDom.length > 0) {
+                window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                window.pJSDom = [];
+            }
+            
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": color },
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": 0.5, "random": false },
+                    "size": { "value": 3, "random": true },
+                    "line_linked": { "enable": true, "distance": 150, "color": color, "opacity": 0.4, "width": 1 },
+                    "move": { "enable": true, "speed": 2.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                    "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
+                },
+                "retina_detect": true
+            });
+        }
+
+        function toggleTheme() {
+            const currentTheme = root.getAttribute('data-tema') || 'claro';
+            const newTheme = currentTheme === 'claro' ? 'escuro' : 'claro';
+            
+            root.setAttribute('data-tema', newTheme);
+            localStorage.setItem('tema', newTheme);
+            
+            updateThemeUI(newTheme);
+        }
+
+        function updateThemeUI(theme) {
+            const particleColor = theme === 'escuro' ? '#ff2b2b' : '#333333';
+            themeIcon.className = theme === 'escuro' ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
+            initParticles(particleColor);
+        }
+
+        // Iniciar com o tema salvo ou padrão light
+        const savedTheme = localStorage.getItem('tema') || 'claro';
+        root.setAttribute('data-tema', savedTheme);
+        updateThemeUI(savedTheme);
     </script>
     <script src="js/scripts.js" defer></script>
    

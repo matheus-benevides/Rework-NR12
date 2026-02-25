@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="../../css/nav.css">
   <link rel="stylesheet" href="../../css/style.css">
   <link rel="stylesheet" href="../../css/header.css">
-
   <link rel="stylesheet" href="../../css/modal.css">
+  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="shortcut icon" href="../../assets/icons/favicon.ico" type="image/x-icon">
 </head>

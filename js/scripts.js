@@ -352,10 +352,16 @@ function showModal(qual, id) {
         document.getElementById("deletarColaborador").style.display = "flex";
     } else if (qual == "desativarColaborador") {
         document.getElementById("desativarColaborador").style.display = "flex";
+        if (id) document.getElementById("id_colaborador_delete").value = id;
+    } else if (qual == "ativarColaborador") {
+        document.getElementById("ativarColaborador").style.display = "flex";
+        if (id) document.getElementById("id_colaborador_ativar").value = id;
     } else if (qual == 'resetPass') {
         document.getElementById('resetPass').style.display = 'flex';
         document.getElementById("id_usuario_reset").value = id;
     } else if (qual == "adicaoMotor") {
+        document.getElementById('adicaoMotor').style.display = "flex";
+    } else if (qual == "editarMotor") {
         document.getElementById('adicaoMotor').style.display = "flex";
     } else if (qual == "editarMotor") {
         document.getElementById('editarMotor').style.display = "flex";
@@ -444,8 +450,10 @@ function closeModal(qual) {
         document.getElementById("editarColaborador").style.display = "none";
     } else if (qual == "deletarColaborador") {
         document.getElementById("deletarColaborador").style.display = "none";
-    } else if (qual == "desativarColaborador") {
+     } else if (qual == "desativarColaborador") {
         document.getElementById("desativarColaborador").style.display = "none";
+    } else if (qual == "ativarColaborador") {
+        document.getElementById("ativarColaborador").style.display = "none";
     } else if (qual == 'resetPass') {
         document.getElementById('resetPass').style.display = "none";
     } else if (qual == "adicaoMotor") {

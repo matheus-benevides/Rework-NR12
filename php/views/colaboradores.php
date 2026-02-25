@@ -82,9 +82,10 @@
                         $sql = "SELECT c.*, s.setor_nome 
                                 FROM colaborador c
                                 LEFT JOIN setor s ON s.idsetor = c.setor_id
-                                WHERE c.idcolaborador LIKE '%$termo_seguro%' 
-                                OR c.colaborador_nome LIKE '%$termo_seguro%' 
-                                OR c.colaborador_status LIKE '%$termo_seguro%'";
+                                WHERE c.colaborador_nome LIKE '%$termo_seguro%' 
+                                OR c.colaborador_nif LIKE '%$termo_seguro%' 
+                                OR c.colaborador_email LIKE '%$termo_seguro%' 
+                                OR s.setor_nome LIKE '%$termo_seguro%'";
                     } else {
                         $sql = "SELECT c.*, s.setor_nome 
                                 FROM colaborador c
