@@ -1,0 +1,136 @@
+<?php require '../controllers/validar_acesso.php'; ?>
+<?php require '../configs/conexao.php'; ?>
+<?php require '../components/modals/all_modals.php'; ?>
+
+<!DOCTYPE html>
+<html lang="pt-br" data-tema="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Agendamento - NR12</title>
+
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/nav.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/modal.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
+
+</head>
+
+<body>
+    <?php require '../components/nav.php'; ?>
+
+    <section class="sec-main">
+
+        <?php require '../components/header.php'; ?>
+
+        <div class="div-btns-pages">
+
+                        <form action="" method="GET" class="form-pesquisa">
+                <div class="search-container">
+                    <?php
+                    // Captura o valor atual para manter no input
+                    $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
+                    ?>
+                    <div class="box-pesquisa">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
+                            placeholder="Pesquisar..." class="input-pesquisa">
+                        
+                        <?php if ($busca_atual): ?>
+                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
+                        <?php endif; ?>
+                    </div>
+                    <div class="filtrar-status">
+                        <label for="">Status:</label>
+                        <select id="select-filtro-agendamento" name="filtro-status" onchange="filtrarProximaManutencao()">
+                            <option value="todos">Todos</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
+                    <!-- Hidden submit button to allow Enter to search -->
+                    <button type="submit" style="display: none;"></button>
+                </div>
+            </form>
+
+            <button class="btn" onclick="showModal('adicaoMaquina')">Adicionar Próxima Manuntenção<i
+                    class="bi bi-plus-circle"></i></button>
+        </div>
+
+        <div class="tabela-bg2">
+            <table class="tabela-main">
+                <thead>
+                    <th>Modelo</th>
+                    <th>Ano</th>
+                    <th>Intervalo</th>
+                    <th>Proxima Manuntenção</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </thead>
+                <tbody id="tabela-agendamento">
+                    <?php
+
+                    if (!empty($busca_atual)) {
+                        $termo_seguro = $conn->real_escape_string($busca_atual);
+
+                        $sql = "SELECT * FROM maquina WHERE 
+                                maquina_modelo LIKE '%$termo_seguro%' OR
+                                intervalo_manutencao LIKE '%$termo_seguro%' OR 
+                                data_proxima_manutencao LIKE '%$termo_seguro%'";
+                    } else {
+                        $sql = "SELECT * FROM maquina";
+                    }
+
+                    $resultado = $conn->query($sql);
+
+                    if ($resultado && $resultado->num_rows > 0) {
+                        while ($linha = $resultado->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $linha["maquina_modelo"] . "</td>";
+                            echo "<td>" . $linha["maquina_ano"] . "</td>";
+                            echo "<td>" . $linha["intervalo_manutencao"] . "</td>";
+                            echo "<td>" . $linha["data_proxima_manutencao"] . "</td>";
+
+                            $status = strtolower($linha["maquina_status"]);
+
+                            if ($status == 'ativo') {
+                                $classe = 'status-ativo';
+                            } else {
+                                $classe = 'status-inativo';
+                            }
+
+                            echo "<td><span class='$classe'>" . $linha["maquina_status"] . "</span></td>";
+                            // Botões de Ação
+                            echo "<td>
+                                    <div>
+                                        <button class='btnAcao editar' type='button' onclick=\"showModal('editarMaquina', " . $linha['idmaquina'] . ")\"><i class='bi bi-pencil-square'></i></button>
+                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('excluirMaquina', " . $linha['idmaquina'] . ",'')\"><i class='bi bi-trash'></i></button>
+                                    </div>
+                                  </td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='8' style='text-align:center; padding:15px;'>Nenhuma máquina encontrada.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="div-btns-change">
+            <button id="btn-ant" type="button"><i class="bi bi-chevron-left"></i></button>
+
+            <button id="btn-prox" type="button"><i class="bi bi-chevron-right"></i></button>
+        </div>
+
+    </section>
+
+    <script src="../../js/scripts.js" defer></script>
+</body>
+
+</html>
