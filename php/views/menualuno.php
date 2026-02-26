@@ -104,8 +104,8 @@
                     <div class="modal-input">
                         <label for="">Pressione a opção que deseja</label>
                         <div class="input-wrapper" style="display: flex; justify-content: space-between">
-                            <button type="submit" class="btn-confirmar-metade clipes" style="width: 49%">Checklist Operacional <i class="bi bi-plus-lg"></i></button>
-                            <button type="submit" class="btn-confirmar-metade clipes" style="width: 49%">Checklist de Segurança<i class="bi bi-plus-lg"></i></button>
+                            <button type="button" onclick="showModal('checkOperacional')" class="btn-confirmar-metade clipes" style="width: 49%">Checklist Operacional <i class="bi bi-plus-lg"></i></button>
+                            <button type="button" onclick="showModal('checkSeguranca')" class="btn-confirmar-metade clipes" style="width: 49%">Checklist de Segurança<i class="bi bi-plus-lg"></i></button>
                         </div>
                     </div>
                 </div>

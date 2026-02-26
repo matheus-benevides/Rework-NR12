@@ -76,15 +76,15 @@ function showPass() {
     // Coleto e armazenos o Btn do Olho e o Input de Senha
 
     let eye = document.getElementById("btnEyeLogin");
-    let inputPass = document.getElementById("senhaLogin");
+    let inputPass = document.getElementById("senha");
 
 
-    if (eye.innerHTML.match('<i class="bi bi-eye-slash"></i>')) {
+    if (inputPass.type == "password") {
         inputPass.type = "text";
-        eye.innerHTML = '<i class="bi bi-eye-fill"></i>';
+        eye.innerHTML = '<i class="bi bi-eye-slash"></i>';
     } else {
         inputPass.type = "password";
-        eye.innerHTML = '<i class="bi bi-eye-slash"></i>';
+        eye.innerHTML = '<i class="bi bi-eye-fill"></i>';
     }
     console.log(inputPass.type);
     console.log(eye.innerHTML);
@@ -409,6 +409,10 @@ function showModal(qual, id) {
         document.getElementById("sucesso").style.display = "flex";
     } else if (qual == "adicaoRequisito") {
         document.getElementById("adicaoRequisito").style.display = "flex";
+    } else if (qual == "checkOperacional") {
+        document.getElementById("checkOperacional").style.display = "flex";
+    } else if (qual == "checkSeguranca") {
+        document.getElementById("checkSeguranca").style.display = "flex";
     }
 }
 
@@ -519,6 +523,10 @@ function closeModal(qual) {
         document.getElementById("changePassword").style.display = "none";
     } else if (qual == "sucesso") {
         document.getElementById("sucesso").style.display = "none";
+    } else if (qual == "checkOperacional") {
+        document.getElementById("checkOperacional").style.display = "none";
+    } else if (qual == "checkSeguranca") {
+        document.getElementById("checkSeguranca").style.display = "none";
     } else {
         const acesso = document.getElementById("acesso");
         if (acesso) acesso.style.display = "none";
@@ -2126,33 +2134,41 @@ function fecharScanner() {
 
 // --- Drag & Drop Genérico para Modais de Lote ---
 document.querySelectorAll(".arquivos-div").forEach(dropArea => {
+
     const fileInput = dropArea.querySelector("input[type='file']");
-    const labelArquivo = dropArea.querySelector("p[id^='label-arquivo']");
+    const labelArquivo = dropArea.querySelector(".label-arquivo");
+    const form = dropArea.closest("form");
 
-    if (!fileInput || !labelArquivo) return;
+    if (!fileInput || !form) return;
 
-    // Tipos permitidos
+    // Cria área de preview automaticamente se não existir
+    let previewArea = form.querySelector(".preview-arquivos");
+    if (!previewArea) {
+        previewArea = document.createElement("div");
+        previewArea.classList.add("preview-arquivos");
+        form.insertBefore(previewArea, form.querySelector(".modal-footer"));
+    }
+
+    let arquivosSelecionados = [];
+
     const tiposPermitidos = [
         "text/csv",
         "application/vnd.ms-excel",
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     ];
 
-    // Clique abre o input
+    // Clique abre input
     dropArea.addEventListener("click", (e) => {
-        if (e.target !== fileInput) {
-            fileInput.click();
-        }
+        if (e.target !== fileInput) fileInput.click();
     });
 
-    // Quando seleciona pelo input
+    // Seleção pelo input
     fileInput.addEventListener("change", () => {
-        if (fileInput.files.length > 0) {
-            validarArquivo(fileInput.files[0], fileInput, labelArquivo);
-        }
+        adicionarArquivos(fileInput.files);
+        fileInput.value = "";
     });
 
-    // Drag & Drop
+    // Drag Over
     dropArea.addEventListener("dragover", (e) => {
         e.preventDefault();
         dropArea.style.borderColor = "var(--corDestaque)";
@@ -2160,31 +2176,80 @@ document.querySelectorAll(".arquivos-div").forEach(dropArea => {
     });
 
     dropArea.addEventListener("dragleave", () => {
-        dropArea.style.borderColor = "var(--corBase)";
-        dropArea.style.background = "var(--corFundo)";
+        resetDropStyle();
     });
 
+    // Drop
     dropArea.addEventListener("drop", (e) => {
         e.preventDefault();
-        dropArea.style.borderColor = "var(--corBase)";
-        dropArea.style.background = "var(--corFundo)";
-
-        const arquivo = e.dataTransfer.files[0];
-        if (arquivo) {
-            fileInput.files = e.dataTransfer.files;
-            validarArquivo(arquivo, fileInput, labelArquivo);
-        }
+        resetDropStyle();
+        adicionarArquivos(e.dataTransfer.files);
     });
 
-    // Validação
-    function validarArquivo(arquivo, input, label) {
-        if (!tiposPermitidos.includes(arquivo.type)) {
-            alert("Arquivo inválido. Envie um .csv, .xls ou .xlsx");
-            input.value = "";
-            label.textContent = "Arraste ou Pressione o Arquivo.";
+    function resetDropStyle() {
+        dropArea.style.borderColor = "var(--corBase)";
+        dropArea.style.background = "var(--corFundo)";
+    }
+
+    function adicionarArquivos(files) {
+        Array.from(files).forEach(file => {
+
+            if (!tiposPermitidos.includes(file.type)) {
+                alert("Arquivo inválido. Envie .csv, .xls ou .xlsx");
+                return;
+            }
+
+            arquivosSelecionados.push(file);
+        });
+
+        atualizarPreview();
+    }
+
+    function atualizarPreview() {
+        previewArea.innerHTML = "";
+
+        arquivosSelecionados.forEach((file, index) => {
+
+            const item = document.createElement("div");
+            item.classList.add("arquivo-item");
+
+            item.innerHTML = `
+                <span>${file.name}</span>
+                <button type="button" class="remover-arquivo">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            `;
+
+            item.querySelector("button").addEventListener("click", () => {
+                arquivosSelecionados.splice(index, 1);
+                atualizarPreview();
+            });
+
+            previewArea.appendChild(item);
+        });
+
+        labelArquivo.textContent =
+            arquivosSelecionados.length > 0
+                ? `${arquivosSelecionados.length} arquivo(s) selecionado(s)`
+                : "Arraste ou Pressione o Arquivo.";
+    }
+
+    // Se for enviar via fetch ou AJAX
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        if (arquivosSelecionados.length === 0) {
+            alert("Selecione pelo menos um arquivo.");
             return;
         }
 
-        label.textContent = `Arquivo selecionado: ${arquivo.name}`;
-    }
+        const formData = new FormData();
+
+        arquivosSelecionados.forEach(file => {
+            formData.append("arquivo[]", file);
+        });
+        
+        console.log("Arquivos prontos para envio:", arquivosSelecionados);
+    });
+
 });

@@ -203,6 +203,17 @@ h1 {
     position: relative;
 }
 
+.input-wrapperLote {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+}
+
 .modal-input input,
 .modal-input textarea,
 .modal-input select {
@@ -475,4 +486,44 @@ input[type='file'] {
         /* Joga a imagem para cima do texto no celular */
         margin-bottom: 20px;
     }
+}
+
+/* CSS para aparecer listado os arquivos em Lote e o "X" */
+
+#preview-arquivos-curso {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.arquivo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--corFundo);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--corBordas);
+}
+
+.arquivo-item span {
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.remover-arquivo {
+    background: none;
+    border: none;
+    color: var(--corErro);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.remover-arquivo:hover {
+    scale: 0.9;
 }

@@ -33,22 +33,25 @@ require_once '../configs/conexao.php';
 </div>
 
 <!-- Adicionar Curso em Lote -->
-<div class="modal-fundo" id="cursosLote" style="display: none">
+<div class="modal-fundo" id="cursosLote">
     <div class="modal-box">
         <div class="modal-header">
-            <h3>Cadastro em Lote - Cursos</h3>
+            <h3>Cadastro em Lote</h3>
             <button class="" onclick="closeModal('cursosLote')"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form id="form-cad-curso-lote" class="modal-form">
-            <label for="arquivoCurso" class="modal-input arquivos-div">
-                <div class="input-wrapper" id="arquivos-input-curso">
+        <form id="form-cad-curso" class="modal-form">
+            <label for="arquivo" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
-                    <p id="label-arquivo-curso">Arraste ou Pressione o Arquivo.</p>
+                    <p class="label-arquivo" id="label-arquivo">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivoCurso" accept=".csv, .xlsx, .xls">
+                    <input type="file" name="arquivo" id="arquivo" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
+            <div class="modal-input">
+
+            </div>
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
@@ -215,22 +218,25 @@ require_once '../configs/conexao.php';
 </div>
 
 <!-- Adicionar Turma em Lote -->
-<div class="modal-fundo" id="turmasLote" style="display: none">
+<div class="modal-fundo" id="turmasLote">
     <div class="modal-box">
         <div class="modal-header">
-            <h3>Cadastro em Lote - Turmas</h3>
+            <h3>Cadastro em Lote</h3>
             <button class="" onclick="closeModal('turmasLote')"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form id="form-cad-turma-lote" class="modal-form">
-            <label for="arquivoTurma" class="modal-input arquivos-div">
-                <div class="input-wrapper" id="arquivos-input-turma">
+        <form id="form-cad-aluno" class="modal-form">
+            <label for="arquivo" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
-                    <p id="label-arquivo-turma">Arraste ou Pressione o Arquivo.</p>
+                    <p class="label-arquivo" id="label-arquivo">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivoTurma" accept=".csv, .xlsx, .xls">
+                    <input type="file" name="arquivo" id="arquivo" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
+            <div class="modal-input">
+
+            </div>
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
@@ -436,9 +442,9 @@ require_once '../configs/conexao.php';
                 <div class="input-wrapper" id="arquivos-input">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
-                    <p id="label-arquivo">Arraste ou Pressione o Arquivo.</p>
+                    <p class="label-arquivo" id="label-arquivo">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivo" accept=".csv, .xlsx, .xls">
+                    <input type="file" name="arquivo" id="arquivo" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
             <div class="modal-input">
@@ -451,7 +457,6 @@ require_once '../configs/conexao.php';
         </form>
     </div>
 </div>
-
 
 <!-- Editar Aluno -->
 <div class="modal-fundo" id="edicaoAluno" style="display: none">
@@ -654,9 +659,9 @@ require_once '../configs/conexao.php';
                 <div class="input-wrapper" id="arquivos-input-unidade">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
-                    <p id="label-arquivo-unidade">Arraste ou Pressione o Arquivo.</p>
+                    <p class="label-arquivo" id="label-arquivo-unidade">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivoUnidade" accept=".csv, .xlsx, .xls">
+                    <input type="file" name="arquivo" id="arquivoUnidade" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
             <div class="modal-footer">
@@ -845,9 +850,9 @@ require_once '../configs/conexao.php';
                 <div class="input-wrapper" id="arquivos-input-setor">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
-                    <p id="label-arquivo-setor">Arraste ou Pressione o Arquivo.</p>
+                    <p class="label-arquivo" id="label-arquivo-setor">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivoSetor" accept=".csv, .xlsx, .xls">
+                    <input type="file" name="arquivo" id="arquivoSetor" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
             <div class="modal-footer">
@@ -1042,9 +1047,9 @@ require_once '../configs/conexao.php';
                 <div class="input-wrapper" id="arquivos-input-colaborador">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
-                    <p id="label-arquivo-colaborador">Arraste ou Pressione o Arquivo.</p>
+                    <p class="label-arquivo" id="label-arquivo-colaborador">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivoColaborador" accept=".csv, .xlsx, .xls">
+                    <input type="file" name="arquivo" id="arquivoColaborador" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
             <div class="modal-footer">
@@ -2032,6 +2037,112 @@ require_once '../configs/conexao.php';
                 <label for="nome_requisito_cad">Nome:</label>
                 <div class="input-wrapper">
                     <input type="text" id="nome_requisito_cad" placeholder="Ex: Botão de Emergência">
+                </div>
+            </div>
+
+            <div class="modal-row">
+                <div class="modal-input">
+                    <label for="tipo_requisito_cad">Tipo de Requisito:</label>
+                    <div class="input-wrapper">
+                        <select id="tipo_requisito_cad">
+                            <option value="" disabled selected>Selecione o Tipo</option>
+                            <option value="Seguranca">Segurança</option>
+                            <option value="Operacional">Operacional</option>
+                            <option value="Preventivo">Preventivo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">
+                    Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Check Segurança -->
+<div class="modal-fundo" id="checkSeguranca" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Requisitos de Segurança</h3>
+            <button class="" onclick="closeModal('checkSeguranca')"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <form id="form-cad-requisito" class="modal-form">
+            <div class="modal-input">
+                <label for="nome_requisito_cad">Colaborador:</label>
+                <div class="input-wrapper">
+                    <select name="colaborador" id="colaborador">
+                        <option value="" selected disabled>Selecione um colaborador</option>
+                        <?php
+                        $sqlBusca = "SELECT idcolaborador, colaborador_nome, colaborador_email FROM colaborador WHERE colaborador_status = 'Ativo'";
+                        $stmt = $conn->prepare($sqlBusca);
+                        $stmt->execute();
+                        $resultado = $stmt->get_result();
+                        // O while percorre todas as linhas retornadas do banco
+                        while ($linha = $resultado->fetch_assoc()) {
+                            // idcolaborador no value, nome e email no texto visível
+                            echo '<option value="' . $linha['idcolaborador'] . '">'
+                                . $linha['colaborador_nome'] . ' - ' . $linha['colaborador_email'] . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-row">
+                <div class="modal-input">
+                    <label for="tipo_requisito_cad">Tipo de Requisito:</label>
+                    <div class="input-wrapper">
+                        <select id="tipo_requisito_cad">
+                            <option value="" disabled selected>Selecione o Tipo</option>
+                            <option value="Seguranca">Segurança</option>
+                            <option value="Operacional">Operacional</option>
+                            <option value="Preventivo">Preventivo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">
+                    Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Check de Operacional -->
+<div class="modal-fundo" id="checkOperacional" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Requisitos Operacionais</h3>
+            <button class="" onclick="closeModal('checkOperacional')"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <form id="form-cad-requisito" class="modal-form">
+            <div class="modal-input">
+                <label for="nome_requisito_cad">Colaborador:</label>
+                <div class="input-wrapper">
+                    <select name="colaborador" id="colaborador">
+                        <option value="" selected disabled>Selecione um colaborador</option>
+                        <?php
+                        $sqlBusca = "SELECT idcolaborador, colaborador_nome, colaborador_email FROM colaborador WHERE colaborador_status = 'Ativo'";
+                        $stmt = $conn->prepare($sqlBusca);
+                        $stmt->execute();
+                        $resultado = $stmt->get_result();
+                        // O while percorre todas as linhas retornadas do banco
+                        while ($linha = $resultado->fetch_assoc()) {
+                            // idcolaborador no value, nome e email no texto visível
+                            echo '<option value="' . $linha['idcolaborador'] . '">'
+                                . $linha['colaborador_nome'] . ' - ' . $linha['colaborador_email'] . '</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
 
