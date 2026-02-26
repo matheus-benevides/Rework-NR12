@@ -1233,3 +1233,58 @@ async function resetarSenha(id) {
 }
 
 window.resetarSenha = resetarSenha;
+
+// --- CHECKLISTS ALUNO ---
+
+async function enviarChecklist(event, tipo) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = {
+        tipo_checklist: tipo,
+        colaborador_id: formData.get('colaborador_id'),
+        requisitos_ids: formData.getAll('requisitos_ids[]'),
+        requisitos_especifico_ids: formData.getAll('requisitos_especifico_ids[]')
+    };
+
+    const button = form.querySelector('button[type="submit"]');
+    const originalText = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<i class="bi bi-hourglass-split"></i> Enviando...';
+
+    try {
+        const response = await fetch('../apis/processa_checklist.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: result.mensagem,
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                closeModal(check\);
+                location.reload();
+            });
+        } else {
+            throw new Error(result.mensagem || 'Erro ao processar checklist.');
+        }
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro!',
+            text: error.message
+        });
+    } finally {
+        button.disabled = false;
+        button.innerHTML = originalText;
+    }
+}
+
+window.enviarChecklist = enviarChecklist;

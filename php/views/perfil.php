@@ -99,7 +99,7 @@
 
         <div class="modal-footer">
           <button type="submit" class="btn-confirmar-full deletar" onclick="window.location.href='../actions/logout.php'">
-            Sair <i class="bi bi-plus-lg"></i>
+            Sair <i class="bi bi-door-closed-fill"></i>
           </button>
         </div>
       </form>

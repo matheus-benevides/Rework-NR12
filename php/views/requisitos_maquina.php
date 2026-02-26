@@ -30,7 +30,7 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
 
     <link rel="stylesheet" href="../../css/global.css">
     <link rel="stylesheet" href="../../css/nav.css">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">  
     <link rel="stylesheet" href="../../css/header.css">
     <link rel="stylesheet" href="../../css/modal.css">
     

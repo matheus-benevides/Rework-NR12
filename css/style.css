@@ -257,6 +257,8 @@ hr {
 .tabela-bg table tbody tr,
 .tabela-bg2 table tbody tr {
     height: 50px;
+    max-height: 50px;
+    min-height: 50px;
     color: var(--corTxt3);
     transition: all 0.3s ease;
     /* adiciona transição suave para hover */
@@ -286,46 +288,9 @@ hr {
     box-shadow: var(--sombra);
 }
 
-@media (max-width: 768px) {
-
-    .tabela-bg,
-    .tabela-bg2 {
-        overflow-x: visible;
-        border-radius: 0;
-        margin-left: 14px;
-    }
-
-    .tabela-bg table,
-    .tabela-bg2 table {
-        min-width: 600px;
-    }
-
-    .tabela-bg table thead th,
-    .tabela-bg2 table thead th {
-        padding: 8px 5px;
-        min-width: 80px;
-        font-size: 12px;
-    }
-
-    .tabela-bg table tbody tr,
-    .tabela-bg2 table tbody tr {
-        height: 35px;
-    }
-
-    .tabela-bg table tbody td,
-    .tabela-bg2 table tbody td {
-        padding: 5px 3px;
-        font-size: 12px;
-    }
-
-    .div-tabelas {
-        height: auto;
-        padding: 10px;
-    }
-
-    .div-btns-pages div {
-        width: 100%;
-    }
+.div-tabelas{
+    width: 90%;
+    padding: 10px;
 }
 
 .btnAcao {
@@ -517,442 +482,6 @@ hr {
 
 .btn-clear-search:hover {
     color: #dc2626 !important;
-}
-
-/* Aq */
-@media (max-width: 768px) {
-
-    .div-btns-pages form {
-        flex-direction: column;
-    }
-
-    .div-header {
-        font-size: var(--text-sm);
-    }
-
-    .div-txt-header p span:last-child {
-        font-size: 0px;
-    }
-
-    .div-header {
-        font-size: var(--text-sm);
-    }
-
-    .div-txt-header p span:last-child {
-        font-size: 0px;
-    }
-
-    .card {
-        width: 100%;
-        max-height: 180px;
-        justify-content: sp;
-    }
-
-    .card-box {
-        flex-direction: row;
-    }
-
-    .card-info-tutorial {
-        font-size: var(--text-sm);
-    }
-
-    .div-btns-pages {
-        padding: 5px;
-        flex-wrap: wrap;
-        gap: 15px;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .search-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .box-pesquisa {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .input-pesquisa {
-        width: 100% !important;
-    }
-
-    .btn-clear-search {
-        right: 14px;
-    }
-
-    .div-tabelas {
-        position: relative;
-        top: 35%;
-    }
-
-    .div-btns-pages>.btn {
-        width: auto !important;
-        /* overrides previous 45px broken logic */
-        align-self: flex-start;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        font-size: var(--text-sm) !important;
-        padding: 10px 15px;
-    }
-
-    .div-btns-pages>.btn:first-of-type {
-        font-size: var(--text-sm) !important;
-        /* reveal the text again */
-    }
-
-    .div-btns-pages>.btn i {
-        font-size: var(--text-sm);
-    }
-
-    .card-info-tutorial {
-        margin-top: 0px;
-    }
-
-    .quick-actions {
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .btn-quick {
-        width: 100%;
-    }
-}
-
-select {
-    cursor: pointer;
-}
-
-/* Aq */
-@media (max-width: 768px) {
-
-    .div-btns-pages form {
-        flex-direction: column;
-    }
-
-    .div-header {
-        font-size: var(--text-sm);
-    }
-
-    .div-txt-header p span:last-child {
-        font-size: 0px;
-    }
-
-    .div-header {
-        font-size: var(--text-sm);
-    }
-
-    .div-txt-header p span:last-child {
-        font-size: 0px;
-    }
-
-    .card {
-        width: 100%;
-        max-height: 180px;
-        justify-content: sp;
-    }
-
-    .card-box {
-        flex-direction: row;
-    }
-
-    .card-info-tutorial {
-        font-size: var(--text-sm);
-    }
-
-    .div-btns-pages {
-        padding: 5px;
-        flex-wrap: wrap;
-        gap: 15px;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .search-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .box-pesquisa {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .input-pesquisa {
-        width: 100% !important;
-    }
-
-    .btn-clear-search {
-        right: 14px;
-    }
-
-    .div-tabelas {
-        position: relative;
-        top: 35%;
-    }
-
-    .div-btns-pages>.btn {
-        width: auto !important;
-        /* overrides previous 45px broken logic */
-        align-self: flex-start;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        font-size: var(--text-sm) !important;
-        padding: 10px 15px;
-    }
-
-    .div-btns-pages>.btn:first-of-type {
-        font-size: var(--text-sm) !important;
-        /* reveal the text again */
-    }
-
-    .div-btns-pages>.btn i {
-        font-size: var(--text-sm);
-    }
-
-    .card-info-tutorial {
-        margin-top: 0px;
-    }
-
-    .quick-actions {
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .btn-quick {
-        width: 100%;
-    }
-}
-
-select {
-    cursor: pointer;
-}
-
-/* Aq */
-@media (max-width: 768px) {
-
-    .div-btns-pages form {
-        flex-direction: column;
-    }
-
-    .div-header {
-        font-size: var(--text-sm);
-    }
-
-    .div-txt-header p span:last-child {
-        font-size: 0px;
-    }
-
-    .div-header {
-        font-size: var(--text-sm);
-    }
-
-    .div-txt-header p span:last-child {
-        font-size: 0px;
-    }
-
-    .card {
-        width: 100%;
-        max-height: 180px;
-        justify-content: sp;
-    }
-
-    .card-box {
-        flex-direction: row;
-    }
-
-    .card-info-tutorial {
-        font-size: var(--text-sm);
-    }
-
-    .div-btns-pages {
-        padding: 5px;
-        flex-wrap: wrap;
-        gap: 15px;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .search-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .box-pesquisa {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .input-pesquisa {
-        width: 100% !important;
-    }
-
-    .btn-clear-search {
-        right: 14px;
-    }
-
-    .div-tabelas {
-        position: relative;
-        top: 35%;
-    }
-
-    .div-btns-pages>.btn {
-        width: auto !important;
-        /* overrides previous 45px broken logic */
-        align-self: flex-start;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        font-size: var(--text-sm) !important;
-        padding: 10px 15px;
-    }
-
-    .div-btns-pages>.btn:first-of-type {
-        font-size: var(--text-sm) !important;
-        /* reveal the text again */
-    }
-
-    .div-btns-pages>.btn i {
-        font-size: var(--text-sm);
-    }
-
-    .card-info-tutorial {
-        margin-top: 0px;
-    }
-
-    .quick-actions {
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .btn-quick {
-        width: 100%;
-    }
-}
-
-select {
-    cursor: pointer;
-}
-
-/* Aq */
-@media (max-width: 768px) {
-
-    .div-btns-pages form {
-        flex-direction: column;
-    }
-
-    .div-header {
-        font-size: var(--text-sm);
-    }
-
-    .div-txt-header p span:last-child {
-        font-size: 0px;
-    }
-
-    .div-header {
-        font-size: var(--text-sm);
-    }
-
-    .div-txt-header p span:last-child {
-        font-size: 0px;
-    }
-
-    .card {
-        width: 100%;
-        max-height: 180px;
-        justify-content: sp;
-    }
-
-    .card-box {
-        flex-direction: row;
-    }
-
-    .card-info-tutorial {
-        font-size: var(--text-sm);
-    }
-
-    .div-btns-pages {
-        padding: 5px;
-        flex-wrap: wrap;
-        gap: 15px;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .search-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .box-pesquisa {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .input-pesquisa {
-        width: 100% !important;
-    }
-
-    .btn-clear-search {
-        right: 14px;
-    }
-
-    .div-tabelas {
-        position: relative;
-        top: 35%;
-    }
-
-    .div-btns-pages>.btn {
-        width: auto !important;
-        /* overrides previous 45px broken logic */
-        align-self: flex-start;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        font-size: var(--text-sm) !important;
-        padding: 10px 15px;
-    }
-
-    .div-btns-pages>.btn:first-of-type {
-        font-size: var(--text-sm) !important;
-        /* reveal the text again */
-    }
-
-    .div-btns-pages>.btn i {
-        font-size: var(--text-sm);
-    }
-
-    .card-info-tutorial {
-        margin-top: 0px;
-    }
-
-    .quick-actions {
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .btn-quick {
-        width: 100%;
-    }
 }
 
 select {
@@ -1386,67 +915,47 @@ select {
     }
 }
 
-@media (max-width: 1024px) {
-    .doc-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .doc-card.full-width {
-        grid-column: span 1;
-    }
-
-    .doc-hero {
+@media (max-width: 768px) {
+    .div-btns-pages{
         flex-direction: column;
-        text-align: center;
-        gap: 20px;
+        width: 50%;
     }
 
-    .doc-list {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ============================= */
-/* AJUSTE REAL PARA MOBILE 360px */
-/* ============================= */
-
-@media (max-width: 480px) {
-
-    .div-tabelas {
-        position: relative;
-        top: 0;
-        margin-top: 20px;
-        height: auto;
-    }
-
-    .tabela-bg,
-    .tabela-bg2 {
-        position: relative;
-        height: 65vh;
-        max-height: 65vh;
-        overflow-y: auto;
-        overflow-x: auto;
+    .btn{
         margin-top: 15px;
-    }
-
-    .tabela-bg table,
-    .tabela-bg2 table {
-        position: relative;
         width: 100%;
-        min-width: 600px;
     }
 
-    .tabela-bg table tbody tr,
-    .tabela-bg2 table tbody tr {
-        height: 40px;
+    .div-btns-pages form{
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        justify-content: flex-start;
     }
 
-    .status-dashboard {
-        margin-bottom: 15px;
+    .search-container{
+        width: 350px;
     }
 
-    .div-btns-pages {
-        margin-bottom: 10px;
+    .tabela-bg tabl, .tabele-bg2 table{
+        width: 50%;
+        overflow-x: auto;
     }
 
-}
+    .div-tabelas{
+        width: 50%;
+        overflow-x: auto;
+    }
+    
+    .hero-content h1{
+        font-size: var(--text-2xl);
+    }
+
+    .doc-grid{
+        display: flex;
+        flex-direction: column;
+        height: 45%;
+        padding-bottom: 15px;
+    } 
+} 
+/* bro, não faz sol */

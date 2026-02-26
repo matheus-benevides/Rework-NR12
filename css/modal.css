@@ -447,47 +447,6 @@ input[type='file'] {
     flex-direction: column;
 }
 
-@media (max-width: 768px) {
-    .modal-notificacao {
-        width: 80%;
-    }
-
-    #fechar-modal {
-        font-size: 1.75rem;
-        top: 25%;
-        left: 90%;
-    }
-
-    .modal-fundo,
-    .modal-fundo2 {
-        scale: 1;
-    }
-
-    .modal-box {
-        width: 80%;
-    }
-
-    .modal-row i {
-        position: relative;
-        left: -50%;
-    }
-
-}
-
-/* --- RESPONSIVIDADE (Para celular) --- */
-@media (max-width: 768px) {
-    .modal-body-layout {
-        grid-template-columns: 1fr;
-        /* Vira uma coluna só */
-    }
-
-    .image-section {
-        order: -1;
-        /* Joga a imagem para cima do texto no celular */
-        margin-bottom: 20px;
-    }
-}
-
 /* CSS para aparecer listado os arquivos em Lote e o "X" */
 
 #preview-arquivos-curso {
@@ -526,4 +485,45 @@ input[type='file'] {
 
 .remover-arquivo:hover {
     scale: 0.9;
+}
+
+@media (max-width: 768px) {
+    .arquivos-div {
+        height: 250px;
+    }
+
+    .modal-body-layout {
+        grid-template-columns: 1fr;
+        /* Vira uma coluna só */
+    }
+
+    .image-section {
+        order: -1;
+        /* Joga a imagem para cima do texto no celular */
+        margin-bottom: 20px;
+    }
+
+        .modal-notificacao {
+        width: 80%;
+    }
+
+    #fechar-modal {
+        font-size: 1.75rem;
+        top: 25%;
+        left: 90%;
+    }
+
+    .modal-fundo,
+    .modal-fundo2 {
+        scale: 1;
+    }
+
+    .modal-box {
+        width: 80%;
+    }
+
+    .modal-row i {
+        position: relative;
+        left: -50%;
+    }
 }

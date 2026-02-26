@@ -1,5 +1,6 @@
 <?php require "../controllers/validar_acesso.php"; ?>
 <?php require '../components/modals/all_modals.php'; ?>
+<?php require '../components/modals/aluno_modals.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br" data-tema="">
@@ -32,37 +33,37 @@
 
                 <div class="modal-row">
                     <label style="color: var(--corDestaque);">Turma: <?php
-                                    // 1. Busca a Turma
-                                    $sqlBusca = "SELECT * FROM turmas WHERE idturmas = ?";
-                                    $stmt = $conn->prepare($sqlBusca);
-                                    $stmt->bind_param("i", $turma_usuario);
-                                    $stmt->execute();
-                                    $resultado = $stmt->get_result();
+                    // 1. Busca a Turma
+                    $sqlBusca = "SELECT * FROM turmas WHERE idturmas = ?";
+                    $stmt = $conn->prepare($sqlBusca);
+                    $stmt->bind_param("i", $turma_usuario);
+                    $stmt->execute();
+                    $resultado = $stmt->get_result();
 
-                                    if ($linha = $resultado->fetch_assoc()) {
-                                        // Exibe o nome da turma (certifique-se se é 'turma_nome' ou 'turmas_nome' no seu banco)
-                                        echo "Turma: " . ($linha['turma_nome'] ?? $linha['turmas_nome']);
+                    if ($linha = $resultado->fetch_assoc()) {
+                        // Exibe o nome da turma (certifique-se se é 'turma_nome' ou 'turmas_nome' no seu banco)
+                        echo "Turma: " . ($linha['turma_nome'] ?? $linha['turmas_nome']);
 
-                                        $curso_id = $linha['curso_id'];
+                        $curso_id = $linha['curso_id'];
 
-                                        // 2. Busca o Curso (usando nomes de variáveis diferentes para não confundir)
-                                        $sqlCurso = "SELECT * FROM curso WHERE idcurso = ?";
-                                        $stmtCurso = $conn->prepare($sqlCurso);
-                                        $stmtCurso->bind_param("i", $curso_id);
-                                        $stmtCurso->execute();
+                        // 2. Busca o Curso (usando nomes de variáveis diferentes para não confundir)
+                        $sqlCurso = "SELECT * FROM curso WHERE idcurso = ?";
+                        $stmtCurso = $conn->prepare($sqlCurso);
+                        $stmtCurso->bind_param("i", $curso_id);
+                        $stmtCurso->execute();
 
-                                        // O QUE FALTOU: Criar o $resultado2
-                                        $resultado2 = $stmtCurso->get_result();
+                        // O QUE FALTOU: Criar o $resultado2
+                        $resultado2 = $stmtCurso->get_result();
 
-                                        if ($linha2 = $resultado2->fetch_assoc()) {
-                                            echo " - Curso: " . $linha2['curso_nome'];
-                                        } else {
-                                            echo " - Curso não encontrado";
-                                        }
-                                    } else {
-                                        echo "Turma não encontrada";
-                                    }
-                                    ?>
+                        if ($linha2 = $resultado2->fetch_assoc()) {
+                            echo " - Curso: " . $linha2['curso_nome'];
+                        } else {
+                            echo " - Curso não encontrado";
+                        }
+                    } else {
+                        echo "Turma não encontrada";
+                    }
+                    ?>
                     </label>
                 </div>
                 <div class="modal-row">
@@ -104,14 +105,19 @@
                     <div class="modal-input">
                         <label for="">Pressione a opção que deseja</label>
                         <div class="input-wrapper" style="display: flex; justify-content: space-between">
-                            <button type="button" onclick="showModal('checkOperacional')" class="btn-confirmar-metade clipes" style="width: 49%">Checklist Operacional <i class="bi bi-plus-lg"></i></button>
-                            <button type="button" onclick="showModal('checkSeguranca')" class="btn-confirmar-metade clipes" style="width: 49%">Checklist de Segurança<i class="bi bi-plus-lg"></i></button>
+                            <button type="button" onclick="showModal('checkOperacional')"
+                                class="btn-confirmar-metade clipes" style="width: 49%">Checklist Operacional <i
+                                    class="bi bi-plus-lg"></i></button>
+                            <button type="button" onclick="showModal('checkSeguranca')"
+                                class="btn-confirmar-metade clipes" style="width: 49%">Checklist de Segurança<i
+                                    class="bi bi-plus-lg"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn-confirmar-full deletar" onclick="window.location.href='../actions/logout.php'">
+                    <button type="submit" class="btn-confirmar-full deletar"
+                        onclick="window.location.href='../actions/logout.php'">
                         Sair <i class="bi bi-plus-lg"></i>
                     </button>
                 </div>
