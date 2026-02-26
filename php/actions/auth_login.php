@@ -4,45 +4,56 @@ require "../configs/conexao.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     session_start();
     // --- LÓGICA PARA ALUNO (Matrícula e NI) ---
-    if (isset($_POST['matricula']) && isset($_POST['nimaquina'])) {
-        $matricula = $_POST['matricula'];
-        $nimaquina = $_POST['nimaquina'];
+if (isset($_POST['matricula']) && isset($_POST['nimaquina'])) {
+    $matricula = $_POST['matricula'];
+    $nimaquina = $_POST['nimaquina'];
 
-        // 1. Verifica Aluno
-        $sqlAluno = "SELECT aluno.*, turmas.idturmas FROM aluno 
-                     INNER JOIN turmas ON aluno.turmas_id = turmas.idturmas 
-                     WHERE aluno.aluno_matricula = ?";
-        $stmt = mysqli_prepare($conn, $sqlAluno);
-        mysqli_stmt_bind_param($stmt, "s", $matricula);
-        mysqli_stmt_execute($stmt);
-        $resAluno = mysqli_stmt_get_result($stmt);
+    // 1. Verifica Aluno (Removi o INNER JOIN para evitar erro caso a turma não esteja vinculada)
+    // Se precisar dos dados da turma, use LEFT JOIN.
+    $sqlAluno = "SELECT * FROM aluno WHERE aluno_matricula = ?";
+    $stmt = mysqli_prepare($conn, $sqlAluno);
+    mysqli_stmt_bind_param($stmt, "s", $matricula);
+    mysqli_stmt_execute($stmt);
+    $resAluno = mysqli_stmt_get_result($stmt);
 
-        if (mysqli_num_rows($resAluno) > 0) {
-            // 2. Verifica Máquina
-            $sqlMaq = "SELECT idmaquina, maquina_ni FROM maquina WHERE maquina_ni = ? AND maquina_status = 'Ativo'";
-            $stmtMaq = mysqli_prepare($conn, $sqlMaq);
-            mysqli_stmt_bind_param($stmtMaq, "s", $nimaquina);
-            mysqli_stmt_execute($stmtMaq);
-            $resMaq = mysqli_stmt_get_result($stmtMaq);
-
-            if (mysqli_num_rows($resMaq) > 0) {
-                $maquina = mysqli_fetch_assoc($resMaq);
-                $_SESSION['matricula'] = $matricula;
-                $_SESSION['nimaquina'] = $maquina['maquina_ni'];
-                $_SESSION['idmaquina'] = $maquina['idmaquina'];
-                header("Location: ../views/menualuno.php");
-                exit;
-            } else {
-                $erro = "Máquina não encontrada ou em manutenção.";
-                header("Location: ../../index.php?erro=maquinaNM");
-            }
-        } else {
-            $erro = "Matrícula não encontrada.";
-            header("Location: ../../index.php?erro=maquinaN");
+    if ($rowAluno = mysqli_fetch_assoc($resAluno)) {
+        
+        // Verifica se o status do aluno permite login (opcional, baseado na sua imagem 'aluno_status')
+        if($rowAluno['aluno_status'] !== 'Ativo') { // Ajuste 'Ativo' conforme seu banco
+             header("Location: ../../index.php?erro=alunoInativo");
+             exit;
         }
-    }
 
-    // --- LÓGICA PARA COLABORADOR (Email e Senha) ---
+        // 2. Verifica Máquina (Conforme sua imagem: maquina_ni e maquina_status)
+        $sqlMaq = "SELECT idmaquina, maquina_ni FROM maquina WHERE maquina_ni = ? AND maquina_status = 'Ativo'";
+        $stmtMaq = mysqli_prepare($conn, $sqlMaq);
+        mysqli_stmt_bind_param($stmtMaq, "s", $nimaquina);
+        mysqli_stmt_execute($stmtMaq);
+        $resMaq = mysqli_stmt_get_result($stmtMaq);
+
+        if (mysqli_num_rows($resMaq) > 0) {
+            $maquina = mysqli_fetch_assoc($resMaq);
+            
+            // Inicia sessão e guarda os dados
+            $_SESSION['matricula'] = $rowAluno['aluno_matricula'];
+            $_SESSION['aluno_nome'] = $rowAluno['aluno_nome'];
+            $_SESSION['turmas_id'] = $rowAluno['turmas_id'];
+            $_SESSION['nimaquina'] = $maquina['maquina_ni'];
+            $_SESSION['idmaquina'] = $maquina['idmaquina'];
+            
+            header("Location: ../views/menualuno.php");
+            exit;
+        } else {
+            // Máquina não existe ou está "Inativo" no banco
+            header("Location: ../../index.php?erro=maquinaNM");
+            exit;
+        }
+    } else {
+        // Matrícula não encontrada
+        header("Location: ../../index.php?erro=maquinaN");
+        exit;
+    }
+}// --- LÓGICA PARA COLABORADOR (Email e Senha) ---
     else if (isset($_POST['email']) && isset($_POST['senha'])) {
         $email = $_POST['email'];
         $senha = $_POST['senha'];

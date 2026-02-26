@@ -1142,6 +1142,7 @@ select {
 #select-filtro-agendamento,
 #select-filtro-manuntencao,
 #select-filtro-motores,
+#select-filtro-requisito,
 #select-filtro-tipo-maquina,
 #select-filtro-unidade {
     border: none !important;

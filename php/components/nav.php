@@ -79,7 +79,6 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
             </a>
 
             <div class="submenu" id="submenu-manutencao">
-                <!-- tem que criar o arquivo de manuntenção, vou criar -->
 
                 <a href="maquinas.php"
                     class="<?php if ($atualmente_em == 'maquinas.php') echo 'ativo'; ?> links-sub">
@@ -103,7 +102,12 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
 
                 <a href="tipo_maquina.php"
                     class="<?php if ($atualmente_em == 'tipo_maquina.php') echo 'ativo'; ?> links-sub">
-                    <i class="bi bi-gear-fill"></i> Tipo de Máquinas
+                    <i class="bi bi-gear-wide-connected"></i> Tipo de Máquinas
+                </a>
+
+                <a href="requisitos.php"
+                    class="<?php if ($atualmente_em == 'requisitos.php') echo 'ativo'; ?> links-sub">
+                    <i class="bi bi-gear-wide-connected"></i> Requisitos
                 </a>
 
                 <a href="requisitos_maquina.php"
@@ -114,37 +118,35 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
             </div>
         </div>
 
-        <!-- DASHBOARD -->
         <a href="historico.php" class="<?php if ($atualmente_em == 'historico.php') echo 'ativo'; ?> links">
             <i class="bi bi-journal-check"></i> Historico
         </a>
 
-        <!-- DASHBOARD -->
         <a href="documentacao.php" class="<?php if ($atualmente_em == 'documentacao.php') echo 'ativo'; ?> links">
             <i class="bi bi-file-earmark"></i> Documentação
-        </a>
-
-        <!-- DASHBOARD -->
-        <a href="suporte.php" class="<?php if ($atualmente_em == 'suporte.php') echo 'ativo'; ?> links">
-            <i class="bi bi-headset"></i> Suporte
-        </a>
-
-        <!-- DASHBOARD -->
-        <a href="perfil.php" class="<?php if ($atualmente_em == 'perfil.php') echo 'ativo'; ?> links">
-            <i class="bi bi-person-fill"></i> Perfil
         </a>
 
     </div>
 
     <!-- CONFIGURAÇÕES -->
     <div class="div-configs">
-        <div >
+        <div>
             <button onclick="changeTheme()" id="tema">I got Black, i got White, what you want?</button>
 
             <button style="display: none;" id="notificacao" onclick="showModal('notificacao-modal')">
                 <i class="bi bi-bell-fill"></i>
                 <div class="div-noti">0</div>
             </button>
+
+            <!-- DASHBOARD -->
+            <a href="suporte.php" class="configs">
+                <i class="bi bi-headset"></i>
+            </a>
+
+            <!-- DASHBOARD -->
+            <a href="perfil.php" class="configs">
+                <i class="bi bi-person-fill"></i>
+            </a>
         </div>
 
         <button
@@ -174,8 +176,6 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
         /* espaçamento leve entre os botões */
     }
 </style>
-
-<!-- MAQUINAS -->
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {

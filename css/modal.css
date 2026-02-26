@@ -218,18 +218,6 @@ h1 {
     box-sizing: border-box;
 }
 
-.modal-input input[readonly] {
-    background: var(--corFundo2);
-    color: var(--corTxt3);
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.modal-input select option {
-    background: var(--corFundo2);
-    color: var(--corTxt3);
-}
-
 .modal-input input::placeholder {
     color: var(--corBordas);
 }
@@ -343,20 +331,23 @@ h1 {
 }
 
 .modal-cam {
-    width: 650px;
-    height: 650px;
+    width: 90vw;
+    max-width: 500px;
+    aspect-ratio: 1 / 1;
     background: var(--corFundo);
-    padding: 5px;
+    padding: 15px;
     border-radius: 15px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 #reader {
-    width: 80%;
+    width: 90%;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 #sucesso {
@@ -400,12 +391,11 @@ h1 {
 }
 
 #sucesso-box {
-    width: 15%;
+    width: 320px;
     background: oklch(76.864% 0.16957 161.631 / 0.48);
     border: 1px solid oklch(76.5% 0.177 163.223);
     border-radius: 8px;
     padding: 12px;
-
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 
@@ -417,6 +407,33 @@ h1 {
 
 #sucesso-txt {
     color: oklch(96.782% 0.03253 170.226);
+}
+
+.arquivos-div {
+    display: flex;
+    height: 500px;
+    width: 100%;
+    background: var(--corFundo);
+    border-radius: 10px;
+    border: 3px dashed var(--corBase);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--hoverTr);
+    }
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.arquivos-div .input-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 @media (max-width: 768px) {

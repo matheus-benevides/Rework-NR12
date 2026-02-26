@@ -352,16 +352,10 @@ function showModal(qual, id) {
         document.getElementById("deletarColaborador").style.display = "flex";
     } else if (qual == "desativarColaborador") {
         document.getElementById("desativarColaborador").style.display = "flex";
-        if (id) document.getElementById("id_colaborador_delete").value = id;
-    } else if (qual == "ativarColaborador") {
-        document.getElementById("ativarColaborador").style.display = "flex";
-        if (id) document.getElementById("id_colaborador_ativar").value = id;
     } else if (qual == 'resetPass') {
         document.getElementById('resetPass').style.display = 'flex';
         document.getElementById("id_usuario_reset").value = id;
     } else if (qual == "adicaoMotor") {
-        document.getElementById('adicaoMotor').style.display = "flex";
-    } else if (qual == "editarMotor") {
         document.getElementById('adicaoMotor').style.display = "flex";
     } else if (qual == "editarMotor") {
         document.getElementById('editarMotor').style.display = "flex";
@@ -392,12 +386,29 @@ function showModal(qual, id) {
     } else if (qual == "alunosLote") {
         document.getElementById("alunosLote").style.display = "flex";
         document.getElementById("adicaoAluno").style.display = "none";
+    } else if (qual == "cursosLote") {
+        document.getElementById("cursosLote").style.display = "flex";
+        document.getElementById("adicaoCurso").style.display = "none";
+    } else if (qual == "turmasLote") {
+        document.getElementById("turmasLote").style.display = "flex";
+        document.getElementById("adicaoTurma").style.display = "none";
+    } else if (qual == "unidadeLote") {
+        document.getElementById("unidadeLote").style.display = "flex";
+        document.getElementById("adicaoUnidade").style.display = "none";
+    } else if (qual == "setoresLote") {
+        document.getElementById("setoresLote").style.display = "flex";
+        document.getElementById("adicaoSetor").style.display = "none";
+    } else if (qual == "colaboradoresLote") {
+        document.getElementById("colaboradoresLote").style.display = "flex";
+        document.getElementById("adicaoColaborador").style.display = "none";
     } else if (qual == "adicaoSuporte") {
         document.getElementById("adicaoSuporte").style.display = "flex";
     } else if (qual == "changePassword") {
         document.getElementById("changePassword").style.display = "flex";
     } else if (qual == "sucesso") {
         document.getElementById("sucesso").style.display = "flex";
+    } else if (qual == "adicaoRequisito") {
+        document.getElementById("adicaoRequisito").style.display = "flex";
     }
 }
 
@@ -438,6 +449,8 @@ function closeModal(qual) {
         document.getElementById("ativarUnidade").style.display = "none";
     } else if (qual == "adicaoSetor") {
         document.getElementById("adicaoSetor").style.display = "none";
+    } else if (qual == "adicaoRequisito") {
+        document.getElementById("adicaoRequisito").style.display = "none";
     } else if (qual == "editarSetor") {
         document.getElementById("editarSetor").style.display = "none";
     } else if (qual == "desativarSetor") {
@@ -450,10 +463,8 @@ function closeModal(qual) {
         document.getElementById("editarColaborador").style.display = "none";
     } else if (qual == "deletarColaborador") {
         document.getElementById("deletarColaborador").style.display = "none";
-     } else if (qual == "desativarColaborador") {
+    } else if (qual == "desativarColaborador") {
         document.getElementById("desativarColaborador").style.display = "none";
-    } else if (qual == "ativarColaborador") {
-        document.getElementById("ativarColaborador").style.display = "none";
     } else if (qual == 'resetPass') {
         document.getElementById('resetPass').style.display = "none";
     } else if (qual == "adicaoMotor") {
@@ -487,6 +498,21 @@ function closeModal(qual) {
     } else if (qual == "alunosLote") {
         document.getElementById("alunosLote").style.display = "none";
         document.getElementById("adicaoAluno").style.display = "flex";
+    } else if (qual == "cursosLote") {
+        document.getElementById("cursosLote").style.display = "none";
+        document.getElementById("adicaoCurso").style.display = "flex";
+    } else if (qual == "turmasLote") {
+        document.getElementById("turmasLote").style.display = "none";
+        document.getElementById("adicaoTurma").style.display = "flex";
+    } else if (qual == "unidadeLote") {
+        document.getElementById("unidadeLote").style.display = "none";
+        document.getElementById("adicaoUnidade").style.display = "flex";
+    } else if (qual == "setoresLote") {
+        document.getElementById("setoresLote").style.display = "none";
+        document.getElementById("adicaoSetor").style.display = "flex";
+    } else if (qual == "colaboradoresLote") {
+        document.getElementById("colaboradoresLote").style.display = "none";
+        document.getElementById("adicaoColaborador").style.display = "flex";
     } else if (qual == "adicaoSuporte") {
         document.getElementById("adicaoSuporte").style.display = "none";
     } else if (qual == "changePassword") {
@@ -2069,7 +2095,13 @@ function lerQr(inputIndex) {
         fecharScanner();
     };
 
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    const config = {
+        fps: 10,
+        qrbox: function (viewfinderWidth, viewfinderHeight) {
+            const side = Math.floor(Math.min(viewfinderWidth, viewfinderHeight) * 0.8);
+            return { width: side, height: side };
+        }
+    };
 
     // Inicia a câmera traseira (environment)
     html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
@@ -2092,61 +2124,67 @@ function fecharScanner() {
     }
 }
 
-const dropArea = document.querySelector(".modal-input");
-const fileInput = document.getElementById("arquivo");
-const labelArquivo = document.getElementById("label-arquivo");
+// --- Drag & Drop Genérico para Modais de Lote ---
+document.querySelectorAll(".arquivos-div").forEach(dropArea => {
+    const fileInput = dropArea.querySelector("input[type='file']");
+    const labelArquivo = dropArea.querySelector("p[id^='label-arquivo']");
 
-// Tipos permitidos
-const tiposPermitidos = [
-  "text/csv",
-  "application/vnd.ms-excel",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-];
+    if (!fileInput || !labelArquivo) return;
 
-// Clique abre o input
-dropArea.addEventListener("click", () => {
-  fileInput.click();
+    // Tipos permitidos
+    const tiposPermitidos = [
+        "text/csv",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    ];
+
+    // Clique abre o input
+    dropArea.addEventListener("click", (e) => {
+        if (e.target !== fileInput) {
+            fileInput.click();
+        }
+    });
+
+    // Quando seleciona pelo input
+    fileInput.addEventListener("change", () => {
+        if (fileInput.files.length > 0) {
+            validarArquivo(fileInput.files[0], fileInput, labelArquivo);
+        }
+    });
+
+    // Drag & Drop
+    dropArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropArea.style.borderColor = "var(--corDestaque)";
+        dropArea.style.background = "var(--corFundo2)";
+    });
+
+    dropArea.addEventListener("dragleave", () => {
+        dropArea.style.borderColor = "var(--corBase)";
+        dropArea.style.background = "var(--corFundo)";
+    });
+
+    dropArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropArea.style.borderColor = "var(--corBase)";
+        dropArea.style.background = "var(--corFundo)";
+
+        const arquivo = e.dataTransfer.files[0];
+        if (arquivo) {
+            fileInput.files = e.dataTransfer.files;
+            validarArquivo(arquivo, fileInput, labelArquivo);
+        }
+    });
+
+    // Validação
+    function validarArquivo(arquivo, input, label) {
+        if (!tiposPermitidos.includes(arquivo.type)) {
+            alert("Arquivo inválido. Envie um .csv, .xls ou .xlsx");
+            input.value = "";
+            label.textContent = "Arraste ou Pressione o Arquivo.";
+            return;
+        }
+
+        label.textContent = `Arquivo selecionado: ${arquivo.name}`;
+    }
 });
-
-// Quando seleciona pelo input
-fileInput.addEventListener("change", () => {
-  if (fileInput.files.length > 0) {
-    validarArquivo(fileInput.files[0]);
-  }
-});
-
-// Drag & Drop
-dropArea.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  dropArea.style.borderColor = "var(--corDestaque)";
-  dropArea.style.background = "var(--corFundo2)";
-});
-
-dropArea.addEventListener("dragleave", () => {
-  dropArea.style.borderColor = "var(--corBase)";
-  dropArea.style.background = "var(--corFundo)";
-});
-
-dropArea.addEventListener("drop", (e) => {
-  e.preventDefault();
-  dropArea.style.borderColor = "var(--corBase)";
-  dropArea.style.background = "var(--corFundo)";
-
-  const arquivo = e.dataTransfer.files[0];
-  if (arquivo) {
-    fileInput.files = e.dataTransfer.files;
-    validarArquivo(arquivo);
-  }
-});
-
-// Validação
-function validarArquivo(arquivo) {
-  if (!tiposPermitidos.includes(arquivo.type)) {
-    alert("Arquivo inválido. Envie um .csv, .xls ou .xlsx");
-    fileInput.value = "";
-    labelArquivo.textContent = "Arraste ou Pressione o Arquivo.";
-    return;
-  }
-
-  labelArquivo.textContent = `Arquivo selecionado: ${arquivo.name}`;
-}

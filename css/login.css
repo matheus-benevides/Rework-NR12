@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
 :root {
     /* MODO DIA (LIMPO & ELEGANTE) */
@@ -32,68 +31,9 @@
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
     transition: background 0.6s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-body,
-html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: var(--bg-dark);
-    color: var(--text-primary);
-}
-
-/* Theme Toggle Slider */
-.theme-switch-wrapper {
-    position: fixed;
-    top: 30px;
-    right: 30px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-}
-
-.theme-toggle-btn {
-    width: 65px;
-    height: 35px;
-    background: var(--glass-bg-rgba);
-    border: 1px solid var(--glass-border);
-    border-radius: 50px;
-    position: relative;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    box-shadow: var(--sombra-glow);
-    display: flex;
-    align-items: center;
-    padding: 0 5px;
-    transition: all 0.3s ease;
-}
-
-.theme-toggle-btn .toggle-thumb {
-    width: 26px;
-    height: 26px;
-    background: var(--senai-red);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 0.9rem;
-    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    box-shadow: 0 0 10px rgba(255, 43, 43, 0.3);
-}
-
-[data-tema="escuro"] .theme-toggle-btn .toggle-thumb {
-    transform: translateX(30px);
-    background: #ffffff;
-    color: var(--bg-dark);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-}
 
 /* Background Shapes */
 .login-bg {
@@ -330,7 +270,7 @@ html {
 .div-msg-erro {
     background: rgba(255, 43, 43, 0.15);
     border: 1px solid var(--senai-red);
-    color: #ffd6d6;
+    color: var(--corDestaque);
     padding: 12px;
     border-radius: 10px;
     font-size: 0.9rem;

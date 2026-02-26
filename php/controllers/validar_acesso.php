@@ -1,15 +1,23 @@
 <?php
 session_start();
 
-// Se essa váriavel de Sessão não existir significa que o cara não está logado.
-// Então mando ele de volta pra tela de login com um aviso de erro.
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) && !isset($_SESSION['matricula'])) {
     header("Location: ../../index.php?acesso=negado");
-} else {
+}
+
+if (isset($_SESSION['user_id'])) {
     $id_usuario = $_SESSION['user_id'];
     $nome_usuario = $_SESSION['colaborador_nome'];
     $permissao_usuario = $_SESSION['colaborador_permissao'];
 
     $atualmente_em = basename($_SERVER['PHP_SELF']);
-} 
-?>
+} else {
+    $permissao_usuario = 'aluno';
+    $id_maquina = $_SESSION['idmaquina'];
+    $nome_usuario = $_SESSION['aluno_nome']; 
+    $turma_usuario = $_SESSION['turmas_id'];
+    $ni_usuario = $_SESSION['matricula'];
+    $maquina_ni = $_SESSION['nimaquina'];
+}
+
+

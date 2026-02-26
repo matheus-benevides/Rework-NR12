@@ -23,6 +23,35 @@ require_once '../configs/conexao.php';
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
+                <br>
+                <button type="button" class="btn-confirmar-full btn" onclick="showModal('cursosLote')">
+                    Cadastrar em Lote <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Adicionar Curso em Lote -->
+<div class="modal-fundo" id="cursosLote" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Cadastro em Lote - Cursos</h3>
+            <button class="" onclick="closeModal('cursosLote')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form id="form-cad-curso-lote" class="modal-form">
+            <label for="arquivoCurso" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input-curso">
+                    <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
+                        class="bi bi-cloud-arrow-up-fill"></i>
+                    <p id="label-arquivo-curso">Arraste ou Pressione o Arquivo.</p>
+                    <p>Somente arquivos .csv, .xlsx e .xls</p>
+                    <input type="file" name="arquivo" id="arquivoCurso" accept=".csv, .xlsx, .xls">
+                </div>
+            </label>
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
             </div>
         </form>
     </div>
@@ -175,6 +204,35 @@ require_once '../configs/conexao.php';
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
+                <br>
+                <button type="button" class="btn-confirmar-full btn" onclick="showModal('turmasLote')">
+                    Cadastrar em Lote <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Adicionar Turma em Lote -->
+<div class="modal-fundo" id="turmasLote" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Cadastro em Lote - Turmas</h3>
+            <button class="" onclick="closeModal('turmasLote')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form id="form-cad-turma-lote" class="modal-form">
+            <label for="arquivoTurma" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input-turma">
+                    <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
+                        class="bi bi-cloud-arrow-up-fill"></i>
+                    <p id="label-arquivo-turma">Arraste ou Pressione o Arquivo.</p>
+                    <p>Somente arquivos .csv, .xlsx e .xls</p>
+                    <input type="file" name="arquivo" id="arquivoTurma" accept=".csv, .xlsx, .xls">
+                </div>
+            </label>
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
         </form>
@@ -376,17 +434,19 @@ require_once '../configs/conexao.php';
         <form id="form-cad-aluno" class="modal-form">
             <label for="arquivo" class="modal-input arquivos-div">
                 <div class="input-wrapper" id="arquivos-input">
-                    <i style="font-size: var(--text-4xl); color: var(--corDestaque)" class="bi bi-cloud-arrow-up-fill"></i>
+                    <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
+                        class="bi bi-cloud-arrow-up-fill"></i>
                     <p id="label-arquivo">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
                     <input type="file" name="arquivo" id="arquivo" accept=".csv, .xlsx, .xls">
                 </div>
             </label>
             <div class="modal-input">
-                
+
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i> </button>
+                <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
             </div>
         </form>
     </div>
@@ -573,6 +633,35 @@ require_once '../configs/conexao.php';
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
+                <br>
+                <button type="button" class="btn-confirmar-full btn" onclick="showModal('unidadeLote')">
+                    Cadastrar em Lote <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Adicionar Unidade em Lote -->
+<div class="modal-fundo" id="unidadeLote" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Cadastro em Lote - Unidades</h3>
+            <button class="" onclick="closeModal('unidadeLote')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form id="form-cad-unidade-lote" class="modal-form">
+            <label for="arquivoUnidade" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input-unidade">
+                    <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
+                        class="bi bi-cloud-arrow-up-fill"></i>
+                    <p id="label-arquivo-unidade">Arraste ou Pressione o Arquivo.</p>
+                    <p>Somente arquivos .csv, .xlsx e .xls</p>
+                    <input type="file" name="arquivo" id="arquivoUnidade" accept=".csv, .xlsx, .xls">
+                </div>
+            </label>
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
             </div>
         </form>
     </div>
@@ -735,6 +824,35 @@ require_once '../configs/conexao.php';
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
+                <br>
+                <button type="button" class="btn-confirmar-full btn" onclick="showModal('setoresLote')">
+                    Cadastrar em Lote <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Adicionar Setor em Lote -->
+<div class="modal-fundo" id="setoresLote" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Cadastro em Lote - Setores</h3>
+            <button class="" onclick="closeModal('setoresLote')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form id="form-cad-setor-lote" class="modal-form">
+            <label for="arquivoSetor" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input-setor">
+                    <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
+                        class="bi bi-cloud-arrow-up-fill"></i>
+                    <p id="label-arquivo-setor">Arraste ou Pressione o Arquivo.</p>
+                    <p>Somente arquivos .csv, .xlsx e .xls</p>
+                    <input type="file" name="arquivo" id="arquivoSetor" accept=".csv, .xlsx, .xls">
+                </div>
+            </label>
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
             </div>
         </form>
     </div>
@@ -854,7 +972,8 @@ require_once '../configs/conexao.php';
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="senha_colaborador_cad">Senha:</label>
-                        <input type="password" name="senha" id="senha_colaborador_cad" value="senaisp" readonly>
+                        <input type="password" name="senha" id="senha_colaborador_cad" value="senaisp" readonly
+                            style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
                     </div>
                 </div>
             </div>
@@ -902,9 +1021,38 @@ require_once '../configs/conexao.php';
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
+                <br>
+                <button type="button" class="btn-confirmar-full btn" onclick="showModal('colaboradoresLote')">
+                    Cadastrar em Lote <i class="bi bi-plus-lg"></i>
+                </button>
             </div>
     </div>
     </form>
+</div>
+
+<!-- Adicionar Colaborador em Lote -->
+<div class="modal-fundo" id="colaboradoresLote" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Cadastro em Lote - Colaboradores</h3>
+            <button class="" onclick="closeModal('colaboradoresLote')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form id="form-cad-colaborador-lote" class="modal-form">
+            <label for="arquivoColaborador" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input-colaborador">
+                    <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
+                        class="bi bi-cloud-arrow-up-fill"></i>
+                    <p id="label-arquivo-colaborador">Arraste ou Pressione o Arquivo.</p>
+                    <p>Somente arquivos .csv, .xlsx e .xls</p>
+                    <input type="file" name="arquivo" id="arquivoColaborador" accept=".csv, .xlsx, .xls">
+                </div>
+            </label>
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <!-- Editar Colaborador -->
@@ -937,7 +1085,8 @@ require_once '../configs/conexao.php';
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="senha_colaborador_edit">Senha:</label>
-                        <input type="password" name="senha" id="senha_colaborador_edit" readonly>
+                        <input type="password" name="senha" id="senha_colaborador_edit" readonly
+                            style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
                     </div>
                 </div>
             </div>
@@ -1027,6 +1176,25 @@ require_once '../configs/conexao.php';
         </div>
     </div>
 </div>
+</div>
+
+<!-- Desativar Colaborador -->
+<div class="modal-fundo" id="desativarColaborador" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Desativar Colaborador</h3>
+            <button onclick="closeModal('desativarColaborador')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer desativar colaborador?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
+            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('desativarColaborador')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
 </div>
 
 <!-- Resetar Senha Colaborador -->
@@ -1158,8 +1326,7 @@ require_once '../configs/conexao.php';
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('deletarMotor')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
@@ -1178,8 +1345,7 @@ require_once '../configs/conexao.php';
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('desativarMotor')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
@@ -1267,7 +1433,8 @@ require_once '../configs/conexao.php';
                     <div class="input-wrapper">
                         <label for="ni">NI:</label>
                         <input type="text" name="ni" id="ni" placeholder="Ex: N1,N2,N2">
-                        <label for="" style="color: var(--corBase); font-size: var(--text-sm)">Separados Por " , "</label>
+                        <label for="" style="color: var(--corBase); font-size: var(--text-sm)">Separados Por " ,
+                            "</label>
                     </div>
                 </div>
             </div>
@@ -1399,7 +1566,8 @@ require_once '../configs/conexao.php';
                     <div class="input-wrapper">
                         <label for="ni">NI:</label>
                         <input type="text" name="ni" id="ni" placeholder="Ex: N1,N2,N2">
-                        <label for="" style="color: var(--corBase); font-size: var(--text-sm)">Separados Por " , "</label>
+                        <label for="" style="color: var(--corBase); font-size: var(--text-sm)">Separados Por " ,
+                            "</label>
                     </div>
                 </div>
             </div>
@@ -1462,8 +1630,7 @@ require_once '../configs/conexao.php';
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('deletarMaquina')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
@@ -1513,7 +1680,8 @@ require_once '../configs/conexao.php';
                 <div class="modal-input">
                     <label for="descricao">Descrição:</label>
                     <div class="input-wrapper">
-                        <textarea style="min-height: 180px; max-height: 180px;" name="" id="" placeholder="Descreva com poucas palavras o erro ou dúvida."></textarea>
+                        <textarea style="min-height: 180px; max-height: 180px;" name="" id=""
+                            placeholder="Descreva com poucas palavras o erro ou dúvida."></textarea>
                     </div>
                 </div>
             </div>
@@ -1539,8 +1707,7 @@ require_once '../configs/conexao.php';
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('deletarManutencao')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
@@ -1559,8 +1726,7 @@ require_once '../configs/conexao.php';
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('desativarManutencao')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
@@ -1631,8 +1797,7 @@ require_once '../configs/conexao.php';
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick=""
-                class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('deletarTipoMaquina')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
@@ -1739,9 +1904,11 @@ require_once '../configs/conexao.php';
 <!-- Div Notificação -->
 <div class="modal-fundo modal-notificacao" id='notificacao-modal' style="display: none">
     <div class="modal-box">
-        <div class="modal-header" id="modal-notif" style="background: var(--corDestaque); color: var(--txtClaro); padding: 10px; border-radius: 10px 10px 0px 0px;">
+        <div class="modal-header" id="modal-notif"
+            style="background: var(--corDestaque); color: var(--txtClaro); padding: 10px; border-radius: 10px 10px 0px 0px;">
             <h3 id="notif-texto" style="color: var(--txtClaro);">Notificações</h3>
-            <button style='color: var(--txtClaro);' onclick="closeModal('notificacao-modal')"><i class="bi bi-x-lg"></i></button>
+            <button style='color: var(--txtClaro);' onclick="closeModal('notificacao-modal')"><i
+                    class="bi bi-x-lg"></i></button>
         </div>
         <div class="modal-notificacao-corpo">
             <div id="notificacoes-lista" style="height: 500px; overflow: auto;">
@@ -1769,7 +1936,7 @@ require_once '../configs/conexao.php';
                 if ($resultado && $resultado->num_rows > 0) {
                     while ($linha = $resultado->fetch_assoc()) {
                         $totalNoti++;
-                        $dias = (int)$linha['dias'];
+                        $dias = (int) $linha['dias'];
 
                         // Define status
                         if ($dias < 0) {
@@ -1826,7 +1993,8 @@ require_once '../configs/conexao.php';
             <h3>Trocar Senha</h3>
         </div>
         <form id="form-change-password" class="modal-form">
-            <div class="modal-row" style="margin-bottom: 20px; color: var(--corTxt3); text-align: center; padding: 0 10px;">
+            <div class="modal-row"
+                style="margin-bottom: 20px; color: var(--corTxt3); text-align: center; padding: 0 10px;">
                 <p style="font-size: var(--text-sm);">Por motivos de segurança, você deve alterar sua senha padrão.</p>
             </div>
             <div class="modal-input">
@@ -1845,6 +2013,45 @@ require_once '../configs/conexao.php';
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Alterar Senha <i class="bi bi-check-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Adicionar Requisito -->
+<div class="modal-fundo" id="adicaoRequisito" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Registrar Requisito</h3>
+            <button class="" onclick="closeModal('adicaoRequisito')"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <form id="form-cad-requisito" class="modal-form">
+            <div class="modal-input">
+                <label for="nome_requisito_cad">Nome:</label>
+                <div class="input-wrapper">
+                    <input type="text" id="nome_requisito_cad" placeholder="Ex: Botão de Emergência">
+                </div>
+            </div>
+
+            <div class="modal-row">
+                <div class="modal-input">
+                    <label for="tipo_requisito_cad">Tipo de Requisito:</label>
+                    <div class="input-wrapper">
+                        <select id="tipo_requisito_cad">
+                            <option value="" disabled selected>Selecione o Tipo</option>
+                            <option value="Seguranca">Segurança</option>
+                            <option value="Operacional">Operacional</option>
+                            <option value="Preventivo">Preventivo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">
+                    Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
         </form>
