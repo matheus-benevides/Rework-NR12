@@ -64,7 +64,7 @@ if ($resColab) {
     <div class="modal-box premium-modal">
         <div class="modal-header">
             <h3 class="premium-title"><i class="bi bi-shield-check"></i> Checklist de Segurança</h3>
-            <span class="bi bi-x-lg close-modal" onclick="closeModal('checkSeguranca')"></span>
+            <button type="button" class="bi bi-x-lg" onclick="closeModal('checkSeguranca')"></button>
         </div>
 
 
@@ -138,7 +138,7 @@ if ($resColab) {
     <div class="modal-box premium-modal">
         <div class="modal-header">
             <h3 class="premium-title"><i class="bi bi-gear-fill"></i> Checklist Operacional</h3>
-            <span class="bi bi-x-lg close-modal" onclick="closeModal('checkOperacional')"></span>
+            <button type="button" class="bi bi-x-lg" onclick="closeModal('checkOperacional')"></button>
         </div>
 
 

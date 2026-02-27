@@ -107,17 +107,17 @@ function trocarForm1() {
 
         inputs[0].name = 'matricula';
         inputs[1].name = 'nimaquina';
-        inputs[0].placeholder = "Matrícula";
+        inputs[0].placeholder = "Matrícula ou E-mail";
         inputs[1].placeholder = "NI da Máquina";
         icons[0].className = "bi bi-person-badge-fill";
         icons[1].className = "bi bi-cpu-fill";
 
-        btnEsp[0].style.visibility = "visible";
+        // btnEsp[0].style.visibility = "visible";
         btnEsp[1].style.visibility = "visible";
 
-        btnEsp[0].innerHTML = '<i class="bi bi-qr-code-scan"></i>';
+        // btnEsp[0].innerHTML = '<i class="bi bi-qr-code-scan"></i>';
         btnEsp[1].innerHTML = '<i class="bi bi-qr-code-scan"></i>';
-        btnEsp[0].onclick = () => lerQr(0);
+        // btnEsp[0].onclick = () => lerQr(0);
         btnEsp[1].onclick = () => lerQr(1);
 
         btnTrocar.innerHTML = "Voltar para Login Colaborador";

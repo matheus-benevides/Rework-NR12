@@ -118,17 +118,26 @@ async function processarLote(formId, inputId, apiPath) {
             const result = await response.json();
 
             if (response.ok) {
-                let msg = `Processamento concluído.\n\n✅ Sucessos: ${result.sucesso}\n❌ Erros: ${result.erros_count}`;
+                let msg = `Processamento concluído.\n✅ Sucessos: ${result.sucesso}\n❌ Erros: ${result.erros_count}`;
 
                 if (result.detalhes_erro && result.detalhes_erro.length > 0) {
-                    msg += `\n\nDetalhes dos erros:\n- ${result.detalhes_erro.slice(0, 5).join('\n- ')}`;
+                    msg += `\n\nDetalhes dos erros (primeiros 5):\n- ${result.detalhes_erro.slice(0, 5).join('\n- ')}`;
                     if (result.detalhes_erro.length > 5) {
                         msg += `\n... e mais ${result.detalhes_erro.length - 5} erros.`;
                     }
                 }
 
-                alert(msg);
-                location.reload();
+                if (result.erros_count > 0) {
+                    // Se houver erros, talvez seja melhor não usar a modal automática de sucesso
+                    // ou criar uma modal de aviso/erro específica. 
+                    // Por enquanto, vamos usar alert para casos com erro para não perder o texto longo,
+                    // ou registrar no sessionStorage se o usuário preferir.
+                    alert(msg);
+                    location.reload();
+                } else {
+                    sessionStorage.setItem('pendingSuccessMessage', `Sucesso! Total de ${result.sucesso} registros processados.`);
+                    location.reload();
+                }
             } else {
                 alert('Erro: ' + (result.mensagem || 'Falha ao processar arquivo.'));
             }

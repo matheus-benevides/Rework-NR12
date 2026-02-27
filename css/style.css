@@ -388,6 +388,7 @@ hr {
     display: flex;
     align-items: center;
     margin: 0;
+    border-radius: 10px;
 }
 
 .search-container {
@@ -398,6 +399,7 @@ hr {
     position: relative;
     width: auto;
     background: transparent;
+    border-radius: 10px;
 }
 
 .box-pesquisa {
@@ -405,6 +407,7 @@ hr {
     display: flex;
     align-items: center;
     background: var(--corFundo2);
+    border-radius: 10px;
 }
 
 /* 1. Input styling */

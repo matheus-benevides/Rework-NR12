@@ -131,13 +131,13 @@ if ($res_assoc) {
         <?php require '../components/header.php'; ?>
 
         <div class="div-btns-pages">
-            <form action="" method="GET" class="form-pesquisa">
-                <div class="search-container">
+            <form action="" method="GET" class="form-pesquisa" style="width: 100%;">
+                <div class="search-container" style="width: 100%;">
                     <?php
                     // Captura o valor atual para manter no input
                     $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
                     ?>
-                    <div class="box-pesquisa">
+                    <div class="box-pesquisa" style="width: 100%;">
                         <i class="bi bi-search search-icon"></i>
                         <input type="text" name="search" id="pesquisa_maquinas" value="<?php echo htmlspecialchars($busca_atual); ?>"
                             placeholder="Pesquisar tipo de máquina..." class="input-pesquisa">

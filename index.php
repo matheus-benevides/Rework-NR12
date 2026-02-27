@@ -36,6 +36,8 @@
             $erro = "<div class='div-msg-erro'><p>Máquina não encontrada ou em manutenção.</p></div>";
         } else if ($_GET['erro'] == "maquinaN") {
             $erro = "<div class='div-msg-erro'><p>Matrícula não encontrada.</p></div>";
+        } else {
+            $erro = "<div class='div-msg-erro'><p>Erro inesperado, tente novamente!</p></div>";
         }
     }
     ?>
