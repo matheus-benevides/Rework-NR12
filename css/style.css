@@ -916,6 +916,12 @@ select {
 }
 
 @media (max-width: 768px) {
+    
+    .btn-download-hero{
+        font-size: var(--text-sm);
+        padding: 15px 25px;
+    }
+
     .div-btns-pages{
         flex-direction: column;
         width: 50%;
@@ -937,16 +943,14 @@ select {
         width: 350px;
     }
 
-    .tabela-bg tabl, .tabele-bg2 table{
-        width: 50%;
+    .tabela-bg, .tabela-bg2{
         overflow-x: auto;
     }
 
-    .div-tabelas{
-        width: 50%;
-        overflow-x: auto;
+    .tabela-bg table tbody tr td, .tabela-bg2 table tbody tr td {
+        height: 57px;
     }
-    
+
     .hero-content h1{
         font-size: var(--text-2xl);
     }
@@ -955,7 +959,7 @@ select {
         display: flex;
         flex-direction: column;
         height: 45%;
-        padding-bottom: 15px;
+        padding-bottom: 35px;
     } 
 } 
-/* bro, não faz sol */
+/* oque voce ta fazendo amigo??*/

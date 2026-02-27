@@ -39,19 +39,21 @@ require_once '../configs/conexao.php';
             <h3>Cadastro em Lote</h3>
             <button class="" onclick="closeModal('cursosLote')"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form id="form-cad-curso" class="modal-form">
-            <label for="arquivo" class="modal-input arquivos-div">
-                <div class="input-wrapper" id="arquivos-input">
+        <form id="form-cad-curso-lote" class="modal-form">
+            <label for="arquivo-curso" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input-curso">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
-                    <p class="label-arquivo" id="label-arquivo">Arraste ou Pressione o Arquivo.</p>
+                    <p class="label-arquivo" id="label-arquivo-curso">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivo" accept=".csv, .xlsx, .xls" multiple>
+                    <a href="../../_documentos/modelo_cursos.csv" download
+                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
+                        <i class="bi bi-download"></i> Baixar Modelo CSV
+                    </a>
+                    <input type="file" name="arquivo" id="arquivo-curso" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
-            <div class="modal-input">
-
-            </div>
+            <div class="modal-input"></div>
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
@@ -168,16 +170,16 @@ require_once '../configs/conexao.php';
                     </div>
                 </div>
             </div>
-            <div class="modal-row">
+            <div class="modal-row datas_div">
                 <div class="modal-input">
+                    <label for="fim_turma_cad">Fim da Turma:</label>
                     <div class="input-wrapper">
-                        <label for="fim_turma_cad">Fim da Turma:</label>
                         <input type="date" id="fim_turma_cad">
                     </div>
                 </div>
                 <div class="modal-input">
+                    <label for="inicio_turma_cad">Inicio da Turma:</label>
                     <div class="input-wrapper">
-                        <label for="inicio_turma_cad">Inicio da Turma:</label>
                         <input type="date" id="inicio_turma_cad">
                     </div>
                 </div>
@@ -222,19 +224,21 @@ require_once '../configs/conexao.php';
             <h3>Cadastro em Lote</h3>
             <button class="" onclick="closeModal('turmasLote')"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form id="form-cad-aluno" class="modal-form">
-            <label for="arquivo" class="modal-input arquivos-div">
-                <div class="input-wrapper" id="arquivos-input">
+        <form id="form-cad-turma-lote" class="modal-form">
+            <label for="arquivo-turma" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input-turma">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
-                    <p class="label-arquivo" id="label-arquivo">Arraste ou Pressione o Arquivo.</p>
+                    <p class="label-arquivo" id="label-arquivo-turma">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivo" accept=".csv, .xlsx, .xls" multiple>
+                    <a href="../../_documentos/modelo_turmas.csv" download
+                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
+                        <i class="bi bi-download"></i> Baixar Modelo CSV
+                    </a>
+                    <input type="file" name="arquivo" id="arquivo-turma" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
-            <div class="modal-input">
-
-            </div>
+            <div class="modal-input"></div>
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
@@ -373,6 +377,7 @@ require_once '../configs/conexao.php';
 </div>
 
 
+
 <!-- Adicionar Aluno -->
 <div class="modal-fundo" id="adicaoAluno" style="display: none">
     <div class="modal-box">
@@ -393,11 +398,20 @@ require_once '../configs/conexao.php';
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
+                        <label for="email_aluno_cad">E-mail do Aluno:</label>
+                        <input type="email" id="email_aluno_cad" placeholder="aluno@email.com">
+                    </div>
+                </div>
+
+                <div class="modal-input">
+                    <div class="input-wrapper">
                         <label for="matricula_aluno_cad">Matricula do Aluno:</label>
                         <input type="text" id="matricula_aluno_cad" placeholder="123456">
                     </div>
                 </div>
+            </div>
 
+            <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="turma_aluno_cad">Turma:</label>
@@ -428,26 +442,27 @@ require_once '../configs/conexao.php';
     </div>
 </div>
 
-<!-- Adicionar Aluno em Lote -->
 <div class="modal-fundo" id="alunosLote">
     <div class="modal-box">
         <div class="modal-header">
             <h3>Cadastro em Lote</h3>
             <button class="" onclick="closeModal('alunosLote')"><i class="bi bi-x-lg"></i></button>
         </div>
-        <form id="form-cad-aluno" class="modal-form">
-            <label for="arquivo" class="modal-input arquivos-div">
-                <div class="input-wrapper" id="arquivos-input">
+        <form id="form-cad-aluno-lote" class="modal-form">
+            <label for="arquivo-aluno" class="modal-input arquivos-div">
+                <div class="input-wrapper" id="arquivos-input-aluno">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
-                    <p class="label-arquivo" id="label-arquivo">Arraste ou Pressione o Arquivo.</p>
+                    <p class="label-arquivo" id="label-arquivo-aluno">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivo" accept=".csv, .xlsx, .xls" multiple>
+                    <a href="../../_documentos/modelo_alunos.csv" download
+                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
+                        <i class="bi bi-download"></i> Baixar Modelo CSV
+                    </a>
+                    <input type="file" name="arquivo" id="arquivo-aluno" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
-            <div class="modal-input">
-
-            </div>
+            <div class="modal-input"></div>
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
@@ -476,11 +491,20 @@ require_once '../configs/conexao.php';
             <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
+                        <label for="email_aluno_edit">E-mail do Aluno:</label>
+                        <input type="email" id="email_aluno_edit" placeholder="aluno@email.com">
+                    </div>
+                </div>
+
+                <div class="modal-input">
+                    <div class="input-wrapper">
                         <label for="matricula_aluno_edit">Matricula do Aluno:</label>
                         <input type="text" id="matricula_aluno_edit" placeholder="123456">
                     </div>
                 </div>
+            </div>
 
+            <div class="modal-row">
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="turma_aluno_edit">Turma:</label>
@@ -653,13 +677,17 @@ require_once '../configs/conexao.php';
             <button class="" onclick="closeModal('unidadeLote')"><i class="bi bi-x-lg"></i></button>
         </div>
         <form id="form-cad-unidade-lote" class="modal-form">
-            <label for="arquivoUnidade" class="modal-input arquivos-div">
+            <label for="arquivo-unidade" class="modal-input arquivos-div">
                 <div class="input-wrapper" id="arquivos-input-unidade">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
                     <p class="label-arquivo" id="label-arquivo-unidade">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivoUnidade" accept=".csv, .xlsx, .xls" multiple>
+                    <a href="../../_documentos/modelo_unidades.csv" download
+                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
+                        <i class="bi bi-download"></i> Baixar Modelo CSV
+                    </a>
+                    <input type="file" name="arquivo" id="arquivo-unidade" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
             <div class="modal-footer">
@@ -844,13 +872,17 @@ require_once '../configs/conexao.php';
             <button class="" onclick="closeModal('setoresLote')"><i class="bi bi-x-lg"></i></button>
         </div>
         <form id="form-cad-setor-lote" class="modal-form">
-            <label for="arquivoSetor" class="modal-input arquivos-div">
+            <label for="arquivo-setor" class="modal-input arquivos-div">
                 <div class="input-wrapper" id="arquivos-input-setor">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
                     <p class="label-arquivo" id="label-arquivo-setor">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivoSetor" accept=".csv, .xlsx, .xls" multiple>
+                    <a href="../../_documentos/modelo_setores.csv" download
+                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
+                        <i class="bi bi-download"></i> Baixar Modelo CSV
+                    </a>
+                    <input type="file" name="arquivo" id="arquivo-setor" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
             <div class="modal-footer">
@@ -975,8 +1007,7 @@ require_once '../configs/conexao.php';
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="senha_colaborador_cad">Senha:</label>
-                        <input type="password" name="senha" id="senha_colaborador_cad" value="senaisp" readonly
-                            style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
+                        <input type="password" name="senha" id="senha_colaborador_cad" value="senaisp" readonly placeholder="*****">
                     </div>
                 </div>
             </div>
@@ -1041,13 +1072,17 @@ require_once '../configs/conexao.php';
             <button class="" onclick="closeModal('colaboradoresLote')"><i class="bi bi-x-lg"></i></button>
         </div>
         <form id="form-cad-colaborador-lote" class="modal-form">
-            <label for="arquivoColaborador" class="modal-input arquivos-div">
+            <label for="arquivo-colaborador" class="modal-input arquivos-div">
                 <div class="input-wrapper" id="arquivos-input-colaborador">
                     <i style="font-size: var(--text-4xl); color: var(--corDestaque)"
                         class="bi bi-cloud-arrow-up-fill"></i>
                     <p class="label-arquivo" id="label-arquivo-colaborador">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <input type="file" name="arquivo" id="arquivoColaborador" accept=".csv, .xlsx, .xls" multiple>
+                    <a href="../../_documentos/modelo_colaboradores.csv" download
+                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
+                        <i class="bi bi-download"></i> Baixar Modelo CSV
+                    </a>
+                    <input type="file" name="arquivo" id="arquivo-colaborador" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
             <div class="modal-footer">
@@ -1088,8 +1123,7 @@ require_once '../configs/conexao.php';
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="senha_colaborador_edit">Senha:</label>
-                        <input type="password" name="senha" id="senha_colaborador_edit" readonly
-                            style="background-color: #e9ecef; cursor: not-allowed; color: #6c757d;">
+                        <input type="password" name="senha" id="senha_colaborador_edit" readonly placeholder="*****">
                     </div>
                 </div>
             </div>
@@ -1182,7 +1216,7 @@ require_once '../configs/conexao.php';
 </div>
 
 <!-- Desativar Colaborador -->
-<div class="modal-fundo" id="desativarColaborador" style="display: none;">
+<!-- <div class="modal-fundo" id="desativarColaborador" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
             <h3>Desativar Colaborador</h3>
@@ -1198,7 +1232,7 @@ require_once '../configs/conexao.php';
                 style="background-color: var(--corBase);">Não</button>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- Resetar Senha Colaborador -->
 <div class="modal-fundo" id="resetPass" style="display: none;">
@@ -2058,5 +2092,83 @@ require_once '../configs/conexao.php';
                 </button>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Editar Requisito -->
+<div class="modal-fundo" id="edicaoRequisito" style="display: none">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Editar Requisito</h3>
+            <button class="" onclick="closeModal('edicaoRequisito')"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <form id="form-edit-requisito" class="modal-form">
+            <input type="hidden" id="id_requisito_edit">
+            <div class="modal-input">
+                <label for="nome_requisito_edit">Nome:</label>
+                <div class="input-wrapper">
+                    <input type="text" id="nome_requisito_edit" placeholder="Ex: Botão de Emergência">
+                </div>
+            </div>
+
+            <div class="modal-row">
+                <div class="modal-input">
+                    <label for="tipo_requisito_edit">Tipo de Requisito:</label>
+                    <div class="input-wrapper">
+                        <select id="tipo_requisito_edit">
+                            <option value="" disabled selected>Selecione o Tipo</option>
+                            <option value="Seguranca">Segurança</option>
+                            <option value="Operacional">Operacional</option>
+                            <option value="Preventivo">Preventivo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn-confirmar-full confirmar">
+                    Editar <i class="bi bi-plus-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Desativar Requisito -->
+<div class="modal-fundo" id="deletarRequisito" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Deletar Requisito</h3>
+            <button onclick="closeModal('deletarRequisito')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer inativar o requisito?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="hidden" id="id_requisito_delete">
+            <button id="btn-confirmar-deletar-requisito" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('deletarRequisito')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
+
+<!-- Ativar Requisito -->
+<div class="modal-fundo" id="ativarRequisito" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Ativar Requisito</h3>
+            <button onclick="closeModal('ativarRequisito')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer ativar o requisito?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="hidden" id="id_requisito_ativar">
+            <button id="btn-confirmar-ativar-requisito" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('ativarRequisito')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
     </div>
 </div>

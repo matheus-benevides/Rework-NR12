@@ -37,11 +37,13 @@
                     ?>
                     <div class="box-pesquisa">
                         <i class="bi bi-search search-icon"></i>
-                        <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
-                            placeholder="Pesquisar..." class="input-pesquisa">
+                        <input type="text" name="search" id="pesquisa"
+                            value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar..."
+                            class="input-pesquisa">
 
                         <?php if ($busca_atual): ?>
-                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
+                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i
+                                    class="bi bi-x-lg"></i></a>
                         <?php endif; ?>
                     </div>
                     <div class="filtrar-status">
@@ -60,11 +62,12 @@
             <button class="btn" onclick="showModal('adicaoAluno')">Adicionar Aluno <i
                     class="bi bi-plus-circle"></i></button>
         </div>
-        
+
         <div class="tabela-bg2">
             <table class="tabela-main">
                 <thead>
                     <th>Nome</th>
+                    <th>E-mail</th>
                     <th>Matrícula</th>
                     <th>Turmas</th>
                     <th>Status</th>
@@ -92,6 +95,7 @@
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . $linha["aluno_nome"] . "</td>";
+                            echo "<td>" . ($linha["aluno_email"] ?? "<span style='color: #999; font-style: italic;'>Não informado</span>") . "</td>";
                             echo "<td>" . $linha["aluno_matricula"] . "</td>";
 
                             $nome_turma = !empty($linha["turma_nome"]) ? $linha["turma_nome"] : "<span style='color: #999; font-style: italic;'>Sem turma</span>";
@@ -103,7 +107,7 @@
                             echo "<td><span class='$classe'>" . $linha["aluno_status"] . "</span></td>";
                             echo "<td>
                                     <div style='display: flex; gap: 5px; justify-content: center;'>
-                                        <button class='btnAcao editar' type='button' onclick=\"abrirModalEdicaoAluno(" . $linha['idaluno'] . ", '" . addslashes($linha['aluno_nome']) . "', '" . $linha['aluno_matricula'] . "', " . $linha['turmas_id'] . ")\"><i class='bi bi-pencil-square'></i></button>";
+                                        <button class='btnAcao editar' type='button' onclick=\"abrirModalEdicaoAluno(" . $linha['idaluno'] . ", '" . addslashes($linha['aluno_nome']) . "', '" . addslashes($linha['aluno_email']) . "', '" . $linha['aluno_matricula'] . "', " . $linha['turmas_id'] . ")\"><i class='bi bi-pencil-square'></i></button>";
 
                             if (strtolower($linha['aluno_status']) == 'ativo') {
                                 echo "<button class='btnAcao deletar' type='button' onclick=\"showModal('desativarAluno', " . $linha['idaluno'] . ")\"><i class='bi bi-x-lg'></i></button>";
@@ -130,9 +134,10 @@
         </div>
 
     </section>
-    
+
     <script src="../../js/scripts.js" defer></script>
     <script src="../../js/processa.js" defer></script>
+    <script src="../../js/processa_lotes.js" defer></script>
 </body>
 
 </html>

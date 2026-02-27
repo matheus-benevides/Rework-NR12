@@ -394,6 +394,7 @@ if (btnConfirmaAtivarTurma) {
 // --- ALUNOS ---
 
 const API_URL_ALUNO = '../apis/processa_alunos.php';
+const API_URL_LOTE_ALUNO = '../apis/processa_lote/lote_aluno.php';
 
 const formCadAluno = document.getElementById('form-cad-aluno');
 const formEditAluno = document.getElementById('form-edit-aluno');
@@ -407,6 +408,7 @@ if (formCadAluno) {
         e.preventDefault();
 
         const nome = document.getElementById('nome_aluno_cad').value;
+        const email = document.getElementById('email_aluno_cad').value;
         const matricula = document.getElementById('matricula_aluno_cad').value;
         const turma = document.getElementById('turma_aluno_cad').value;
 
@@ -415,7 +417,8 @@ if (formCadAluno) {
             return;
         }
 
-        const dados = { nome: nome, matricula: matricula, turma_id: turma };
+        const dados = { nome: nome, email: email, matricula: matricula, turma_id: turma };
+        console.log('Enviando dados do aluno:', dados);
 
         try {
             const response = await fetch(API_URL_ALUNO, {
@@ -424,7 +427,9 @@ if (formCadAluno) {
                 body: JSON.stringify(dados)
             });
 
+            console.log('Resposta da API (status):', response.status);
             const result = await response.json();
+            console.log('Resultado da API:', result);
 
             if (response.ok) {
                 sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
@@ -446,6 +451,7 @@ if (formEditAluno) {
 
         const id = document.getElementById('id_aluno_edit').value;
         const nome = document.getElementById('nome_aluno_edit').value;
+        const email = document.getElementById('email_aluno_edit').value;
         const matricula = document.getElementById('matricula_aluno_edit').value;
         const turma = document.getElementById('turma_aluno_edit').value;
 
@@ -454,7 +460,7 @@ if (formEditAluno) {
             return;
         }
 
-        const dados = { id: id, nome: nome, matricula: matricula, turma_id: turma };
+        const dados = { id: id, nome: nome, email: email, matricula: matricula, turma_id: turma };
 
         try {
             const response = await fetch(API_URL_ALUNO, {
@@ -557,16 +563,19 @@ if (btnConfirmaDeletarAluno) {
     });
 }
 
+
 // 6. PREPARAR EDIÇÃO ALUNO
-function abrirModalEdicaoAluno(id, nome, matricula, turma) {
+function abrirModalEdicaoAluno(id, nome, email, matricula, turma) {
     const idEdit = document.getElementById('id_aluno_edit');
     const nomeEdit = document.getElementById('nome_aluno_edit');
+    const emailEdit = document.getElementById('email_aluno_edit');
     const matriculaEdit = document.getElementById('matricula_aluno_edit');
     const turmaEdit = document.getElementById('turma_aluno_edit');
 
-    if (idEdit && nomeEdit && matriculaEdit && turmaEdit) {
+    if (idEdit && nomeEdit && emailEdit && matriculaEdit && turmaEdit) {
         idEdit.value = id;
         nomeEdit.value = nome;
+        emailEdit.value = email;
         matriculaEdit.value = matricula;
         turmaEdit.value = turma;
         showModal('edicaoAluno');
@@ -1288,3 +1297,210 @@ async function enviarChecklist(event, tipo) {
 }
 
 window.enviarChecklist = enviarChecklist;
+
+// ==========================================
+// CRUD REQUISITOS (requisitos.php)
+// ==========================================
+
+const API_URL_REQUISITO = '../apis/processa_requisitos.php';
+
+// 1. CADASTRAR REQUISITO
+const formCadRequisito = document.getElementById('form-cad-requisito');
+
+if (formCadRequisito) {
+    formCadRequisito.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const topico = document.getElementById('nome_requisito_cad').value;
+        const tipo = document.getElementById('tipo_requisito_cad').value;
+
+        if (!topico || !tipo) {
+            alert('Preencha todos os campos do requisito.');
+            return;
+        }
+
+        const dados = {
+            topico: topico,
+            tipo: tipo
+        };
+
+        const btnSubmit = formCadRequisito.querySelector('button[type="submit"]');
+        const originalText = btnSubmit.innerHTML;
+        btnSubmit.innerHTML = '<i class="bi bi-hourglass-split"></i> Cadastrando...';
+        btnSubmit.disabled = true;
+
+        try {
+            const response = await fetch(API_URL_REQUISITO, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar cadastrar requisito.');
+        } finally {
+            btnSubmit.innerHTML = originalText;
+            btnSubmit.disabled = false;
+        }
+    });
+}
+
+// 2. EDITAR REQUISITO
+const formEditRequisito = document.getElementById('form-edit-requisito');
+
+if (formEditRequisito) {
+    window.abrirModalEdicaoRequisito = function (id, topico, tipo) {
+        document.getElementById('id_requisito_edit').value = id;
+        document.getElementById('nome_requisito_edit').value = topico;
+        document.getElementById('tipo_requisito_edit').value = tipo;
+        showModal('edicaoRequisito');
+    };
+
+    formEditRequisito.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id = document.getElementById('id_requisito_edit').value;
+        const topico = document.getElementById('nome_requisito_edit').value;
+        const tipo = document.getElementById('tipo_requisito_edit').value;
+
+        if (!id || !topico || !tipo) {
+            alert('Preencha os dados obrigatórios para edição.');
+            return;
+        }
+
+        const dados = {
+            id: id,
+            topico: topico,
+            tipo: tipo
+        };
+
+        const btnSubmit = formEditRequisito.querySelector('button[type="submit"]');
+        const originalText = btnSubmit.innerHTML;
+        btnSubmit.innerHTML = '<i class="bi bi-hourglass-split"></i> Editando...';
+        btnSubmit.disabled = true;
+
+        try {
+            const response = await fetch(API_URL_REQUISITO, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar editar requisito.');
+        } finally {
+            btnSubmit.innerHTML = originalText;
+            btnSubmit.disabled = false;
+        }
+    });
+}
+
+// 3. DESATIVAR REQUISITO
+const btnDesativarRequisito = document.getElementById('btn-confirmar-deletar-requisito');
+
+if (btnDesativarRequisito) {
+    btnDesativarRequisito.addEventListener('click', async () => {
+        const id = document.getElementById('id_requisito_delete').value;
+
+        if (!id) {
+            alert('ID do requisito não encontrado para desativação.');
+            return;
+        }
+
+        const dados = {
+            id: id,
+            status: 'Inativo'
+        };
+
+        const originalText = btnDesativarRequisito.innerHTML;
+        btnDesativarRequisito.innerHTML = '<i class="bi bi-hourglass-split"></i> Desativando...';
+        btnDesativarRequisito.disabled = true;
+
+        try {
+            const response = await fetch(API_URL_REQUISITO, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar desativar requisito.');
+        } finally {
+            btnDesativarRequisito.innerHTML = originalText;
+            btnDesativarRequisito.disabled = false;
+        }
+    });
+}
+
+// 4. ATIVAR REQUISITO
+const btnAtivarRequisito = document.getElementById('btn-confirmar-ativar-requisito');
+
+if (btnAtivarRequisito) {
+    btnAtivarRequisito.addEventListener('click', async () => {
+        const id = document.getElementById('id_requisito_ativar').value;
+
+        if (!id) {
+            alert('ID do requisito não encontrado para ativação.');
+            return;
+        }
+
+        const dados = {
+            id: id,
+            status: 'Ativo'
+        };
+
+        const originalText = btnAtivarRequisito.innerHTML;
+        btnAtivarRequisito.innerHTML = '<i class="bi bi-hourglass-split"></i> Ativando...';
+        btnAtivarRequisito.disabled = true;
+
+        try {
+            const response = await fetch(API_URL_REQUISITO, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+                location.reload();
+            } else {
+                alert('Erro: ' + result.mensagem);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro de conexão ao tentar ativar requisito.');
+        } finally {
+            btnAtivarRequisito.innerHTML = originalText;
+            btnAtivarRequisito.disabled = false;
+        }
+    });
+}

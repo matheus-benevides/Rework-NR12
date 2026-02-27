@@ -307,13 +307,11 @@ function showModal(qual, id) {
         document.getElementById("desativarAluno").style.display = "flex";
         if (id) document.getElementById("id_aluno_desativar").value = id;
     } else if (qual == "ativarAluno") {
-        document.getElementById("ativarAluno").style.display = "flex";
+        document.getElementById("ativarAlu  no").style.display = "flex";
         if (id) document.getElementById("id_aluno_ativar").value = id;
     } else if (qual == "deletarAluno") {
         document.getElementById("deletarAluno").style.display = "flex";
         if (id) document.getElementById("id_aluno_delete").value = id;
-    } else if (qual == "adicaoTurma") {
-        document.getElementById("adicaoTurma").style.display = "flex";
     } else if (qual == "adicaoTurma") {
         document.getElementById("adicaoTurma").style.display = "flex";
     } else if (qual == "edicaoTurma") {
@@ -350,8 +348,13 @@ function showModal(qual, id) {
         document.getElementById("editarColaborador").style.display = "flex";
     } else if (qual == "deletarColaborador") {
         document.getElementById("deletarColaborador").style.display = "flex";
+        if (id) document.getElementById("id_colaborador_delete").value = id;
     } else if (qual == "desativarColaborador") {
         document.getElementById("desativarColaborador").style.display = "flex";
+        if (id) document.getElementById("id_colaborador_delete").value = id;
+    } else if (qual == "ativarColaborador") {
+        document.getElementById("ativarColaborador").style.display = "flex";
+        if (id) document.getElementById("id_colaborador_ativar").value = id;
     } else if (qual == 'resetPass') {
         document.getElementById('resetPass').style.display = 'flex';
         document.getElementById("id_usuario_reset").value = id;
@@ -409,6 +412,11 @@ function showModal(qual, id) {
         document.getElementById("sucesso").style.display = "flex";
     } else if (qual == "adicaoRequisito") {
         document.getElementById("adicaoRequisito").style.display = "flex";
+    } else if (qual == "edicaoRequisito") {
+        document.getElementById("edicaoRequisito").style.display = "flex";
+    } else if (qual == "deletarRequisito") {
+        document.getElementById("deletarRequisito").style.display = "flex";
+        if (id) document.getElementById("id_requisito_delete").value = id;
     } else if (qual == "checkOperacional") {
         document.getElementById("checkOperacional").style.display = "flex";
     } else if (qual == "checkSeguranca") {
@@ -531,6 +539,14 @@ function closeModal(qual) {
         document.getElementById("checkSeguranca").style.display = "none";
     } else if (qual == "relacionarRequisitos") {
         document.getElementById("relacionarRequisitos").style.display = "none";
+    } else if (qual == "edicaoRequisito") {
+        document.getElementById("edicaoRequisito").style.display = "none";
+    } else if (qual == "deletarRequisito") {
+        document.getElementById("deletarRequisito").style.display = "none";
+    } else if (qual == "edicaoRequisito") {
+        document.getElementById("edicaoRequisito").style.display = "none";
+    } else if (qual == "deletarRequisito") {
+        document.getElementById("deletarRequisito").style.display = "none";
     } else {
         const acesso = document.getElementById("acesso");
         if (acesso) acesso.style.display = "none";

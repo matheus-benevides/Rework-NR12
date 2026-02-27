@@ -148,6 +148,7 @@
 
     <script src="../../js/scripts.js" defer></script>
     <script src="../../js/processa.js" defer></script>
+    <script src="../../js/processa_lotes.js" defer></script>
 </body>
 
 </html>

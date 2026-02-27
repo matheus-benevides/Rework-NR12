@@ -73,32 +73,32 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
                 id="btn-manutencao">
                 <div>
                     <i class="bi bi-wrench"></i>
-                    <span>Máquinas</span>
+                    <span>Requísitos</span>
                 </div>
                 <i class="bi bi-caret-down-fill seta"></i>
             </a>
 
             <div class="submenu" id="submenu-manutencao">
 
-                <a href="maquinas.php"
-                    class="<?php if ($atualmente_em == 'maquinas.php') echo 'ativo'; ?> links-sub">
+                <!-- <a href="maquinas.php"
+                    class="<?php //if ($atualmente_em == 'maquinas.php') echo 'ativo'; ?> links-sub">
                     <i class="bi bi-gear-wide-connected"></i> Máquinas
                 </a>
 
                 <a href="manuntencao.php"
-                    class="<?php if ($atualmente_em == 'manuntencao.php') echo 'ativo'; ?> links-sub">
+                    class="<?php //if ($atualmente_em == 'manuntencao.php') echo 'ativo'; ?> links-sub">
                     <i class="bi bi-tools"></i> Manuntenção
                 </a>
 
                 <a href="proxima_manuntencao.php"
-                    class="<?php if ($atualmente_em == 'proxima_manuntencao.php') echo 'ativo'; ?> links-sub">
+                    class="<?php //if ($atualmente_em == 'proxima_manuntencao.php') echo 'ativo'; ?> links-sub">
                     <i class="bi bi-tools"></i> Proxima Manuntenção
                 </a>
 
                 <a href="motores.php"
-                    class="<?php if ($atualmente_em == 'motores.php') echo 'ativo'; ?> links-sub">
+                    class="<?php //if ($atualmente_em == 'motores.php') echo 'ativo'; ?> links-sub">
                     <i class="bi bi-wrench-adjustable-circle"></i> Motores
-                </a>
+                </a> -->
 
                 <a href="tipo_maquina.php"
                     class="<?php if ($atualmente_em == 'tipo_maquina.php') echo 'ativo'; ?> links-sub">

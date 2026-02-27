@@ -28,10 +28,10 @@
     <section class="sec-main">
 
         <?php require '../components/header.php'; ?>
-        
+
         <div class="div-btns-pages">
 
-                        <form action="" method="GET" class="form-pesquisa">
+            <form action="" method="GET" class="form-pesquisa">
                 <div class="search-container">
                     <?php
                     // Captura o valor atual para manter no input
@@ -39,11 +39,13 @@
                     ?>
                     <div class="box-pesquisa">
                         <i class="bi bi-search search-icon"></i>
-                        <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
-                            placeholder="Pesquisar..." class="input-pesquisa">
-                        
+                        <input type="text" name="search" id="pesquisa"
+                            value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar..."
+                            class="input-pesquisa">
+
                         <?php if ($busca_atual): ?>
-                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
+                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i
+                                    class="bi bi-x-lg"></i></a>
                         <?php endif; ?>
                     </div>
                     <div class="filtrar-status">
@@ -131,6 +133,7 @@
 
     <script src="../../js/processa.js" defer></script>
     <script src="../../js/scripts.js" defer></script>
+    <script src="../../js/processa_lotes.js" defer></script>
 </body>
 
 </html>

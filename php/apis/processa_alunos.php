@@ -1,4 +1,4 @@
-    <?php
+<?php
 require_once '../configs/conexao.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -12,10 +12,12 @@ $json_recebido = file_get_contents("php://input");
 $input = json_decode($json_recebido, true);
 
 if (json_last_error() !== JSON_ERROR_NONE && $metodo !== 'OPTIONS' && $metodo !== 'DELETE') {
+    file_put_contents("debug_api.log", "JSON Error: " . json_last_error_msg() . " | Input: " . $json_recebido . "\n", FILE_APPEND);
     http_response_code(400);
     echo json_encode(["mensagem" => "JSON inválido: " . json_last_error_msg()]);
     exit;
 }
+file_put_contents("debug_api.log", "Method: $metodo | Input: " . $json_recebido . "\n", FILE_APPEND);
 
 $id = $input['id'] ?? null;
 
@@ -29,16 +31,17 @@ switch ($metodo) {
         // CADASTRAR
         $nome = $input['nome'] ?? null;
         $matricula = $input['matricula'] ?? null;
+        $email = $input['email'] ?? null;
         $turma_id = $input['turma_id'] ?? null;
 
         if (!$nome || !$matricula || !$turma_id) {
             http_response_code(400);
-            echo json_encode(["mensagem" => "Todos os campos (Nome, Matrícula, Turma) são obrigatórios."]);
+            echo json_encode(["mensagem" => "Todos os campos (Nome, Matrícula, Turma) são obrigatórios. E-mail é opcional."]);
             exit;
         }
 
-        $stmt = $conn->prepare("INSERT INTO aluno (aluno_nome, aluno_matricula, turmas_id, aluno_status) VALUES (?, ?, ?, 'Ativo')");
-        $stmt->bind_param("sii", $nome, $matricula, $turma_id);
+        $stmt = $conn->prepare("INSERT INTO aluno (aluno_nome, aluno_matricula, aluno_email, turmas_id, aluno_status) VALUES (?, ?, ?, ?, 'Ativo')");
+        $stmt->bind_param("sssi", $nome, $matricula, $email, $turma_id);
 
         if ($stmt->execute()) {
             http_response_code(201);
@@ -60,16 +63,17 @@ switch ($metodo) {
 
         $nome = $input['nome'] ?? null;
         $matricula = $input['matricula'] ?? null;
+        $email = $input['email'] ?? null;
         $turma_id = $input['turma_id'] ?? null;
 
         if (!$nome || !$matricula || !$turma_id) {
             http_response_code(400);
-            echo json_encode(["mensagem" => "Todos os campos (Nome, Matrícula, Turma) são obrigatórios."]);
+            echo json_encode(["mensagem" => "Todos os campos (Nome, Matrícula, Turma) são obrigatórios. E-mail é opcional."]);
             exit;
         }
 
-        $stmt = $conn->prepare("UPDATE aluno SET aluno_nome = ?, aluno_matricula = ?, turmas_id = ? WHERE idaluno = ?");
-        $stmt->bind_param("siii", $nome, $matricula, $turma_id, $id);
+        $stmt = $conn->prepare("UPDATE aluno SET aluno_nome = ?, aluno_matricula = ?, aluno_email = ?, turmas_id = ? WHERE idaluno = ?");
+        $stmt->bind_param("sssii", $nome, $matricula, $email, $turma_id, $id);
 
         if ($stmt->execute()) {
             http_response_code(200);
