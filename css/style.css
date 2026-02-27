@@ -288,7 +288,7 @@ hr {
     box-shadow: var(--sombra);
 }
 
-.div-tabelas{
+.div-tabelas {
     width: 90%;
     padding: 10px;
 }
@@ -916,50 +916,64 @@ select {
 }
 
 @media (max-width: 768px) {
-    
-    .btn-download-hero{
+
+    .btn-download-hero {
         font-size: var(--text-sm);
         padding: 15px 25px;
     }
 
-    .div-btns-pages{
+    .div-btns-pages {
         flex-direction: column;
-        width: 50%;
+        width: 100%;
     }
 
-    .btn{
+    .btn {
         margin-top: 15px;
         width: 100%;
     }
 
-    .div-btns-pages form{
+    .div-btns-pages form {
         display: flex;
+        flex-direction: column;
+        width: 100%;
         gap: 10px;
-        align-items: flex-start;
-        justify-content: flex-start;
     }
 
-    .search-container{
-        width: 350px;
+    .search-container {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .tabela-bg, .tabela-bg2{
+    .box-pesquisa {
+        width: 100%;
+    }
+
+    .filtrar-status {
+        width: 100% !important;
+        justify-content: space-between;
+    }
+
+    .tabela-bg,
+    .tabela-bg2 {
         overflow-x: auto;
     }
 
-    .tabela-bg table tbody tr td, .tabela-bg2 table tbody tr td {
+    .tabela-bg table tbody tr td,
+    .tabela-bg2 table tbody tr td {
         height: 57px;
     }
 
-    .hero-content h1{
+    .hero-content h1 {
         font-size: var(--text-2xl);
     }
 
-    .doc-grid{
+    .doc-grid {
         display: flex;
         flex-direction: column;
         height: 45%;
         padding-bottom: 35px;
-    } 
-} 
+    }
+}
+
 /* oque voce ta fazendo amigo??*/

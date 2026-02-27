@@ -15,10 +15,52 @@ async function processarLote(formId, inputId, apiPath) {
     const form = document.getElementById(formId);
     if (!form) return;
 
+    const fileInput = document.getElementById(inputId);
+    const labelArquivo = form.querySelector('.label-arquivo');
+    const dropArea = form.querySelector('.arquivos-div');
+
+    if (fileInput && labelArquivo) {
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                labelArquivo.textContent = fileInput.files[0].name;
+                labelArquivo.style.color = 'var(--corDestaque)';
+            } else {
+                labelArquivo.textContent = 'Arraste ou Pressione o Arquivo.';
+                labelArquivo.style.color = '';
+            }
+        });
+    }
+
+    // Suporte básico a Drag & Drop
+    if (dropArea && fileInput) {
+        ['dragover', 'dragenter'].forEach(eventName => {
+            dropArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropArea.style.borderColor = 'var(--corDestaque)';
+                dropArea.style.background = 'rgba(var(--corDestaqueRGB), 0.1)';
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropArea.style.borderColor = 'var(--corBase)';
+                dropArea.style.background = '';
+            });
+        });
+
+        dropArea.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+            // Disparar evento de change manualmente para atualizar o label
+            fileInput.dispatchEvent(new Event('change'));
+        });
+    }
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const fileInput = document.getElementById(inputId);
         if (!fileInput || !fileInput.files.length) {
             alert('Por favor, selecione um arquivo.');
             return;
@@ -27,7 +69,7 @@ async function processarLote(formId, inputId, apiPath) {
         const formData = new FormData();
         formData.append('arquivo', fileInput.files[0]);
 
-        // Feedback visual (opcional)
+        // Feedback visual
         const btnSubmit = form.querySelector('button[type="submit"]');
         const originalText = btnSubmit.innerHTML;
         btnSubmit.disabled = true;

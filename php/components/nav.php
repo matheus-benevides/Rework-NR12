@@ -73,7 +73,7 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
                 id="btn-manutencao">
                 <div>
                     <i class="bi bi-wrench"></i>
-                    <span>Requísitos</span>
+                    <span>Requisitos</span>
                 </div>
                 <i class="bi bi-caret-down-fill seta"></i>
             </a>
@@ -119,7 +119,7 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
         </div>
 
         <a href="historico.php" class="<?php if ($atualmente_em == 'historico.php') echo 'ativo'; ?> links">
-            <i class="bi bi-journal-check"></i> Historico
+            <i class="bi bi-journal-check"></i> Histórico
         </a>
 
         <a href="documentacao.php" class="<?php if ($atualmente_em == 'documentacao.php') echo 'ativo'; ?> links">

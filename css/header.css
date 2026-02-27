@@ -104,6 +104,9 @@
 }
 
 @media (max-width: 768px) {
+    .sec-main {
+        padding-left: 90px;
+    }
 
     .div-header {
         padding: 15px;
@@ -149,16 +152,16 @@
 .premium-modal {
     max-width: 600px !important;
     border-radius: 15px !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
-    background: var(--corFundo2) !important; 
-    border: 2px solid var(--corBordas) !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    background: var(--corFundo2) !important;
+    border: 2px solid var(--corBordas) !important;
     overflow: hidden;
 }
 
 .premium-title {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--corTxt3); 
+    color: var(--corTxt3);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -173,7 +176,7 @@
 }
 
 .colab-section {
-    background: var(--corFundo); 
+    background: var(--corFundo);
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -272,12 +275,12 @@
     transition: all 0.3s ease;
 }
 
-.checkbox-input:checked + .checkbox-box {
+.checkbox-input:checked+.checkbox-box {
     background: #28a745;
     border-color: #28a745;
 }
 
-.checkbox-input:checked + .checkbox-box .checkbox-check {
+.checkbox-input:checked+.checkbox-box .checkbox-check {
     stroke-dashoffset: 0;
 }
 
@@ -288,7 +291,7 @@
     transition: color 0.2s;
 }
 
-.checkbox-input:checked ~ .checkbox-text {
+.checkbox-input:checked~.checkbox-text {
     color: #28a745;
     font-weight: 600;
 }
@@ -297,13 +300,13 @@
     border-left: 4px solid var(--corDestaque);
 }
 
-.op-card .checkbox-input:checked + .checkbox-box {
+.op-card .checkbox-input:checked+.checkbox-box {
     background: var(--corDestaque);
     border-color: var(--corDestaque);
     box-shadow: none;
 }
 
-.op-card .checkbox-input:checked ~ .checkbox-text {
+.op-card .checkbox-input:checked~.checkbox-text {
     color: var(--corDestaque);
 }
 
@@ -357,14 +360,17 @@
 .checklist-scroll-premium::-webkit-scrollbar {
     width: 6px;
 }
+
 .checklist-scroll-premium::-webkit-scrollbar-track {
     background: var(--corFundo);
     border-radius: 10px;
 }
+
 .checklist-scroll-premium::-webkit-scrollbar-thumb {
     background: var(--corBordas);
     border-radius: 10px;
 }
+
 .checklist-scroll-premium::-webkit-scrollbar-thumb:hover {
     background: var(--corDestaque);
 }

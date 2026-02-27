@@ -1,19 +1,36 @@
 <?php
 require_once '../../configs/conexao.php';
 
-// Importante: A biblioteca PhpSpreadsheet deve estar instalada via composer.
-// Se não estiver, haverá um erro de classe não encontrada.
-if (file_exists('../../../vendor/autoload.php')) {
-    require_once '../../../vendor/autoload.php';
-}
-
-use PhpOffice\PhpSpreadsheet\IOFactory;
-
+// Definir headers para JSON
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+// --- TRATAMENTO DE ERROS GLOBAL PARA RETORNAR SEMPRE JSON ---
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    if (!(error_reporting() & $errno))
+        return false;
+    http_response_code(500);
+    echo json_encode([
+        "mensagem" => "Erro interno no servidor (PHP Error).",
+        "detalhes" => "$errstr em $errfile na linha $errline"
+    ]);
+    exit;
+});
+
+register_shutdown_function(function () {
+    $error = error_get_last();
+    if ($error !== NULL && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        http_response_code(500);
+        echo json_encode([
+            "mensagem" => "Erro fatal no processamento.",
+            "detalhes" => $error['message'] . " em " . $error['file'] . " na linha " . $error['line']
+        ]);
+    }
+});
+// ---------------------------------------------------------
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -32,36 +49,50 @@ if (!isset($_FILES['arquivo'])) {
     exit;
 }
 
-$arquivo = $_FILES['arquivo']['tmp_name'];
+$arquivoPath = $_FILES['arquivo']['tmp_name'];
 $extensao = pathinfo($_FILES['arquivo']['name'], PATHINFO_EXTENSION);
 
-if (!in_array(strtolower($extensao), ['csv', 'xlsx', 'xls'])) {
+if (strtolower($extensao) !== 'csv') {
     http_response_code(400);
-    echo json_encode(["mensagem" => "Formato de arquivo inválido. Use .csv, .xlsx ou .xls."]);
+    echo json_encode(["mensagem" => "Formato inválido. Atualmente apenas .csv é suportado nativamente."]);
     exit;
 }
 
 try {
-    $spreadsheet = IOFactory::load($arquivo);
-    $sheet = $spreadsheet->getActiveSheet();
-    $rows = $sheet->toArray();
+    // Abrir o arquivo
+    $handle = fopen($arquivoPath, "r");
+    if (!$handle) {
+        throw new Exception("Não foi possível abrir o arquivo.");
+    }
 
-    // Remove o cabeçalho
-    array_shift($rows);
+    // Detectar Delimitador (, ou ;)
+    $primeiraLinha = fgets($handle);
+    $delimitador = (strpos($primeiraLinha, ';') !== false) ? ';' : ',';
+    rewind($handle); // Voltar ao início
+
+    // Pular cabeçalho
+    fgetcsv($handle, 1000, $delimitador);
 
     $sucessoCount = 0;
     $erroCount = 0;
     $mensagensErro = [];
+    $index = 0;
 
-    // Mapeamento: 0 => Matricula, 1 => Nome, 2 => Turma, 3 => Email
-    foreach ($rows as $index => $row) {
+    // Processar linhas
+    while (($row = fgetcsv($handle, 1000, $delimitador)) !== FALSE) {
+        $index++;
+
+        // Mapeamento esperado: [0]Matricula, [1]Nome, [2]Turma, [3]Email
         $matricula = trim($row[0] ?? '');
         $nome = trim($row[1] ?? '');
         $turma_nome = trim($row[2] ?? '');
         $email = trim($row[3] ?? '');
 
         if (empty($matricula) || empty($nome) || empty($turma_nome)) {
-            $erroCount++;
+            if (!empty($matricula) || !empty($nome)) { // Só conta erro se não for linha vazia
+                $erroCount++;
+                $mensagensErro[] = "Linha " . ($index + 1) . ": Dados incompletos (Matrícula, Nome e Turma são obrigatórios).";
+            }
             continue;
         }
 
@@ -75,27 +106,26 @@ try {
 
         if (!$turma) {
             $erroCount++;
-            $mensagensErro[] = "Linha " . ($index + 2) . ": Turma '$turma_nome' não encontrada ou inativa.";
+            $mensagensErro[] = "Linha " . ($index + 1) . ": Turma '$turma_nome' não encontrada.";
             continue;
         }
 
         $turma_id = $turma['idturmas'];
 
-        // 2. Verificar se matrícula já existe
+        // 2. Verificar duplicata
         $stmt_check = $conn->prepare("SELECT idaluno FROM aluno WHERE aluno_matricula = ? LIMIT 1");
         $stmt_check->bind_param("s", $matricula);
         $stmt_check->execute();
-        $res_check = $stmt_check->get_result();
-        $exists = $res_check->fetch_assoc();
+        $exists = $stmt_check->get_result()->fetch_assoc();
         $stmt_check->close();
 
         if ($exists) {
             $erroCount++;
-            $mensagensErro[] = "Linha " . ($index + 2) . ": Matrícula '$matricula' já cadastrada.";
+            $mensagensErro[] = "Linha " . ($index + 1) . ": Matrícula '$matricula' já cadastrada.";
             continue;
         }
 
-        // 3. Inserir aluno
+        // 3. Inserir
         $stmt_insert = $conn->prepare("INSERT INTO aluno (aluno_nome, aluno_matricula, aluno_email, turmas_id, aluno_status) VALUES (?, ?, ?, ?, 'Ativo')");
         $stmt_insert->bind_param("sssi", $nome, $matricula, $email, $turma_id);
 
@@ -103,10 +133,12 @@ try {
             $sucessoCount++;
         } else {
             $erroCount++;
-            $mensagensErro[] = "Linha " . ($index + 2) . ": Erro ao inserir - " . $conn->error;
+            $mensagensErro[] = "Linha " . ($index + 1) . ": Erro no banco - " . $conn->error;
         }
         $stmt_insert->close();
     }
+
+    fclose($handle);
 
     echo json_encode([
         "mensagem" => "Processamento concluído.",
@@ -117,7 +149,8 @@ try {
 
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(["mensagem" => "Erro ao processar arquivo: " . $e->getMessage()]);
+    echo json_encode(["mensagem" => "Erro no processamento: " . $e->getMessage()]);
 }
 
 $conn->close();
+
