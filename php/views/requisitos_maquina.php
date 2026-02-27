@@ -1,32 +1,24 @@
-<?php require "../controllers/validar_acesso.php"; ?>
-<?php require '../components/modals/all_modals.php'; ?>
+<?php 
+require "../controllers/validar_acesso.php"; 
+require '../components/modals/all_modals.php'; 
 
-<?php
-// LÓGICA DE BUSCA DE ASSOCIAÇÕES EXISTENTES
-$requisitos_associados = [];
-if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
-    $tipomaquina_id = $_POST['tipo'];
-
-    // Usando a conexão $conn que você já possui no projeto
-    $sql_assoc = "SELECT requisitos_id FROM tipomaquina_requisito WHERE tipomaquina_id = ?";
-    $stmt_assoc = $conn->prepare($sql_assoc);
-    $stmt_assoc->bind_param("i", $tipomaquina_id);
-    $stmt_assoc->execute();
-    $res_assoc = $stmt_assoc->get_result();
-
+// Carrega os relacionamentos atuais para exibir na interface
+$sql_assoc = "SELECT tipomaquina_id, requisitos_id FROM tipomaquina_requisito";
+$res_assoc = $conn->query($sql_assoc);
+$maquinaRequisitos = [];
+if ($res_assoc) {
     while ($row = $res_assoc->fetch_assoc()) {
-        $requisitos_associados[] = $row['requisitos_id'];
+        $maquinaRequisitos[$row['tipomaquina_id']][] = $row['requisitos_id'];
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br" data-tema="">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requisitos - NR12</title>
+    <title>Requisitos de Máquinas - NR12</title>
 
     <link rel="stylesheet" href="../../css/global.css">
     <link rel="stylesheet" href="../../css/nav.css">
@@ -36,6 +28,8 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="shortcut icon" href="../../assets/icons/favicon.ico" type="image/x-icon">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         #lista-requisitos {
@@ -133,14 +127,95 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
 
     <?php require '../components/nav.php'; ?>
 
-    <section class="sec-main dontmove" style="align-items: center; justify-content: center;">
+    <section class="sec-main">
+        <?php require '../components/header.php'; ?>
 
+        <div class="div-btns-pages">
+            <form action="" method="GET" class="form-pesquisa">
+                <div class="search-container">
+                    <?php
+                    // Captura o valor atual para manter no input
+                    $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
+                    ?>
+                    <div class="box-pesquisa">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" name="search" id="pesquisa_maquinas" value="<?php echo htmlspecialchars($busca_atual); ?>"
+                            placeholder="Pesquisar tipo de máquina..." class="input-pesquisa">
+                        
+                        <?php if ($busca_atual): ?>
+                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
+                        <?php endif; ?>
+                    </div>
+                    <!-- Hidden submit button to allow Enter to search -->
+                    <button type="submit" style="display: none;"></button>
+                </div>
+            </form>
+        </div>
+
+        <div class="tabela-bg2">
+            <table class="tabela-main">
+                <thead>
+                    <th>ID</th>
+                    <th>Tipo de Máquina</th>
+                    <th>Qtd. Requisitos Associados</th>
+                    <th>Ações</th>
+                </thead>
+                <tbody id="tabela-requisitos-maquina">
+                    <?php
+                    if (!empty($busca_atual)) {
+                        $termo_seguro = $conn->real_escape_string($busca_atual);
+                        $sql = "SELECT idtipomaquina, tipomaquina_nome FROM tipomaquina WHERE tipomaquina_nome LIKE '%$termo_seguro%' ORDER BY tipomaquina_nome";
+                    } else {
+                        $sql = "SELECT idtipomaquina, tipomaquina_nome FROM tipomaquina ORDER BY tipomaquina_nome";
+                    }
+                    
+                    $result = $conn->query($sql);
+
+                    if ($result && $result->num_rows > 0) {
+                        while ($linha = $result->fetch_assoc()) {
+                            $id = $linha['idtipomaquina'];
+                            $nome = htmlspecialchars($linha['tipomaquina_nome']);
+                            $qtd = isset($maquinaRequisitos[$id]) ? count($maquinaRequisitos[$id]) : 0;
+                            
+                            echo "<tr>";
+                            echo "<td>{$id}</td>";
+                            echo "<td>{$nome}</td>";
+                            echo "<td><span class='status-ativo' style='background-color: var(--corBase); color: #fff;'>{$qtd} Requisitos</span></td>";
+                            echo "<td>
+                                    <div style='display: flex; gap: 5px; justify-content: center;'>
+                                        <button class='btnAcao editar' type='button' style='width: auto; padding: 5px 15px;' onclick=\"abrirModalRelacionar({$id}, '{$nome}')\">
+                                            <i class='bi bi-link-45deg'></i> Relacionar
+                                        </button>
+                                    </div>
+                                  </td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4' style='text-align:center; padding:15px;'>Nenhum tipo de máquina encontrado.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="div-btns-change">
+            <button id="btn-ant" type="button"><i class="bi bi-chevron-left"></i></button>
+            <button id="btn-prox" type="button"><i class="bi bi-chevron-right"></i></button>
+        </div>
+        
+    </section>
+
+    <!-- MODAL RELACIONAR REQUISITOS -->
+    <div class="modal-fundo" id="relacionarRequisitos" style="display: none">
         <div class="modal-box" style="width: 50em; height: auto">
             <div class="modal-header">
-                <h3>Relacionar Requisitos</h3>
+                <h3>Relacionar Requisitos: <span id="nome_maquina_display" style="color: var(--corDestaque);"></span></h3>
+                <button type="button" onclick="closeModal('relacionarRequisitos')"><i class="bi bi-x-lg"></i></button>
             </div>
 
-            <form id="form-suporte" class="modal-form" method="POST" action="">
+            <form id="form-relacionar-requisitos" class="modal-form">
+                <!-- Passa o ID da máquina selecionada via hidden input -->
+                <input type="hidden" name="tipo" id="tipo" value="">
 
                 <div class="modal-row">
                     <div class="modal-input">
@@ -162,30 +237,6 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
                     </div>
                 </div>
 
-                <div class="modal-row">
-                    <div class="modal-input">
-                        <label for="tipo">Tipo de Máquina: </label>
-                        <div class="input-wrapper">
-                            <select name="tipo" id="tipo" onchange="this.form.submit()">
-                                <option value="">Selecione...</option>
-                                <?php
-                                $sql = "SELECT idtipomaquina, tipomaquina_nome FROM tipomaquina ORDER BY tipomaquina_nome";
-                                $stmt = $conn->prepare($sql);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
-
-                                if ($result->num_rows > 0) {
-                                    while ($resultado = $result->fetch_assoc()) {
-                                        $selected = (isset($_POST['tipo']) && $_POST['tipo'] == $resultado['idtipomaquina']) ? 'selected' : '';
-                                        echo '<option value="' . $resultado['idtipomaquina'] . '" ' . $selected . '>' . $resultado['tipomaquina_nome'] . '</option>';
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="modal-input">
                     <label>Requisitos:</label>
                     <div class="checklist-container" id="container-principal">
@@ -198,15 +249,12 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
                         if ($result->num_rows > 0) {
                             while ($resultado = $result->fetch_assoc()) {
                                 $id = $resultado['idrequisitos'];
-                                $texto = $resultado['requisito_topico'];
+                                $texto = htmlspecialchars($resultado['requisito_topico']);
                                 $tipo = $resultado['tipo_req'];
-
-                                // Verifica se o requisito já está associado
-                                $checked = in_array($id, $requisitos_associados) ? 'checked' : '';
 
                                 echo "
                                     <div class='checklist-item' data-tipo='$tipo'>
-                                        <input type='checkbox' name='requisitos_selecionados[]' value='$id' id='req_$id' data-nome='$texto' $checked onclick='atualizarListaSelecionados(this)'>
+                                        <input type='checkbox' name='requisitos_selecionados[]' value='$id' id='req_$id' data-nome='$texto' onclick='atualizarListaSelecionados(this)'>
                                         <label for='req_$id'>$texto</label>
                                     </div>";
                             }
@@ -232,18 +280,45 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
 
             </form>
         </div>
-    </section>
+    </div>
+
 
     <script>
-        // LÓGICA DE AUTO-PREENCHIMENTO AO CARREGAR A PÁGINA
-        document.addEventListener("DOMContentLoaded", function() {
-            // Busca todos os checkboxes que vieram marcados do PHP
-            const marcados = document.querySelectorAll('input[name="requisitos_selecionados[]"]:checked');
-            marcados.forEach(checkbox => {
-                atualizarListaSelecionados(checkbox);
+        // LÓGICA DE EXIBIÇÃO DA MODAL COM DADOS DA LÓGICA PHP
+        const maquinaRequisitos = <?= json_encode($maquinaRequisitos) ?>;
+        
+        function abrirModalRelacionar(id, nome) {
+            document.getElementById('tipo').value = id;
+            document.getElementById('nome_maquina_display').innerText = nome;
+            
+            // 1. Limpar todas as seleções atuais
+            document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
             });
-        });
+            
+            // 2. Limpar visualização da lista na UI
+            document.getElementById('lista-requisitos').innerHTML = '<p id="placeholder-msg" style="color: #888; font-style: italic; margin: 0;">Nenhum requisito selecionado.</p>';
+            
+            // 3. Marcar apenas o que pertence à máquina selecionada
+            const reqs = maquinaRequisitos[id] || [];
+            reqs.forEach(reqId => {
+                const cb = document.getElementById('req_' + reqId);
+                if (cb) {
+                    cb.checked = true;
+                    // Atualiza a pequena lista em tempo real pra cada item
+                    atualizarListaSelecionados(cb);
+                }
+            });
+            
+            // 4. Mostrar a modal
+            if(typeof showModal === "function") {
+                showModal('relacionarRequisitos');
+            } else {
+                document.getElementById('relacionarRequisitos').style.display = 'flex';
+            }
+        }
 
+        // LÓGICA DE LISTA SELECIONADA (Checkbox para a Lista Visual abaixo)
         function atualizarListaSelecionados(checkbox) {
             const lista = document.getElementById('lista-requisitos');
             const id = checkbox.value;
@@ -290,7 +365,7 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
             }
         }
 
-        // Filtros permanecem iguais
+        // Filtros da modal
         document.getElementById('pesquisa').addEventListener('input', function() {
             const termo = this.value.toLowerCase();
             const itens = document.querySelectorAll('.checklist-item');
@@ -312,8 +387,74 @@ if (isset($_POST['tipo']) && !empty($_POST['tipo'])) {
                 }
             });
         });
+        
+        // Submissão do Formulário via Fetch API
+        const formRelacionar = document.getElementById('form-relacionar-requisitos');
+        if (formRelacionar) {
+            formRelacionar.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const tipomaquinaId = document.getElementById('tipo').value;
+                const checkboxes = document.querySelectorAll('input[name="requisitos_selecionados[]"]:checked');
+                const requisitosIds = Array.from(checkboxes).map(cb => cb.value);
+                
+                if (!tipomaquinaId) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Atenção',
+                        text: 'Nenhuma máquina selecionada.'
+                    });
+                    return;
+                }
+                
+                const btnSubmit = formRelacionar.querySelector('button[type="submit"]');
+                const originalText = btnSubmit.innerHTML;
+                btnSubmit.innerHTML = 'Salvando...';
+                btnSubmit.disabled = true;
+
+                try {
+                    const response = await fetch('../apis/processa_tipomaquina_requisitos.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            tipomaquina_id: tipomaquinaId,
+                            requisitos_ids: requisitosIds
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sucesso!',
+                            text: result.mensagem,
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            closeModal('relacionarRequisitos');
+                            location.reload();
+                        });
+                    } else {
+                        throw new Error(result.mensagem || 'Erro ao salvar associação.');
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro!',
+                        text: error.message
+                    });
+                } finally {
+                    btnSubmit.innerHTML = originalText;
+                    btnSubmit.disabled = false;
+                }
+            });
+        }
     </script>
 
+    <!-- Usando script central de JS da aplicação -->
     <script src="../../js/scripts.js" defer></script>
 </body>
 

@@ -413,6 +413,8 @@ function showModal(qual, id) {
         document.getElementById("checkOperacional").style.display = "flex";
     } else if (qual == "checkSeguranca") {
         document.getElementById("checkSeguranca").style.display = "flex";
+    } else if (qual == "relacionarRequisitos") {
+        document.getElementById("relacionarRequisitos").style.display = "flex";
     }
 }
 
@@ -527,6 +529,8 @@ function closeModal(qual) {
         document.getElementById("checkOperacional").style.display = "none";
     } else if (qual == "checkSeguranca") {
         document.getElementById("checkSeguranca").style.display = "none";
+    } else if (qual == "relacionarRequisitos") {
+        document.getElementById("relacionarRequisitos").style.display = "none";
     } else {
         const acesso = document.getElementById("acesso");
         if (acesso) acesso.style.display = "none";
@@ -1699,7 +1703,7 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarPagina(1);
     }
 
-        // --- BLOCO 17 ---    
+    // --- BLOCO 17 ---    
     if (tabelaCursos17 != undefined) {
         let paginaAtual = 1;
         const linhas = Array.from(tabelaCursos17.getElementsByTagName("tr"));

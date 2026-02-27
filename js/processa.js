@@ -1269,7 +1269,7 @@ async function enviarChecklist(event, tipo) {
                 timer: 2000,
                 showConfirmButton: false
             }).then(() => {
-                closeModal(check\);
+                closeModal(tipo);
                 location.reload();
             });
         } else {
