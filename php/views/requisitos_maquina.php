@@ -387,7 +387,6 @@ if ($res_assoc) {
                 }
             });
         });
-        
         // Submissão do Formulário via Fetch API
         const formRelacionar = document.getElementById('form-relacionar-requisitos');
         if (formRelacionar) {
@@ -399,11 +398,7 @@ if ($res_assoc) {
                 const requisitosIds = Array.from(checkboxes).map(cb => cb.value);
                 
                 if (!tipomaquinaId) {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Atenção',
-                        text: 'Nenhuma máquina selecionada.'
-                    });
+                    alert('Nenhuma máquina selecionada.');
                     return;
                 }
                 
@@ -427,25 +422,14 @@ if ($res_assoc) {
                     const result = await response.json();
 
                     if (response.ok) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sucesso!',
-                            text: result.mensagem,
-                            timer: 2000,
-                            showConfirmButton: false
-                        }).then(() => {
-                            closeModal('relacionarRequisitos');
-                            location.reload();
-                        });
+                        sessionStorage.setItem('pendingSuccessMessage', result.mensagem);
+                        location.reload();
                     } else {
-                        throw new Error(result.mensagem || 'Erro ao salvar associação.');
+                        alert('Erro: ' + result.mensagem);
                     }
                 } catch (error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Erro!',
-                        text: error.message
-                    });
+                    console.error('Erro na requisição:', error);
+                    alert('Erro de conexão ao salvar associação.');
                 } finally {
                     btnSubmit.innerHTML = originalText;
                     btnSubmit.disabled = false;
