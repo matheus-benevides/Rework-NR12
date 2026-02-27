@@ -529,3 +529,57 @@ input[type='file'] {
         left: -50%;
     }
 }
+
+.footer-lote {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-modelo {
+    width: 48%;
+    background: var(--corFundo);
+    border: 1px solid var(--corDestaque);
+    color: var(--corDestaque);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.btn-modelo:hover {
+    background: var(--corDestaque);
+    color: var(--corTxt3);
+}
+
+.footer-lote .btn-confirmar-full {
+    width: 48%;
+    margin-top: 0;
+}
+
+.preview-lote {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.preview-lote::-webkit-scrollbar {
+    width: 5px;
+}
+
+.preview-lote::-webkit-scrollbar-thumb {
+    background: var(--corDestaque);
+    border-radius: 10px;
+}

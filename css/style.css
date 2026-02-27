@@ -924,6 +924,10 @@ select {
 
     .div-btns-pages {
         flex-direction: column;
+        width: 90%;
+    }
+    
+    .div-btns-pages select{
         width: 100%;
     }
 

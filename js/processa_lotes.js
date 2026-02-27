@@ -19,14 +19,52 @@ async function processarLote(formId, inputId, apiPath) {
     const labelArquivo = form.querySelector('.label-arquivo');
     const dropArea = form.querySelector('.arquivos-div');
 
-    if (fileInput && labelArquivo) {
+    if (fileInput) {
         fileInput.addEventListener('change', () => {
-            if (fileInput.files.length > 0) {
-                labelArquivo.textContent = fileInput.files[0].name;
-                labelArquivo.style.color = 'var(--corDestaque)';
+            const previewContainer = document.getElementById(`preview-${formId.split('-')[2]}`);
+            const files = fileInput.files;
+
+            if (files.length > 0) {
+                if (labelArquivo) {
+                    labelArquivo.textContent = files.length > 1
+                        ? `${files.length} arquivos selecionados`
+                        : files[0].name;
+                    labelArquivo.style.color = 'var(--corDestaque)';
+                }
+
+                if (previewContainer) {
+                    previewContainer.innerHTML = '';
+                    Array.from(files).forEach((file, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'arquivo-item';
+                        item.innerHTML = `
+                            <span><i class="bi bi-file-earmark-text"></i> ${file.name}</span>
+                            <button type="button" class="remover-arquivo" data-index="${index}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        `;
+                        previewContainer.appendChild(item);
+                    });
+
+                    previewContainer.querySelectorAll('.remover-arquivo').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const dt = new DataTransfer();
+                            const idx = parseInt(btn.getAttribute('data-index'));
+                            Array.from(fileInput.files)
+                                .filter((_, i) => i !== idx)
+                                .forEach(f => dt.items.add(f));
+                            fileInput.files = dt.files;
+                            fileInput.dispatchEvent(new Event('change'));
+                        });
+                    });
+                }
             } else {
-                labelArquivo.textContent = 'Arraste ou Pressione o Arquivo.';
-                labelArquivo.style.color = '';
+                if (labelArquivo) {
+                    labelArquivo.textContent = 'Arraste ou Pressione o Arquivo.';
+                    labelArquivo.style.color = '';
+                }
+                if (previewContainer) previewContainer.innerHTML = '';
             }
         });
     }
@@ -37,7 +75,6 @@ async function processarLote(formId, inputId, apiPath) {
             dropArea.addEventListener(eventName, (e) => {
                 e.preventDefault();
                 dropArea.style.borderColor = 'var(--corDestaque)';
-                dropArea.style.background = 'rgba(var(--corDestaqueRGB), 0.1)';
             });
         });
 
@@ -45,15 +82,12 @@ async function processarLote(formId, inputId, apiPath) {
             dropArea.addEventListener(eventName, (e) => {
                 e.preventDefault();
                 dropArea.style.borderColor = 'var(--corBase)';
-                dropArea.style.background = '';
             });
         });
 
         dropArea.addEventListener('drop', (e) => {
-            const dt = e.dataTransfer;
-            const files = dt.files;
+            const files = e.dataTransfer.files;
             fileInput.files = files;
-            // Disparar evento de change manualmente para atualizar o label
             fileInput.dispatchEvent(new Event('change'));
         });
     }

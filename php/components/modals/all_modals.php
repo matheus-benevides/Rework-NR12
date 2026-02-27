@@ -46,15 +46,17 @@ require_once '../configs/conexao.php';
                         class="bi bi-cloud-arrow-up-fill"></i>
                     <p class="label-arquivo" id="label-arquivo-curso">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <a href="../../_documentos/modelo_cursos.csv" download
-                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
-                        <i class="bi bi-download"></i> Baixar Modelo CSV
-                    </a>
                     <input type="file" name="arquivo" id="arquivo-curso" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
-            <div class="modal-input"></div>
-            <div class="modal-footer">
+
+            <!-- Área de Preview -->
+            <div id="preview-curso" class="preview-lote"></div>
+
+            <div class="modal-footer footer-lote">
+                <a href="../../_documentos/modelo_cursos.csv" download class="btn-modelo">
+                    <i class="bi bi-download"></i> Modelo CSV
+                </a>
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
@@ -231,15 +233,17 @@ require_once '../configs/conexao.php';
                         class="bi bi-cloud-arrow-up-fill"></i>
                     <p class="label-arquivo" id="label-arquivo-turma">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <a href="../../_documentos/modelo_turmas.csv" download
-                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
-                        <i class="bi bi-download"></i> Baixar Modelo CSV
-                    </a>
                     <input type="file" name="arquivo" id="arquivo-turma" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
-            <div class="modal-input"></div>
-            <div class="modal-footer">
+
+            <!-- Área de Preview -->
+            <div id="preview-turma" class="preview-lote"></div>
+
+            <div class="modal-footer footer-lote">
+                <a href="../../_documentos/modelo_turmas.csv" download class="btn-modelo">
+                    <i class="bi bi-download"></i> Modelo CSV
+                </a>
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
@@ -455,15 +459,17 @@ require_once '../configs/conexao.php';
                         class="bi bi-cloud-arrow-up-fill"></i>
                     <p class="label-arquivo" id="label-arquivo-aluno">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <a href="../../_documentos/modelo_alunos.csv" download
-                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
-                        <i class="bi bi-download"></i> Baixar Modelo CSV
-                    </a>
                     <input type="file" name="arquivo" id="arquivo-aluno" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
-            <div class="modal-input"></div>
-            <div class="modal-footer">
+
+            <!-- Área de Preview -->
+            <div id="preview-aluno" class="preview-lote"></div>
+
+            <div class="modal-footer footer-lote">
+                <a href="../../_documentos/modelo_alunos.csv" download class="btn-modelo">
+                    <i class="bi bi-download"></i> Modelo CSV
+                </a>
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
@@ -683,14 +689,17 @@ require_once '../configs/conexao.php';
                         class="bi bi-cloud-arrow-up-fill"></i>
                     <p class="label-arquivo" id="label-arquivo-unidade">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <a href="../../_documentos/modelo_unidades.csv" download
-                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
-                        <i class="bi bi-download"></i> Baixar Modelo CSV
-                    </a>
                     <input type="file" name="arquivo" id="arquivo-unidade" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
-            <div class="modal-footer">
+
+            <!-- Área de Preview -->
+            <div id="preview-unidade" class="preview-lote"></div>
+
+            <div class="modal-footer footer-lote">
+                <a href="../../_documentos/modelo_unidades.csv" download class="btn-modelo">
+                    <i class="bi bi-download"></i> Modelo CSV
+                </a>
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
@@ -878,14 +887,17 @@ require_once '../configs/conexao.php';
                         class="bi bi-cloud-arrow-up-fill"></i>
                     <p class="label-arquivo" id="label-arquivo-setor">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <a href="../../_documentos/modelo_setores.csv" download
-                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
-                        <i class="bi bi-download"></i> Baixar Modelo CSV
-                    </a>
                     <input type="file" name="arquivo" id="arquivo-setor" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
-            <div class="modal-footer">
+
+            <!-- Área de Preview -->
+            <div id="preview-setor" class="preview-lote"></div>
+
+            <div class="modal-footer footer-lote">
+                <a href="../../_documentos/modelo_setores.csv" download class="btn-modelo">
+                    <i class="bi bi-download"></i> Modelo CSV
+                </a>
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
@@ -1078,14 +1090,17 @@ require_once '../configs/conexao.php';
                         class="bi bi-cloud-arrow-up-fill"></i>
                     <p class="label-arquivo" id="label-arquivo-colaborador">Arraste ou Pressione o Arquivo.</p>
                     <p>Somente arquivos .csv, .xlsx e .xls</p>
-                    <a href="../../_documentos/modelo_colaboradores.csv" download
-                        style="color: var(--corDestaque); text-decoration: underline; margin: 10px 0; display: inline-block; font-size: 0.9rem;">
-                        <i class="bi bi-download"></i> Baixar Modelo CSV
-                    </a>
                     <input type="file" name="arquivo" id="arquivo-colaborador" accept=".csv, .xlsx, .xls" multiple>
                 </div>
             </label>
-            <div class="modal-footer">
+
+            <!-- Área de Preview -->
+            <div id="preview-colaborador" class="preview-lote"></div>
+
+            <div class="modal-footer footer-lote">
+                <a href="../../_documentos/modelo_colaboradores.csv" download class="btn-modelo">
+                    <i class="bi bi-download"></i> Modelo CSV
+                </a>
                 <button type="submit" class="btn-confirmar-full confirmar">Cadastrar <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
