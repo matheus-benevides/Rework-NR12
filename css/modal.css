@@ -489,7 +489,7 @@ input[type='file'] {
 }
 
 @media (max-width: 768px) {
-
+    
     .arquivos-div {
         height: 250px;
     }
@@ -583,3 +583,4 @@ input[type='file'] {
     background: var(--corDestaque);
     border-radius: 10px;
 }
+

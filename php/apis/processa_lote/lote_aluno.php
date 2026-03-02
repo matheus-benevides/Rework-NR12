@@ -83,10 +83,10 @@ try {
         $index++;
 
         // Mapeamento esperado: [0]Matricula, [1]Nome, [2]Turma, [3]Email
-        $matricula = trim($row[0] ?? '');
-        $nome = trim($row[1] ?? '');
-        $turma_nome = trim($row[2] ?? '');
-        $email = trim($row[3] ?? '');
+        $matricula = trim($row[2] ?? '');
+        $nome = trim($row[0] ?? '');
+        $turma_nome = trim($row[3] ?? '');
+        $email = trim($row[1] ?? '');
 
         if (empty($matricula) || empty($nome) || empty($turma_nome)) {
             if (!empty($matricula) || !empty($nome)) { // Só conta erro se não for linha vazia

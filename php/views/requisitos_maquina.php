@@ -33,13 +33,21 @@ if ($res_assoc) {
 
     <style>
         #lista-requisitos {
-            background: #f4f4f4;
+            background: var(--corFundo);
             padding: 15px;
             border-radius: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--corBordas);
             max-height: 200px;
             overflow-y: auto;
             min-height: 60px;
+        }
+        
+        .checklist-container::-webkit-scrollbar{
+            width: 6px;
+        }
+        .checklist-container::-webkit-scrollbar-thumb{
+            background: var(--hoverTr);
+            border-radius: 10px;
         }
 
         #lista-requisitos::-webkit-scrollbar {
@@ -47,7 +55,7 @@ if ($res_assoc) {
         }
 
         #lista-requisitos::-webkit-scrollbar-thumb {
-            background: #bbb;
+            background: var(--hoverTr);
             border-radius: 10px;
         }
 
@@ -55,7 +63,7 @@ if ($res_assoc) {
             width: 100%;
             max-height: 250px;
             overflow-y: auto;
-            border: 1px solid #ccc;
+            border: 1px solid var(--corBordas);
             border-radius: 4px;
             background-color: var(--corFundo2);
             padding: 10px;
@@ -67,7 +75,7 @@ if ($res_assoc) {
             align-items: flex-start;
             gap: 12px;
             padding: 8px 5px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--corBordas);
             transition: background 0.2s;
             border-radius: 5px 5px 0 0;
         }
@@ -101,12 +109,15 @@ if ($res_assoc) {
             align-items: center;
             margin-bottom: 8px;
             gap: 10px;
-            background: #fff;
+            background: var(--corFundo2);
             padding: 10px;
             border-radius: 4px;
-            border: 1px solid #eee;
+            border: 1px solid var(--corBordas);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             animation: fadeIn 0.3s ease;
+            &:hover{
+                background: var(--hoverTr);
+            }
         }
 
         @keyframes fadeIn {
@@ -267,13 +278,13 @@ if ($res_assoc) {
                     <div class="modal-input" style="width: 100%;">
                         <label>Itens Selecionados (Checklist):</label>
                         <div id="lista-requisitos">
-                            <p id="placeholder-msg" style="color: #888; font-style: italic; margin: 0;">Nenhum requisito selecionado.</p>
+                            <p id="placeholder-msg" style="color: var(--corTxt3); font-style: italic; margin: 0;">Nenhum requisito selecionado.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" name="associar_requisitos" class="btn-confirmar-full confirmar" style="background: #28a745; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">
+                    <button type="submit" name="associar_requisitos" class="btn-confirmar-full confirmar" style="background: var(--confirmar); color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">
                         Salvar Associação
                     </button>
                 </div>
@@ -335,9 +346,9 @@ if ($res_assoc) {
                     div.className = 'selecionado-wrapper';
 
                     div.innerHTML = `
-                        <i class="bi bi-check-circle-fill" style="color: #28a745; font-size: 1.2rem;"></i>
-                        <span style="flex-grow: 1; font-size: 14px; color: #333;">${nome}</span>
-                        <button type="button" onclick="desmarcarRequisito('${id}')" style="background: none; color: #ff4d4d; border: none; cursor: pointer; padding: 5px;">
+                        <i class="bi bi-check-circle-fill" style="color: var(--confirmar); font-size: 1.2rem;"></i>
+                        <span style="flex-grow: 1; font-size: 14px; color: var(--corTxt3);">${nome}</span>
+                        <button type="button" onclick="desmarcarRequisito('${id}')" style="background: none; color: var(--corDestaque); border: none; cursor: pointer; padding: 5px;">
                             <i class="bi bi-x-lg"></i>
                         </button>
                     `;

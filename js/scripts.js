@@ -70,6 +70,17 @@ window.onload = () => {
             destino.innerHTML = origem.innerHTML;
         }
     }
+
+    var placeholderQuebra = document.querySelectorAll(".quebraMobile");
+    var sizeWidth = window.innerWidth;
+    if(sizeWidth <= 720){
+        if(placeholderQuebra != undefined){
+            for(let i = 0; i < placeholderQuebra.length; i++){
+                placeholderQuebra[i].style.display = "flex";
+                placeholderQuebra[i].style.flexDirection = "column";
+            }
+        }
+    }
 }
 
 function showPass() {
@@ -1929,7 +1940,7 @@ function filtrarAlunos() {
 
     linhas.forEach(linha => {
         // Índice 4 confirmado (5ª coluna)
-        const colunaStatus = linha.getElementsByTagName("td")[3];
+        const colunaStatus = linha.getElementsByTagName("td")[4];
 
         if (colunaStatus) {
             const textoStatus = colunaStatus.textContent.toLowerCase().trim();

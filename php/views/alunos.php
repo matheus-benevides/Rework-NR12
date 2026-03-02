@@ -95,7 +95,7 @@
                         while ($linha = $resultado->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . $linha["aluno_nome"] . "</td>";
-                            echo "<td>" . ($linha["aluno_email"] ?? "<span style='color: #999; font-style: italic;'>Não informado</span>") . "</td>";
+                            echo "<td>" . ($linha["aluno_email"] ?? "<span style='color: var(--corBordas); font-style: italic;'>Não informado</span>") . "</td>";
                             echo "<td>" . $linha["aluno_matricula"] . "</td>";
 
                             $nome_turma = !empty($linha["turma_nome"]) ? $linha["turma_nome"] : "<span style='color: #999; font-style: italic;'>Sem turma</span>";
@@ -112,7 +112,7 @@
                             if (strtolower($linha['aluno_status']) == 'ativo') {
                                 echo "<button class='btnAcao deletar' type='button' onclick=\"showModal('desativarAluno', " . $linha['idaluno'] . ")\"><i class='bi bi-x-lg'></i></button>";
                             } else {
-                                echo "<button class='btnAcao confirmar' type='button' style='background-color: #28a745;' onclick=\"showModal('ativarAluno', " . $linha['idaluno'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                                echo "<button class='btnAcao confirmar' type='button' style='background-color: var(--confirmar);' onclick=\"showModal('ativarAluno', " . $linha['idaluno'] . ")\"><i class='bi bi-check-lg'></i></button>";
                             }
 
                             echo "<button class='btnAcao deletar' type='button' style='background-color: red;' onclick=\"showModal('deletarAluno', " . $linha['idaluno'] . ")\"><i class='bi bi-trash'></i></button>

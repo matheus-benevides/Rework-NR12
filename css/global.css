@@ -16,6 +16,25 @@ body {
     height: 100vh;
     min-height: 100vh;
     background: var(--corFundo);
+    animation: animacaoCoringa 0.4s forwards ease-in-out;
+}
+
+@keyframes animacaoCoringa {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50%{
+    opacity: 0.5;
+  }
+  75%{
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 :root {
@@ -80,4 +99,40 @@ html[data-tema='claro'] {
     
     --corBordas: #e0e0e0;
     --corBarra: #ca2525;
+}
+
+@keyframes showBody {
+    0%{
+        left: -15%;
+    }
+    10%{
+        left: 1%;
+    }
+    20%{
+        left: 11%;
+    }
+    30%{
+        left: 21%;
+    }
+    40%{
+        left: 31%;
+    }
+    50%{
+        left: 41%;
+    }
+    60%{
+        left: 51%;
+    }
+    70%{
+        left: 61%;
+    }
+    80%{
+        left: 71%;
+    }
+    90%{
+        left: 81%;
+    }
+    100%{
+        left: 91%;
+    }
 }

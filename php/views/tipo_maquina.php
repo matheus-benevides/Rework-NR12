@@ -30,7 +30,7 @@
 
         <div class="div-btns-pages">
 
-                        <form action="" method="GET" class="form-pesquisa">
+            <form action="" method="GET" class="form-pesquisa">
                 <div class="search-container">
                     <?php
                     // Captura o valor atual para manter no input
@@ -40,7 +40,7 @@
                         <i class="bi bi-search search-icon"></i>
                         <input type="text" name="search" id="pesquisa" value="<?php echo htmlspecialchars($busca_atual); ?>"
                             placeholder="Pesquisar..." class="input-pesquisa">
-                        
+
                         <?php if ($busca_atual): ?>
                             <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
                         <?php endif; ?>
@@ -99,18 +99,29 @@
                             }
 
                             echo "<td><span class='$classe'>" . $linha["tipomaquina_status"] . "</span></td>";
-                            
+
                             echo "<td>
                                     <div>
                                         <button class='btnAcao editar' type='button' onclick=\"showModal('edicaoTipoMaquina', " . $linha['idtipomaquina'] . ")\"><i class='bi bi-pencil-square'></i></button>
                                         <button class='btnAcao deletar' type='button' onclick=\"showModal('deletarTipoMaquina', " . $linha['idtipomaquina'] . ",'')\"><i class='bi bi-trash'></i></button>
+                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('desativarTipMa', " . $linha['idtipomaquina'] . ",'')\"><i class='bi bi-x-lg'></i></button>
+                                        // apenas visual
                                     </div>
                                   </td>";
                             echo "</tr>";
+
+                            if ($status == 'ativo') {
+                                echo "<button class='btnAcao deletar' type='button' onclick=\"showModal('desativarTipMa', " . $linha['idtipomaquina'] . ")\"><i class='bi bi-x-lg'></i></button>";
+                            } else {
+                                echo "<button class='btnAcao confirmar' type='button' style='background-color: #28a745;' onclick=\"showModal('ativarTipMa', " . $linha['idtipomaquina'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                            }
                         }
+                        
                     } else {
                         echo "<tr><td colspan='4' style='text-align:center; padding:15px;'>Nenhuma máquina encontrada.</td></tr>";
                     }
+
+
                     ?>
                 </tbody>
             </table>

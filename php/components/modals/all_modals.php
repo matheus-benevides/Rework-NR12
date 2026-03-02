@@ -33,7 +33,7 @@ require_once '../configs/conexao.php';
 </div>
 
 <!-- Adicionar Curso em Lote -->
-<div class="modal-fundo" id="cursosLote">
+<div class="modal-fundo" id="cursosLote" style="display: none;">
     <div class="modal-box">
         <div class="modal-header">
             <h3>Cadastro em Lote</h3>
@@ -172,7 +172,7 @@ require_once '../configs/conexao.php';
                     </div>
                 </div>
             </div>
-            <div class="modal-row datas_div">
+            <div class="modal-row quebraMobile">
                 <div class="modal-input">
                     <label for="fim_turma_cad">Fim da Turma:</label>
                     <div class="input-wrapper">
@@ -220,7 +220,7 @@ require_once '../configs/conexao.php';
 </div>
 
 <!-- Adicionar Turma em Lote -->
-<div class="modal-fundo" id="turmasLote">
+<div class="modal-fundo" id="turmasLote" style="display: none;">
     <div class="modal-box">
         <div class="modal-header">
             <h3>Cadastro em Lote</h3>
@@ -299,7 +299,7 @@ require_once '../configs/conexao.php';
                     </div>
                 </div>
             </div>
-            <div class="modal-row">
+            <div class="modal-row quebraMobile">
                 <div class="modal-input">
                     <div class="input-wrapper">
                         <label for="fim_turma_edit">Fim da Turma:</label>
@@ -446,7 +446,7 @@ require_once '../configs/conexao.php';
     </div>
 </div>
 
-<div class="modal-fundo" id="alunosLote">
+<div class="modal-fundo" id="alunosLote" style="display: none;">
     <div class="modal-box">
         <div class="modal-header">
             <h3>Cadastro em Lote</h3>
@@ -781,6 +781,44 @@ require_once '../configs/conexao.php';
                 </button>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Desativar Tipo Máquina -->
+<div class="modal-fundo" id="desativarTipMa" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Desativar Unidade</h3>
+            <button onclick="closeModal('desativarTipMa')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer desativar esta Máquina?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="hidden" id="id_unidade_desativar">
+            <button id="btn-confirmar-desativar-tipo-maquina" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('desativarTipMa')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
+
+<!-- Ativar Tipo Máquina -->
+<div class="modal-fundo" id="ativarTipMa" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Ativar Unidade</h3>
+            <button onclick="closeModal('ativarTipMa')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer ativar esta Máquina?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="hidden" id="id_unidade_ativar">
+            <button id="btn-confirmar-ativar-tipo-maquina" class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('ativarTipMa')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
     </div>
 </div>
 
@@ -1690,7 +1728,7 @@ require_once '../configs/conexao.php';
 </div>
 
 <!-- Adicionar Manutenção -->
-<div class="modal-fundo" id="adicaoManutencao">
+<div class="modal-fundo" id="adicaoManutencao" style="display: none;">
     <div class="modal-box">
         <div class="modal-header">
             <h3>Cadastrar Manutenção</h3>
@@ -1857,7 +1895,7 @@ require_once '../configs/conexao.php';
 </div>
 
 <!-- Adicionar Suporte -->
-<div class="modal-fundo" id="adicaoSuporte">
+<div class="modal-fundo" id="adicaoSuporte" style="display: none;">
     <div class="modal-box">
         <div class="modal-header">
             <h3>Suporte</h3>
