@@ -114,7 +114,7 @@
                                         </button>";
 
                             if ($status == 'inativo') {
-                                echo "<button class='btnAcao confirmar' type='button' style='background-color: #28a745;' onclick=\"showModal('ativarSetor', " . $linha['idsetor'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                                echo "<button class='btnAcao confirmar' type='button' style='background-color: var(--confirmar);' onclick=\"showModal('ativarSetor', " . $linha['idsetor'] . ")\"><i class='bi bi-check-lg'></i></button>";
                             } else {
                                 echo "<button class='btnAcao deletar' type='button' onclick=\"showModal('desativarSetor', " . $linha['idsetor'] . ")\"><i class='bi bi-x-lg'></i></button>";
                             }

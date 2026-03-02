@@ -108,7 +108,7 @@
                             if ($status == 'ativo') {
                                 echo "<button class='btnAcao deletar' type='button' onclick=\"showModal('desativarUnidade', " . $linha['idunidade'] . ")\"><i class='bi bi-x-lg'></i></button>";
                             } else {
-                                echo "<button class='btnAcao confirmar' type='button' style='background-color: #28a745;' onclick=\"showModal('ativarUnidade', " . $linha['idunidade'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                                echo "<button class='btnAcao confirmar' type='button' style='background-color: var(--confirmar);' onclick=\"showModal('ativarUnidade', " . $linha['idunidade'] . ")\"><i class='bi bi-check-lg'></i></button>";
                             }
 
                             echo "</div>

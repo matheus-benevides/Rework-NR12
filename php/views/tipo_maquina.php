@@ -105,7 +105,6 @@
                                         <button class='btnAcao editar' type='button' onclick=\"showModal('edicaoTipoMaquina', " . $linha['idtipomaquina'] . ")\"><i class='bi bi-pencil-square'></i></button>
                                         <button class='btnAcao deletar' type='button' onclick=\"showModal('deletarTipoMaquina', " . $linha['idtipomaquina'] . ",'')\"><i class='bi bi-trash'></i></button>
                                         <button class='btnAcao deletar' type='button' onclick=\"showModal('desativarTipMa', " . $linha['idtipomaquina'] . ",'')\"><i class='bi bi-x-lg'></i></button>
-                                        // apenas visual
                                     </div>
                                   </td>";
                             echo "</tr>";
@@ -113,7 +112,7 @@
                             if ($status == 'ativo') {
                                 echo "<button class='btnAcao deletar' type='button' onclick=\"showModal('desativarTipMa', " . $linha['idtipomaquina'] . ")\"><i class='bi bi-x-lg'></i></button>";
                             } else {
-                                echo "<button class='btnAcao confirmar' type='button' style='background-color: #28a745;' onclick=\"showModal('ativarTipMa', " . $linha['idtipomaquina'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                                echo "<button class='btnAcao confirmar' type='button' style='background-color: var(--confirmar);' onclick=\"showModal('ativarTipMa', " . $linha['idtipomaquina'] . ")\"><i class='bi bi-check-lg'></i></button>";
                             }
                         }
                         

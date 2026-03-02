@@ -2061,7 +2061,7 @@ require_once '../configs/conexao.php';
     </div>
 </div>
 
-<div class="modal-fundo" id="sucesso" style="display: none;">
+<div class="" id="sucesso" style="display: none;">
     <div class="modal-box" id="sucesso-box">
         <div class="modal-header">
             <h5 id="sucesso-txt">Sucesso</h5>

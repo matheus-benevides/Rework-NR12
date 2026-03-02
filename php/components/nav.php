@@ -133,11 +133,11 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
         <div>
             <button onclick="changeTheme()" id="tema">I got Black, i got White, what you want?</button>
 
-            <a href="suporte.php" class="configs" title="Suporte">
+            <a href="suporte.php" class="configs dont-rotate" title="Suporte">
                 <i class="bi bi-headset"></i>
             </a>
 
-            <a href="perfil.php" class="configs" title="Perfil">
+            <a href="perfil.php" class="configs dont-rotate" title="Perfil">
                 <i class="bi bi-person-fill"></i>
             </a>
         </div>

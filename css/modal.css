@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    backdrop-filter: blur(3px);
 }
 
 /* MODAL DE ACESSO NEGADO */
@@ -364,6 +365,10 @@ h1 {
 
 #sucesso {
     position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
     background: rgba(0, 0, 0, 0.0);
     display: flex;
@@ -399,17 +404,18 @@ h1 {
     to {
         transform: translateY(-10px) scale(0.96);
         opacity: 0;
+        display: none;
     }
 }
 
 #sucesso-box {
     width: 320px;
-    background: oklch(76.864% 0.16957 161.631 / 0.48);
+    background: oklch(76.864% 0.16957 161.631 / 0.75);
     border: 1px solid oklch(76.5% 0.177 163.223);
     border-radius: 8px;
     padding: 12px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 
@@ -489,7 +495,7 @@ input[type='file'] {
 }
 
 @media (max-width: 768px) {
-    
+
     .arquivos-div {
         height: 250px;
     }
@@ -583,4 +589,3 @@ input[type='file'] {
     background: var(--corDestaque);
     border-radius: 10px;
 }
-

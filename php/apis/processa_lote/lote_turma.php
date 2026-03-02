@@ -71,14 +71,18 @@ try {
     while (($row = fgetcsv($handle, 1000, $delimitador)) !== FALSE) {
         $index++;
         $nome = trim($row[0] ?? '');
-        $curso_nome = trim($row[1] ?? '');
-        $colaborador_nome = trim($row[2] ?? '');
+        $periodo = trim($row[1] ?? '');
+        $inicio = trim($row[2] ?? '');
+        $fim = trim($row[3] ?? '');
+        $curso_nome = trim($row[4] ?? '');
+        $colaborador_nome = trim($row[5] ?? '');
 
-        if (empty($nome) || empty($curso_nome) || empty($colaborador_nome)) {
-            // Se a linha estiver vazia ou com dados insuficientes, pula para a próxima
-            // Mas se for uma linha com dados parciais, pode ser um erro de formatação
-            // ou dados ausentes que o usuário precisa saber.
-            // Por enquanto, apenas ignora linhas vazias.
+        if (empty($nome) || empty($periodo) || empty($inicio) || empty($fim) || empty($curso_nome) || empty($colaborador_nome)) {
+            if (empty($nome) && empty($periodo) && empty($inicio) && empty($fim) && empty($curso_nome) && empty($colaborador_nome)) {
+                continue; // Linha completamente vazia, ignora
+            }
+            $erroCount++;
+            $mensagensErro[] = "Linha " . ($index + 1) . ": Dados incompletos. Todos os campos são obrigatórios (Nome, Periodo, Data_Inicio, Data_Fim, Nome_Curso, Nome_Colaborador).";
             continue;
         }
 
@@ -97,7 +101,7 @@ try {
         $curso_id = $res_curso['idcurso'];
 
         // 2. Buscar ID do Colaborador (Instrutor/Responsável)
-        $stmt_colab = $conn->prepare("SELECT idcolaboradores FROM colaboradores WHERE colaboradores_nome = ? AND colaboradores_status = 'Ativo' LIMIT 1");
+        $stmt_colab = $conn->prepare("SELECT idcolaborador FROM colaborador WHERE colaborador_nome = ? AND colaborador_status = 'Ativo' LIMIT 1");
         $stmt_colab->bind_param("s", $colaborador_nome);
         $stmt_colab->execute();
         $res_colab = $stmt_colab->get_result()->fetch_assoc();
@@ -108,7 +112,7 @@ try {
             $mensagensErro[] = "Linha " . ($index + 1) . ": Colaborador '$colaborador_nome' não encontrado.";
             continue;
         }
-        $colaborador_id = $res_colab['idcolaboradores'];
+        $colaborador_id = $res_colab['idcolaborador'];
 
         // 3. Verificar duplicata
         $stmt_check = $conn->prepare("SELECT idturmas FROM turmas WHERE turma_nome = ? AND curso_id = ? LIMIT 1");
@@ -124,8 +128,8 @@ try {
         }
 
         // 4. Inserir
-        $stmt_insert = $conn->prepare("INSERT INTO turmas (turma_nome, curso_id, colaborador_id, turmas_status) VALUES (?, ?, ?, 'Ativo')");
-        $stmt_insert->bind_param("sii", $nome, $curso_id, $colaborador_id);
+        $stmt_insert = $conn->prepare("INSERT INTO turmas (turma_nome, turma_periodo, turma_inicio, turma_fim, curso_id, colaborador_id, turmas_status) VALUES (?, ?, ?, ?, ?, ?, 'Ativo')");
+        $stmt_insert->bind_param("ssssii", $nome, $periodo, $inicio, $fim, $curso_id, $colaborador_id);
 
         if ($stmt_insert->execute()) {
             $sucessoCount++;

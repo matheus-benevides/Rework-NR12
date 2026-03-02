@@ -121,7 +121,7 @@
                             if ($status == 'ativo') {
                                 echo "<button class='btnAcao ferramentas' title='Desativar' type='button' onclick=\"showModal('desativarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-x-lg'></i></button>";
                             } else {
-                                echo "<button class='btnAcao clipes' style='background-color: #28a745;' title='Ativar' type='button' onclick=\"showModal('ativarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-check-lg'></i></button>";
+                                echo "<button class='btnAcao clipes' style='background-color: var(--confirmar);' title='Ativar' type='button' onclick=\"showModal('ativarColaborador', " . $linha['idcolaborador'] . ")\"><i class='bi bi-check-lg'></i></button>";
                             }
 
                             // Reset Senha
