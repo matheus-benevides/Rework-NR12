@@ -1271,25 +1271,16 @@ async function enviarChecklist(event, tipo) {
         const result = await response.json();
 
         if (response.ok) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Sucesso!',
-                text: result.mensagem,
-                timer: 2000,
-                showConfirmButton: false
-            }).then(() => {
-                closeModal(tipo);
-                location.reload();
-            });
+            // Usando o sistema nativo do scripts.js
+            sessionStorage.setItem('pendingSuccessMessage', result.mensagem || 'Checklist enviado com sucesso!');
+            closeModal(`check${tipo}`);
+            location.reload();
         } else {
             throw new Error(result.mensagem || 'Erro ao processar checklist.');
         }
     } catch (error) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Erro!',
-            text: error.message
-        });
+        console.error('Erro no checklist:', error);
+        alert('Erro: ' + error.message);
     } finally {
         button.disabled = false;
         button.innerHTML = originalText;
