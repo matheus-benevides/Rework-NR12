@@ -236,7 +236,6 @@ hr {
     height: 100%;
     overflow: hidden;
     position: absolute;
-
 }
 
 .tabela-bg table thead,
@@ -286,11 +285,7 @@ hr {
     overflow: hidden;
     position: relative;
     box-shadow: var(--sombra);
-}
-
-.div-tabelas {
-    width: 90%;
-    padding: 10px;
+    padding: 50px;
 }
 
 .btnAcao {

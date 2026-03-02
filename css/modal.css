@@ -15,15 +15,17 @@
 /* MODAL DE ACESSO NEGADO */
 .modal-box-acesso {
     display: flex;
+    border-top: 5px solid var(--corBase);
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    width: 40%;
-    height: 200px;
+    justify-content: space-between;
+    width: 25%;
+    height: 450px;
     padding: 10px;
     border-radius: 25px;
     background: var(--corFundo);
     color: var(--corTxt);
+    min-width: 350px;
 }
 
 .modal-header-acesso {
@@ -63,9 +65,39 @@
 }
 
 .modal-txt-acesso {
+    height: 100%;
     width: 100%;
     text-align: center;
     color: var(--corTxt3);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.modal-txt-acesso div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal-txt-acesso p {
+    padding: 30px 5px;
+    border: 1px solid var(--corBordas);
+    border-radius: 5px;
+    width: 100%;
+}
+
+.modal-txt-acesso h3 {
+    font-size: var(--text-2xl);
+}
+
+.modal-txt-acesso i {
+    color: var(--corDestaque);
+    font-size: 170px;
 }
 
 .modal-btn-acesso {
@@ -77,8 +109,9 @@
 
 .modal-btn-acesso button {
     background: var(--confirmar);
-    color: var(--corTxt3);
-    width: 49%;
+    color: var(--txtClaro);
+    width: 100%;
+    transition: 0.3s all ease-in-out;
 
     &:last-child {
         background: var(--corBase);

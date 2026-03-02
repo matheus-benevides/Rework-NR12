@@ -100,10 +100,10 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
                     <i class="bi bi-wrench-adjustable-circle"></i> Motores
                 </a> -->
 
-                <a href="tipo_maquina.php"
-                    class="<?php if ($atualmente_em == 'tipo_maquina.php') echo 'ativo'; ?> links-sub">
+                <!-- <a href="tipo_maquina.php"
+                    class="<?php //if ($atualmente_em == 'tipo_maquina.php') echo 'ativo'; ?> links-sub">
                     <i class="bi bi-gear-wide-connected"></i> Tipo de Máquinas
-                </a>
+                </a> -->
 
                 <a href="requisitos.php"
                     class="<?php if ($atualmente_em == 'requisitos.php') echo 'ativo'; ?> links-sub">

@@ -342,15 +342,15 @@ require_once '../configs/conexao.php';
     </form>
 </div>
 
-<!-- Deletar Turmas -->
+<!-- Desativar Turmas -->
 <div class="modal-fundo" id="deletarTurma" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Desativar Turma</h3>
+            <h3>Desetivar Turma</h3>
             <button onclick="closeModal('deletarTurma')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer deletar turma?</p>
+            <p>Tem certeza que quer desativar turma?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="hidden" id="id_turma_delete">

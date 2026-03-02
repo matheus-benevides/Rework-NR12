@@ -138,7 +138,7 @@ function trocarForm1() {
         inputs[1].type = "password";
 
         inputs[0].name = 'email';
-        inputs[1].name = 'senhaLogin';
+        inputs[1].name = 'senha';
         inputs[0].placeholder = "exemplo@email.com";
         inputs[1].placeholder = "*****";
         icons[0].className = 'bi bi-envelope-fill';
@@ -490,6 +490,8 @@ function closeModal(qual) {
         document.getElementById("deletarColaborador").style.display = "none";
     } else if (qual == "desativarColaborador") {
         document.getElementById("desativarColaborador").style.display = "none";
+    } else if (qual == "ativarColaborador"){
+        document.getElementById("ativarColaborador").style.display = "none";
     } else if (qual == 'resetPass') {
         document.getElementById('resetPass').style.display = "none";
     } else if (qual == "adicaoMotor") {
