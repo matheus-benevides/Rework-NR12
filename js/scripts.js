@@ -618,6 +618,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabelaCursos16 = document.getElementById("tabela-motores");
     const tabelaCursos17 = document.getElementById("tabela-suporte");
     const tabelaCursos18 = document.getElementById("tabela-requisitos");
+    const tabelaCursos19 = document.getElementById("tabela-requisitos-maquina");
 
     // --- BLOCO 1 ---
     if (tabelaCursos1 != undefined) {
@@ -1811,6 +1812,72 @@ document.addEventListener("DOMContentLoaded", function () {
     if (tabelaCursos18 != undefined) { // Verificando tabela 14
         let paginaAtual = 1;
         const linhas = Array.from(tabelaCursos18.getElementsByTagName("tr"));
+
+        const btnAnterior = document.getElementById("btn-ant");
+        const btnProximo = document.getElementById("btn-prox");
+
+        if (!btnAnterior || !btnProximo) {
+            console.error("Erro: Botões de paginação não encontrados.");
+            return;
+        }
+
+        function mostrarPagina(pagina) {
+            const inicio = (pagina - 1) * registrosPorPagina;
+            const fim = inicio + registrosPorPagina;
+
+            linhas.forEach((linha, index) => {
+                if (index >= inicio && index < fim) {
+                    linha.style.display = "";
+                } else {
+                    linha.style.display = "none";
+                }
+            });
+            atualizarBotoes();
+        }
+
+        function atualizarBotoes() {
+            if (paginaAtual === 1) {
+                btnAnterior.style.opacity = "0.3";
+                btnAnterior.disabled = true;
+                btnAnterior.style.pointerEvents = "none";
+            } else {
+                btnAnterior.style.opacity = "1";
+                btnAnterior.disabled = false;
+                btnAnterior.style.pointerEvents = "auto";
+            }
+
+            if (paginaAtual * registrosPorPagina >= linhas.length) {
+                btnProximo.style.opacity = "0.3";
+                btnProximo.disabled = true;
+                btnProximo.style.pointerEvents = "none";
+            } else {
+                btnProximo.style.opacity = "1";
+                btnProximo.disabled = false;
+                btnProximo.style.pointerEvents = "auto";
+            }
+        }
+
+        btnAnterior.addEventListener("click", function () {
+            if (paginaAtual > 1) {
+                paginaAtual--;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        btnProximo.addEventListener("click", function () {
+            if ((paginaAtual * registrosPorPagina) < linhas.length) {
+                paginaAtual++;
+                mostrarPagina(paginaAtual);
+            }
+        });
+
+        mostrarPagina(1);
+    }
+
+    // --- BLOCO 19 --- Requisitos de Máquinas
+    if (tabelaCursos19 != undefined) {
+        let paginaAtual = 1;
+        const linhas = Array.from(tabelaCursos19.getElementsByTagName("tr"));
 
         const btnAnterior = document.getElementById("btn-ant");
         const btnProximo = document.getElementById("btn-prox");

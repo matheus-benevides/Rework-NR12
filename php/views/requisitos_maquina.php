@@ -1,6 +1,6 @@
-<?php 
-require "../controllers/validar_acesso.php"; 
-require '../components/modals/all_modals.php'; 
+<?php
+require "../controllers/validar_acesso.php";
+require '../components/modals/all_modals.php';
 
 // Carrega os relacionamentos atuais para exibir na interface
 $sql_assoc = "SELECT tipomaquina_id, requisitos_id FROM tipomaquina_requisito";
@@ -22,10 +22,10 @@ if ($res_assoc) {
 
     <link rel="stylesheet" href="../../css/global.css">
     <link rel="stylesheet" href="../../css/nav.css">
-    <link rel="stylesheet" href="../../css/style.css">  
+    <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/header.css">
     <link rel="stylesheet" href="../../css/modal.css">
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="shortcut icon" href="../../assets/icons/favicon.ico" type="image/x-icon">
     <!-- SweetAlert2 -->
@@ -41,11 +41,12 @@ if ($res_assoc) {
             overflow-y: auto;
             min-height: 60px;
         }
-        
-        .checklist-container::-webkit-scrollbar{
+
+        .checklist-container::-webkit-scrollbar {
             width: 6px;
         }
-        .checklist-container::-webkit-scrollbar-thumb{
+
+        .checklist-container::-webkit-scrollbar-thumb {
             background: var(--hoverTr);
             border-radius: 10px;
         }
@@ -61,47 +62,72 @@ if ($res_assoc) {
 
         .checklist-container {
             width: 100%;
-            max-height: 250px;
+            max-height: 300px;
             overflow-y: auto;
             border: 1px solid var(--corBordas);
-            border-radius: 4px;
+            border-radius: 8px;
             background-color: var(--corFundo2);
-            padding: 10px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 12px;
+            display: grid;
+            gap: 10px;
         }
-        
+
         .checklist-item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 12px;
-            padding: 8px 5px;
-            border-bottom: 1px solid var(--corBordas);
-            transition: background 0.2s;
-            border-radius: 5px 5px 0 0;
+            padding: 10px 15px;
+            background: var(--corFundo);
+            border: 1px solid var(--corBordas);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            user-select: none;
         }
-        
-        .checklist-item:last-child {
-            border-bottom: none;
-        }
-        
+
         .checklist-item:hover {
             background-color: var(--hoverTr);
+            border-color: var(--corDestaque);
+            transform: translateY(-1px);
         }
-        
+
+        .checklist-item.selected {
+            border-color: var(--confirmar);
+            background: rgba(0, 255, 0, 0.05);
+        }
+
         .checklist-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-top: 2px;
-            cursor: pointer;
-            accent-color: var(--corDestaque);
+            display: none;
         }
-        
+
+        /* Indicador circular igual ao de selecionados */
+        .checklist-item .check-indicator {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--corBordas);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: transparent;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .checklist-item.selected .check-indicator {
+            background: var(--confirmar);
+            border-color: var(--confirmar);
+            color: white;
+        }
+
         .checklist-item label {
             cursor: pointer;
             font-size: 14px;
             color: var(--corTxt3);
-            line-height: 1.4;
             font-weight: 500;
+            margin: 0;
+            flex-grow: 1;
         }
 
         .selecionado-wrapper {
@@ -110,14 +136,15 @@ if ($res_assoc) {
             margin-bottom: 8px;
             gap: 10px;
             background: var(--corFundo2);
-            padding: 10px;
-            border-radius: 4px;
+            padding: 10px 15px;
+            border-radius: 6px;
             border: 1px solid var(--corBordas);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             animation: fadeIn 0.3s ease;
-            &:hover{
-                background: var(--hoverTr);
-            }
+        }
+
+        .selecionado-wrapper:hover {
+            background: var(--hoverTr);
         }
 
         @keyframes fadeIn {
@@ -150,11 +177,13 @@ if ($res_assoc) {
                     ?>
                     <div class="box-pesquisa" style="width: 100%;">
                         <i class="bi bi-search search-icon"></i>
-                        <input type="text" name="search" id="pesquisa_maquinas" value="<?php echo htmlspecialchars($busca_atual); ?>"
+                        <input type="text" name="search" id="pesquisa_maquinas"
+                            value="<?php echo htmlspecialchars($busca_atual); ?>"
                             placeholder="Pesquisar tipo de máquina..." class="input-pesquisa">
-                        
+
                         <?php if ($busca_atual): ?>
-                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i class="bi bi-x-lg"></i></a>
+                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i
+                                    class="bi bi-x-lg"></i></a>
                         <?php endif; ?>
                     </div>
                     <!-- Hidden submit button to allow Enter to search -->
@@ -184,7 +213,7 @@ if ($res_assoc) {
                     } else {
                         $sql = "SELECT idtipomaquina, tipomaquina_nome FROM tipomaquina ORDER BY tipomaquina_nome";
                     }
-                    
+
                     $result = $conn->query($sql);
 
                     if ($result && $result->num_rows > 0) {
@@ -192,7 +221,7 @@ if ($res_assoc) {
                             $id = $linha['idtipomaquina'];
                             $nome = htmlspecialchars($linha['tipomaquina_nome']);
                             $qtd = isset($maquinaRequisitos[$id]) ? count($maquinaRequisitos[$id]) : 0;
-                            
+
                             echo "<tr>";
                             echo "<td>{$id}</td>";
                             echo "<td>{$nome}</td>";
@@ -218,14 +247,15 @@ if ($res_assoc) {
                 <button id="btn-prox" type="button"><i class="bi bi-chevron-right"></i></button>
             </div>
         </div>
-        
+
     </section>
 
     <!-- MODAL RELACIONAR REQUISITOS -->
     <div class="modal-fundo" id="relacionarRequisitos" style="display: none">
         <div class="modal-box" style="width: 50em; height: auto">
             <div class="modal-header">
-                <h3>Relacionar Requisitos: <span id="nome_maquina_display" style="color: var(--corDestaque);"></span></h3>
+                <h3>Relacionar Requisitos: <span id="nome_maquina_display" style="color: var(--corDestaque);"></span>
+                </h3>
                 <button type="button" onclick="closeModal('relacionarRequisitos')"><i class="bi bi-x-lg"></i></button>
             </div>
 
@@ -269,9 +299,10 @@ if ($res_assoc) {
                                 $tipo = $resultado['tipo_req'];
 
                                 echo "
-                                    <div class='checklist-item' data-tipo='$tipo'>
-                                        <input type='checkbox' name='requisitos_selecionados[]' value='$id' id='req_$id' data-nome='$texto' onclick='atualizarListaSelecionados(this)'>
-                                        <label for='req_$id'>$texto</label>
+                                    <div class='checklist-item' data-tipo='$tipo' id='card_$id' onclick=\"toggleRequirement('$id')\">
+                                        <input type='checkbox' name='requisitos_selecionados[]' value='$id' id='req_$id' data-nome='$texto' onclick='event.stopPropagation(); atualizarListaSelecionados(this)'>
+                                        <div class='check-indicator'><i class='bi bi-check-lg'></i></div>
+                                        <label for='req_$id' onclick='event.preventDefault()'>$texto</label>
                                     </div>";
                             }
                         }
@@ -283,13 +314,15 @@ if ($res_assoc) {
                     <div class="modal-input" style="width: 100%;">
                         <label>Itens Selecionados (Checklist):</label>
                         <div id="lista-requisitos">
-                            <p id="placeholder-msg" style="color: var(--corTxt3); font-style: italic; margin: 0;">Nenhum requisito selecionado.</p>
+                            <p id="placeholder-msg" style="color: var(--corTxt3); font-style: italic; margin: 0;">Nenhum
+                                requisito selecionado.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" name="associar_requisitos" class="btn-confirmar-full confirmar" style="background: var(--confirmar); color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">
+                    <button type="submit" name="associar_requisitos" class="btn-confirmar-full confirmar"
+                        style="background: var(--confirmar); color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer;">
                         Salvar Associação
                     </button>
                 </div>
@@ -302,35 +335,45 @@ if ($res_assoc) {
     <script>
         // LÓGICA DE EXIBIÇÃO DA MODAL COM DADOS DA LÓGICA PHP
         const maquinaRequisitos = <?= json_encode($maquinaRequisitos) ?>;
-        
+
         function abrirModalRelacionar(id, nome) {
             document.getElementById('tipo').value = id;
             document.getElementById('nome_maquina_display').innerText = nome;
-            
+
             // 1. Limpar todas as seleções atuais
-            document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(cb => {
-                cb.checked = false;
+            document.querySelectorAll('.checklist-item').forEach(card => {
+                card.classList.remove('selected');
+                card.querySelector('input').checked = false;
             });
-            
+
             // 2. Limpar visualização da lista na UI
             document.getElementById('lista-requisitos').innerHTML = '<p id="placeholder-msg" style="color: #888; font-style: italic; margin: 0;">Nenhum requisito selecionado.</p>';
-            
+
             // 3. Marcar apenas o que pertence à máquina selecionada
             const reqs = maquinaRequisitos[id] || [];
             reqs.forEach(reqId => {
                 const cb = document.getElementById('req_' + reqId);
                 if (cb) {
                     cb.checked = true;
-                    // Atualiza a pequena lista em tempo real pra cada item
+                    const card = document.getElementById('card_' + reqId);
+                    if (card) card.classList.add('selected');
                     atualizarListaSelecionados(cb);
                 }
             });
-            
+
             // 4. Mostrar a modal
-            if(typeof showModal === "function") {
+            if (typeof showModal === "function") {
                 showModal('relacionarRequisitos');
             } else {
                 document.getElementById('relacionarRequisitos').style.display = 'flex';
+            }
+        }
+
+        function toggleRequirement(id) {
+            const cb = document.getElementById('req_' + id);
+            if (cb) {
+                cb.checked = !cb.checked;
+                atualizarListaSelecionados(cb);
             }
         }
 
@@ -339,12 +382,13 @@ if ($res_assoc) {
             const lista = document.getElementById('lista-requisitos');
             const id = checkbox.value;
             const nome = checkbox.getAttribute('data-nome');
+            const card = document.getElementById('card_' + id);
 
             if (checkbox.checked) {
+                if (card) card.classList.add('selected');
                 const placeholder = document.getElementById('placeholder-msg');
                 if (placeholder) placeholder.remove();
 
-                // Evita duplicar se a função for chamada duas vezes
                 if (!document.getElementById('selecionado-' + id)) {
                     const div = document.createElement('div');
                     div.id = 'selecionado-' + id;
@@ -360,6 +404,7 @@ if ($res_assoc) {
                     lista.appendChild(div);
                 }
             } else {
+                if (card) card.classList.remove('selected');
                 const itemParaRemover = document.getElementById('selecionado-' + id);
                 if (itemParaRemover) itemParaRemover.remove();
                 verificarListaVazia();
@@ -382,7 +427,7 @@ if ($res_assoc) {
         }
 
         // Filtros da modal
-        document.getElementById('pesquisa').addEventListener('input', function() {
+        document.getElementById('pesquisa').addEventListener('input', function () {
             const termo = this.value.toLowerCase();
             const itens = document.querySelectorAll('.checklist-item');
             itens.forEach(item => {
@@ -391,7 +436,7 @@ if ($res_assoc) {
             });
         });
 
-        document.getElementById('filtro').addEventListener('change', function() {
+        document.getElementById('filtro').addEventListener('change', function () {
             const tipoSelecionado = this.value;
             const itens = document.querySelectorAll('.checklist-item');
             itens.forEach(item => {
@@ -406,18 +451,18 @@ if ($res_assoc) {
         // Submissão do Formulário via Fetch API
         const formRelacionar = document.getElementById('form-relacionar-requisitos');
         if (formRelacionar) {
-            formRelacionar.addEventListener('submit', async function(e) {
+            formRelacionar.addEventListener('submit', async function (e) {
                 e.preventDefault();
-                
+
                 const tipomaquinaId = document.getElementById('tipo').value;
                 const checkboxes = document.querySelectorAll('input[name="requisitos_selecionados[]"]:checked');
                 const requisitosIds = Array.from(checkboxes).map(cb => cb.value);
-                
+
                 if (!tipomaquinaId) {
                     alert('Nenhuma máquina selecionada.');
                     return;
                 }
-                
+
                 const btnSubmit = formRelacionar.querySelector('button[type="submit"]');
                 const originalText = btnSubmit.innerHTML;
                 btnSubmit.innerHTML = 'Salvando...';

@@ -108,8 +108,8 @@
                             echo "<tr>";
                             echo "<td>" . $linha["turma_nome"] . "</td>";
                             echo "<td>" . $linha["turma_periodo"] . "</td>";
-                            echo "<td>" . $linha["turma_inicio"] . "</td>";
-                            echo "<td>" . $linha["turma_fim"] . "</td>";
+                            echo "<td>" . date('d/m/Y', strtotime($linha["turma_inicio"])) . "</td>";
+                            echo "<td>" . date('d/m/Y', strtotime($linha["turma_fim"])) . "</td>";
                             echo "<td>" . $linha["curso_nome"] . "</td>";
                             echo "<td>" . $linha["colaborador_nome"] . "</td>";
 
