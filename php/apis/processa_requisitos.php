@@ -11,7 +11,7 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 $json_recebido = file_get_contents("php://input");
 $input = json_decode($json_recebido, true);
 
-if (json_last_error() !== JSON_ERROR_NONE && $metodo !== 'OPTIONS') {
+if (json_last_error() !== JSON_ERROR_NONE && !in_array($metodo, ['GET', 'OPTIONS'])) {
     http_response_code(400);
     echo json_encode(["mensagem" => "JSON inválido: " . json_last_error_msg()]);
     exit;
@@ -22,6 +22,33 @@ switch ($metodo) {
         // PREFLIGHT CORS
         http_response_code(200);
         exit;
+
+    case 'GET':
+        // BUSCAR REQUISITO(S)
+        $id = $_GET['id'] ?? null;
+
+        if ($id) {
+            $stmt = $conn->prepare("SELECT * FROM requisitos WHERE idrequisitos = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+
+            if ($resultado->num_rows > 0) {
+                echo json_encode($resultado->fetch_assoc());
+            } else {
+                http_response_code(404);
+                echo json_encode(["mensagem" => "Requisito não encontrado."]);
+            }
+            $stmt->close();
+        } else {
+            $resultado = $conn->query("SELECT * FROM requisitos ORDER BY requisito_topico ASC");
+            $requisitos = [];
+            while ($linha = $resultado->fetch_assoc()) {
+                $requisitos[] = $linha;
+            }
+            echo json_encode($requisitos);
+        }
+        break;
 
     case 'POST':
         // CADASTRAR REQUISITO

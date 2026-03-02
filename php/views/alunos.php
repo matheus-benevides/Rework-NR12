@@ -64,6 +64,11 @@
         </div>
 
         <div class="tabela-bg2">
+            <div class="tabela-titulo">
+                <i class="bi bi-people"></i>
+                <h2>Alunos</h2>
+            </div>
+            <div class="tabela-wrapper">
             <table class="tabela-main">
                 <thead>
                     <th>Nome</th>
@@ -126,11 +131,11 @@
                     ?>
                 </tbody>
             </table>
-        </div>
-
-        <div class="div-btns-change">
-            <button id="btn-ant" type="button"><i class="bi bi-chevron-left"></i></button>
-            <button id="btn-prox" type="button"><i class="bi bi-chevron-right"></i></button>
+            </div>
+            <div class="div-btns-change">
+                <button id="btn-ant" type="button"><i class="bi bi-chevron-left"></i></button>
+                <button id="btn-prox" type="button"><i class="bi bi-chevron-right"></i></button>
+            </div>
         </div>
 
     </section>

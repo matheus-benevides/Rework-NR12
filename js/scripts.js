@@ -73,9 +73,9 @@ window.onload = () => {
 
     var placeholderQuebra = document.querySelectorAll(".quebraMobile");
     var sizeWidth = window.innerWidth;
-    if(sizeWidth <= 720){
-        if(placeholderQuebra != undefined){
-            for(let i = 0; i < placeholderQuebra.length; i++){
+    if (sizeWidth <= 720) {
+        if (placeholderQuebra != undefined) {
+            for (let i = 0; i < placeholderQuebra.length; i++) {
                 placeholderQuebra[i].style.display = "flex";
                 placeholderQuebra[i].style.flexDirection = "column";
             }
@@ -425,9 +425,22 @@ function showModal(qual, id) {
         document.getElementById("adicaoRequisito").style.display = "flex";
     } else if (qual == "edicaoRequisito") {
         document.getElementById("edicaoRequisito").style.display = "flex";
+        if (id) {
+            fetch(`../apis/processa_requisitos.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("id_requisito_edit").value = data.idrequisitos;
+                    document.getElementById("nome_requisito_edit").value = data.requisito_topico;
+                    document.getElementById("tipo_requisito_edit").value = data.tipo_req;
+                })
+                .catch(error => console.error('Erro ao buscar requisito:', error));
+        }
     } else if (qual == "deletarRequisito") {
         document.getElementById("deletarRequisito").style.display = "flex";
         if (id) document.getElementById("id_requisito_delete").value = id;
+    } else if (qual == "ativarRequisito") {
+        document.getElementById("ativarRequisito").style.display = "flex";
+        if (id) document.getElementById("id_requisito_ativar").value = id;
     } else if (qual == "checkOperacional") {
         document.getElementById("checkOperacional").style.display = "flex";
     } else if (qual == "checkSeguranca") {
@@ -490,7 +503,7 @@ function closeModal(qual) {
         document.getElementById("deletarColaborador").style.display = "none";
     } else if (qual == "desativarColaborador") {
         document.getElementById("desativarColaborador").style.display = "none";
-    } else if (qual == "ativarColaborador"){
+    } else if (qual == "ativarColaborador") {
         document.getElementById("ativarColaborador").style.display = "none";
     } else if (qual == 'resetPass') {
         document.getElementById('resetPass').style.display = "none";
@@ -2154,31 +2167,145 @@ function filtrarTipoMaquina() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-
-    const selectTurmas = document.querySelector("#select-filtro-turmas");
-    if (selectTurmas) {
-        selectTurmas.addEventListener("change", filtrarTurmas);
+    const selectRequisitos = document.querySelector("#select-filtro-requisito");
+    if (selectRequisitos) {
+        selectRequisitos.addEventListener("change", filtrarRequisito);
     }
 
-    const selectCursos = document.querySelector("#select-filtro-status");
-    if (selectCursos) {
-        selectCursos.addEventListener("change", filtrarTabela);
+    const selectTipoRequisito = document.querySelector("#select-filtro-tipo");
+    if (selectTipoRequisito) {
+        selectTipoRequisito.addEventListener("change", filtrarRequisito);
     }
 
-    const selectAlunos = document.querySelector("#select-filtro-alunos");
-    if (selectAlunos) {
-        selectAlunos.addEventListener("change", filtrarAlunos);
+    // Handlers para Requisitos
+    const formCadRequisito = document.getElementById('form-cad-requisito');
+    if (formCadRequisito) {
+        formCadRequisito.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const topico = document.getElementById('nome_requisito_cad').value;
+            const tipo = document.getElementById('tipo_requisito_cad').value;
+
+            fetch('../apis/processa_requisitos.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ topico, tipo })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                    location.reload();
+                })
+                .catch(error => console.error('Erro ao cadastrar requisito:', error));
+        });
     }
 
-    const selectSetores = document.querySelector("#select-filtro-setor");
-    if (selectSetores) {
-        selectSetores.addEventListener("change", filtrarSetor);
+    const formEditRequisito = document.getElementById('form-edit-requisito');
+    if (formEditRequisito) {
+        formEditRequisito.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const id = document.getElementById('id_requisito_edit').value;
+            const topico = document.getElementById('nome_requisito_edit').value;
+            const tipo = document.getElementById('tipo_requisito_edit').value;
+
+            fetch('../apis/processa_requisitos.php', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, topico, tipo })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                    location.reload();
+                })
+                .catch(error => console.error('Erro ao editar requisito:', error));
+        });
     }
-    const selectMaquinas = document.querySelector("#select-filtro-maquinas");
-    if (selectSetores) {
-        selectSetores.addEventListener("change", filtrarMaquinas);
+
+    const btnDelRequisito = document.getElementById('btn-confirmar-deletar-requisito');
+    if (btnDelRequisito) {
+        btnDelRequisito.addEventListener('click', function () {
+            const id = document.getElementById('id_requisito_delete').value;
+            fetch('../apis/processa_requisitos.php', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, status: 'Inativo' })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                    location.reload();
+                })
+                .catch(error => console.error('Erro ao desativar requisito:', error));
+        });
+    }
+
+    const btnAtivarRequisito = document.getElementById('btn-confirmar-ativar-requisito');
+    if (btnAtivarRequisito) {
+        btnAtivarRequisito.addEventListener('click', function () {
+            const id = document.getElementById('id_requisito_ativar').value;
+            fetch('../apis/processa_requisitos.php', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, status: 'Ativo' })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                    location.reload();
+                })
+                .catch(error => console.error('Erro ao ativar requisito:', error));
+        });
     }
 });
+
+function filtrarRequisito() {
+    const selectStatus = document.querySelector("#select-filtro-requisito");
+    const selectTipo = document.querySelector("#select-filtro-tipo");
+    const linhas = document.querySelectorAll("#tabela-requisitos tr");
+
+    if (!selectStatus || !selectTipo) return;
+
+    const filtroStatus = selectStatus.value.toLowerCase().trim();
+    const filtroTipo = selectTipo.value.toLowerCase().trim();
+
+    linhas.forEach(linha => {
+        const colunaTipo = linha.getElementsByTagName("td")[1];
+        const colunaStatus = linha.getElementsByTagName("td")[2];
+
+        if (colunaTipo && colunaStatus) {
+            // Normalizando texto para remover acentos para comparação
+            const textoTipo = colunaTipo.textContent.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const textoStatus = colunaStatus.textContent.toLowerCase().trim();
+
+            const matchesStatus = (filtroStatus === "todos" || textoStatus === filtroStatus);
+            const matchesTipo = (filtroTipo === "todos" || textoTipo === filtroTipo);
+
+            if (matchesStatus && matchesTipo) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        }
+    });
+}
+
+function filtrarTabela(idTabela, indiceColuna) {
+    const select = event.target;
+    const filtro = select.value.toLowerCase().trim();
+    const linhas = document.querySelectorAll(`#${idTabela} tr`);
+
+    linhas.forEach(linha => {
+        const coluna = linha.getElementsByTagName("td")[indiceColuna];
+        if (coluna) {
+            const texto = coluna.textContent.toLowerCase().trim();
+            if (filtro === "todos" || texto === filtro) {
+                linha.style.display = "";
+            } else {
+                linha.style.display = "none";
+            }
+        }
+    });
+}
 
 let html5QrCode;
 

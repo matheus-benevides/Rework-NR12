@@ -199,6 +199,7 @@ h1 {
     font-size: 14px;
     background: var(--corFundo2);
     color: var(--corTxt3);
+    box-shadow: var(--sombra);
 }
 
 .modal-header button {

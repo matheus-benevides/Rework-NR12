@@ -164,6 +164,11 @@ if ($res_assoc) {
         </div>
 
         <div class="tabela-bg2">
+            <div class="tabela-titulo">
+                <i class="bi bi-link-45deg"></i>
+                <h2>Requisitos de Máquinas</h2>
+            </div>
+            <div class="tabela-wrapper">
             <table class="tabela-main">
                 <thead>
                     <th>ID</th>
@@ -207,11 +212,11 @@ if ($res_assoc) {
                     ?>
                 </tbody>
             </table>
-        </div>
-
-        <div class="div-btns-change">
-            <button id="btn-ant" type="button"><i class="bi bi-chevron-left"></i></button>
-            <button id="btn-prox" type="button"><i class="bi bi-chevron-right"></i></button>
+            </div>
+            <div class="div-btns-change">
+                <button id="btn-ant" type="button"><i class="bi bi-chevron-left"></i></button>
+                <button id="btn-prox" type="button"><i class="bi bi-chevron-right"></i></button>
+            </div>
         </div>
         
     </section>
