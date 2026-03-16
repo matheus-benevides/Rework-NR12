@@ -447,132 +447,14 @@ function showModal(qual, id) {
         document.getElementById("checkSeguranca").style.display = "flex";
     } else if (qual == "relacionarRequisitos") {
         document.getElementById("relacionarRequisitos").style.display = "flex";
+    } else if (qual == "reportarMaquina") {
+        document.getElementById("reportarMaquina").style.display = "flex";
     }
 }
 
-function closeModal(qual) {
-    if (qual == "adicaoCurso") {
-        document.getElementById("adicaoCurso").style.display = "none";
-    } else if (qual == "desativarCurso") {
-        document.getElementById("desativarCurso").style.display = "none";
-    } else if (qual == "ativarCurso") {
-        document.getElementById("ativarCurso").style.display = "none";
-    } else if (qual == "edicaoCurso") {
-        document.getElementById("edicaoCurso").style.display = "none";
-    } else if (qual == "adicaoAluno") {
-        document.getElementById("adicaoAluno").style.display = "none";
-    } else if (qual == "edicaoAluno") {
-        document.getElementById("edicaoAluno").style.display = "none";
-    } else if (qual == "desativarAluno") {
-        document.getElementById("desativarAluno").style.display = "none";
-    } else if (qual == "ativarAluno") {
-        document.getElementById("ativarAluno").style.display = "none";
-    } else if (qual == "deletarAluno") {
-        document.getElementById("deletarAluno").style.display = "none";
-    } else if (qual == "adicaoTurma") {
-        document.getElementById("adicaoTurma").style.display = "none";
-    } else if (qual == "edicaoTurma") {
-        document.getElementById("edicaoTurma").style.display = "none";
-    } else if (qual == "deletarTurma") {
-        document.getElementById("deletarTurma").style.display = "none";
-    } else if (qual == "ativarTurma") {
-        document.getElementById("ativarTurma").style.display = "none";
-    } else if (qual == "adicaoUnidade") {
-        document.getElementById("adicaoUnidade").style.display = "none";
-    } else if (qual == "edicaoUnidade") {
-        document.getElementById("edicaoUnidade").style.display = "none";
-    } else if (qual == "desativarUnidade") {
-        document.getElementById("desativarUnidade").style.display = "none";
-    } else if (qual == "ativarUnidade") {
-        document.getElementById("ativarUnidade").style.display = "none";
-    } else if (qual == "adicaoSetor") {
-        document.getElementById("adicaoSetor").style.display = "none";
-    } else if (qual == "adicaoRequisito") {
-        document.getElementById("adicaoRequisito").style.display = "none";
-    } else if (qual == "editarSetor") {
-        document.getElementById("editarSetor").style.display = "none";
-    } else if (qual == "desativarSetor") {
-        document.getElementById("desativarSetor").style.display = "none";
-    } else if (qual == "ativarSetor") {
-        document.getElementById("ativarSetor").style.display = "none";
-    } else if (qual == "adicaoColaborador") {
-        document.getElementById("adicaoColaborador").style.display = "none";
-    } else if (qual == "editarColaborador") {
-        document.getElementById("editarColaborador").style.display = "none";
-    } else if (qual == "deletarColaborador") {
-        document.getElementById("deletarColaborador").style.display = "none";
-    } else if (qual == "desativarColaborador") {
-        document.getElementById("desativarColaborador").style.display = "none";
-    } else if (qual == "ativarColaborador") {
-        document.getElementById("ativarColaborador").style.display = "none";
-    } else if (qual == 'resetPass') {
-        document.getElementById('resetPass').style.display = "none";
-    } else if (qual == "adicaoMotor") {
-        document.getElementById('adicaoMotor').style.display = "none";
-    } else if (qual == "editarMotor") {
-        document.getElementById('editarMotor').style.display = "none";
-    } else if (qual == "deletarMotor") {
-        document.getElementById('deletarMotor').style.display = "none";
-    } else if (qual == "desativarMotor") {
-        document.getElementById('desativarMotor').style.display = "none";
-    } else if (qual == "adicaoMaquina") {
-        document.getElementById("adicaoMaquina").style.display = "none";
-    } else if (qual == "deletarMaquina") {
-        document.getElementById("deletarMaquina").style.display = "none";
-    } else if (qual == "edicaoMaquina") {
-        document.getElementById("edicaoMaquina").style.display = "none";
-    } else if (qual == "notificacao-modal") {
-        document.getElementById("notificacao-modal").style.display = "none";
-    } else if (qual == "adicaoTipoMaquina") {
-        document.getElementById("adicaoTipoMaquina").style.display = "none";
-    } else if (qual == "edicaoTipoMaquina") {
-        document.getElementById("edicaoTipoMaquina").style.display = "none";
-    } else if (qual == "deletarTipoMaquina") {
-        document.getElementById("deletarTipoMaquina").style.display = "none";
-    } else if (qual == "adicaoManutencao") {
-        document.getElementById("adicaoManutencao").style.display = "none";
-    } else if (qual == "deletarManutencao") {
-        document.getElementById("deletarManutencao").style.display = "none";
-    } else if (qual == "desativarManutencao") {
-        document.getElementById("desativarManutencao").style.display = "none";
-    } else if (qual == "alunosLote") {
-        document.getElementById("alunosLote").style.display = "none";
-        document.getElementById("adicaoAluno").style.display = "flex";
-    } else if (qual == "cursosLote") {
-        document.getElementById("cursosLote").style.display = "none";
-        document.getElementById("adicaoCurso").style.display = "flex";
-    } else if (qual == "turmasLote") {
-        document.getElementById("turmasLote").style.display = "none";
-        document.getElementById("adicaoTurma").style.display = "flex";
-    } else if (qual == "unidadeLote") {
-        document.getElementById("unidadeLote").style.display = "none";
-        document.getElementById("adicaoUnidade").style.display = "flex";
-    } else if (qual == "setoresLote") {
-        document.getElementById("setoresLote").style.display = "none";
-        document.getElementById("adicaoSetor").style.display = "flex";
-    } else if (qual == "colaboradoresLote") {
-        document.getElementById("colaboradoresLote").style.display = "none";
-        document.getElementById("adicaoColaborador").style.display = "flex";
-    } else if (qual == "adicaoSuporte") {
-        document.getElementById("adicaoSuporte").style.display = "none";
-    } else if (qual == "changePassword") {
-        document.getElementById("changePassword").style.display = "none";
-    } else if (qual == "sucesso") {
-        document.getElementById("sucesso").style.display = "none";
-    } else if (qual == "checkOperacional") {
-        document.getElementById("checkOperacional").style.display = "none";
-    } else if (qual == "checkSeguranca") {
-        document.getElementById("checkSeguranca").style.display = "none";
-    } else if (qual == "relacionarRequisitos") {
-        document.getElementById("relacionarRequisitos").style.display = "none";
-    } else if (qual == "edicaoRequisito") {
-        document.getElementById("edicaoRequisito").style.display = "none";
-    } else if (qual == "deletarRequisito") {
-        document.getElementById("deletarRequisito").style.display = "none";
-    } else {
-        const acesso = document.getElementById("acesso");
-        if (acesso) acesso.style.display = "none";
-    }
+// REDUZIU 130 LINHAS DE MODAIS
+function closeModal(qual){
+    document.getElementById(qual).style.display = "none";
 }
 
 function exibirSucesso(mensagem) {

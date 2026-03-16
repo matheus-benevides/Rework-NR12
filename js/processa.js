@@ -1245,9 +1245,14 @@ window.resetarSenha = resetarSenha;
 
 // --- CHECKLISTS ALUNO ---
 
+let tempChecklistData = null;
+
 async function enviarChecklist(event, tipo) {
     event.preventDefault();
     const form = event.target;
+    const checkboxes = form.querySelectorAll('.check-norma');
+    const marcados = Array.from(checkboxes).filter(cb => cb.checked);
+
     const formData = new FormData(form);
     const data = {
         tipo_checklist: tipo,
@@ -1255,6 +1260,13 @@ async function enviarChecklist(event, tipo) {
         requisitos_ids: formData.getAll('requisitos_ids[]'),
         requisitos_especifico_ids: formData.getAll('requisitos_especifico_ids[]')
     };
+
+    // Validação: se não marcou tudo, pergunta se quer reportar erro
+    if (marcados.length < checkboxes.length) {
+        tempChecklistData = data;
+        showModal('reportarMaquina');
+        return;
+    }
 
     const button = form.querySelector('button[type="submit"]');
     const originalText = button.innerHTML;
@@ -1271,7 +1283,6 @@ async function enviarChecklist(event, tipo) {
         const result = await response.json();
 
         if (response.ok) {
-            // Usando o sistema nativo do scripts.js
             sessionStorage.setItem('pendingSuccessMessage', result.mensagem || 'Checklist enviado com sucesso!');
             closeModal(`check${tipo}`);
             location.reload();
@@ -1287,7 +1298,81 @@ async function enviarChecklist(event, tipo) {
     }
 }
 
+async function enviarReporteErro(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+
+    if (!tempChecklistData) {
+        alert('Dados do checklist não encontrados.');
+        return;
+    }
+
+    // Identifica quais requisitos NÃO foram marcados
+    const formOriginal = document.querySelector(`#formCheck${tempChecklistData.tipo_checklist}`);
+    const checkboxes = formOriginal.querySelectorAll('.check-norma');
+    const naoMarcadosIds = [];
+    const naoMarcadosEspIds = [];
+
+    checkboxes.forEach(cb => {
+        if (!cb.checked) {
+            if (cb.name === 'requisitos_ids[]') naoMarcadosIds.push(cb.value);
+            else if (cb.name === 'requisitos_especifico_ids[]') naoMarcadosEspIds.push(cb.value);
+        }
+    });
+
+    const dataReporte = {
+        descricao: formData.get('descricao'),
+        colaborador_id: formData.get('colaborador_id'),
+        requisitos_ids: naoMarcadosIds,
+        requisitos_especifico_ids: naoMarcadosEspIds
+    };
+
+    const button = form.querySelector('button[type="submit"]');
+    const originalText = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<i class="bi bi-hourglass-split"></i> Reportando...';
+
+    try {
+        const response = await fetch('../apis/processa_defeitos.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataReporte)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            // Após reportar o erro, envia o checklist (mesmo incompleto)
+            const resCheck = await fetch('../apis/processa_checklist.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(tempChecklistData)
+            });
+
+            if (resCheck.ok) {
+                sessionStorage.setItem('pendingSuccessMessage', 'Defeito reportado e checklist finalizado com sucesso!');
+                closeModal('reportarMaquina');
+                closeModal(`check${tempChecklistData.tipo_checklist}`);
+                location.reload();
+            } else {
+                const errJson = await resCheck.json();
+                alert('Defeito reportado, mas erro ao finalizar checklist: ' + errJson.mensagem);
+            }
+        } else {
+            alert('Erro ao reportar defeito: ' + result.mensagem);
+        }
+    } catch (error) {
+        console.error('Erro no reporte:', error);
+        alert('Erro de conexão ao tentar reportar.');
+    } finally {
+        button.disabled = false;
+        button.innerHTML = originalText;
+    }
+}
+
 window.enviarChecklist = enviarChecklist;
+window.enviarReporteErro = enviarReporteErro;
 
 // ==========================================
 // CRUD REQUISITOS (requisitos.php)

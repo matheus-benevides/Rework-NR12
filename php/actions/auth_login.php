@@ -9,9 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nimaquina = $_POST['nimaquina'];
 
         // Ajustar dps, tá só email agr
-        $sqlAluno = "SELECT * FROM aluno WHERE aluno_email = ?";
+        $sqlAluno = "SELECT * FROM aluno WHERE aluno_matricula = ? OR aluno_email = ?";
         $stmt = mysqli_prepare($conn, $sqlAluno);
-        mysqli_stmt_bind_param($stmt, "s", $matricula);
+        mysqli_stmt_bind_param($stmt, "ss", $matricula, $matricula);
         mysqli_stmt_execute($stmt);
         $resAluno = mysqli_stmt_get_result($stmt);
 

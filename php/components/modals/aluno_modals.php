@@ -95,7 +95,7 @@ if ($resColab) {
                     <?php else: ?>
                         <?php foreach ($requisitos_seguranca as $req): ?>
                             <label class="premium-checkbox-card">
-                                <input class="checkbox-input check-norma" type="checkbox" required name="requisitos_ids[]"
+                                <input class="checkbox-input check-norma" type="checkbox" name="requisitos_ids[]"
                                     value="<?= $req['idrequisitos'] ?>" />
                                 <div class="checkbox-box">
                                     <svg class="checkbox-check" width="20" height="20">
@@ -111,7 +111,7 @@ if ($resColab) {
                         <h3 class="titulochecks-premium" style="margin-top: 25px;">Requisitos Específicos</h3>
                         <?php foreach ($requisitos_especificos as $reqEsp): ?>
                             <label class="premium-checkbox-card specific">
-                                <input class="checkbox-input check-norma" type="checkbox" required
+                                <input class="checkbox-input check-norma" type="checkbox"
                                     name="requisitos_especifico_ids[]" value="<?= $reqEsp['idmaquina_requisitos'] ?>" />
                                 <div class="checkbox-box">
                                     <svg class="checkbox-check" width="20" height="20">
@@ -170,7 +170,7 @@ if ($resColab) {
                     <?php else: ?>
                         <?php foreach ($requisitos_operacionais as $req): ?>
                             <label class="premium-checkbox-card op-card">
-                                <input class="checkbox-input check-norma" type="checkbox" required name="requisitos_ids[]"
+                                <input class="checkbox-input check-norma" type="checkbox" name="requisitos_ids[]"
                                     value="<?= $req['idrequisitos'] ?>" />
                                 <div class="checkbox-box">
                                     <svg class="checkbox-check" width="20" height="20">
@@ -187,6 +187,44 @@ if ($resColab) {
             <div class="modal-footer-premium">
                 <button type="submit" class="cadastrarhist-premium op-btn">Finalizar Checklist <i
                         class="bi bi-send-fill"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-fundo" id="reportarMaquina">
+    <div class="modal-box premium-modal">
+        <div class="modal-header">
+            <h3 class="premium-title"><i class="bi bi-exclamation-triangle-fill"></i> Reportar Erro</h3>
+            <button type="button" class="bi bi-x-lg" onclick="closeModal('reportarMaquina')"></button>
+        </div>
+        <form id="formReportarErro" onsubmit="enviarReporteErro(event)" class="premium-form">
+            <div class="modal-input">
+                <h4 style="color: var(--corTexto); margin-bottom: 10px;">Identificamos que você não selecionou todos os requisitos.</h4>
+                <p style="color: var(--corSombra); margin-bottom: 20px;">Caso algum requisito não possa ser marcado devido a um defeito na máquina, reporte-o abaixo para a manutenção.</p>
+            </div>
+            
+            <div class="colab-section">
+                <label for="colab_reporte" class="premium-label">COLABORADOR RESPONSÁVEL</label>
+                <div class="select-wrapper">
+                    <select name="colaborador_id" id="colab_reporte" class="premium-select" required>
+                        <option value="">Selecione um colaborador</option>
+                        <?php foreach ($colaboradores_geral as $colab): ?>
+                            <option value="<?= $colab['idcolaborador'] ?>">
+                                <?= htmlspecialchars($colab['colaborador_nome']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-input" style="margin-top: 20px;">
+                <label for="desc_reporte" class="premium-label">DESCRIÇÃO DO PROBLEMA</label>
+                <textarea name="descricao" id="desc_reporte" class="premium-input" style="height: 100px; resize: none; padding: 10px;" placeholder="Descreva o que está acontecendo..." required></textarea>
+            </div>
+
+            <div class="modal-footer-premium" style="margin-top: 20px;">
+                <button type="submit" class="cadastrarhist-premium" style="background-color: var(--confirmar);">Reportar à Manutenção <i class="bi bi-tools"></i></button>
             </div>
         </form>
     </div>
