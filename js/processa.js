@@ -1264,7 +1264,7 @@ async function enviarChecklist(event, tipo) {
     // Validação: se não marcou tudo, pergunta se quer reportar erro
     if (marcados.length < checkboxes.length) {
         tempChecklistData = data;
-        showModal('reportarMaquina');
+        showModal('confirmarProceed');
         return;
     }
 
@@ -1298,6 +1298,16 @@ async function enviarChecklist(event, tipo) {
     }
 }
 
+function confirmarSimProceed() {
+    closeModal('confirmarProceed');
+    showModal('reportarMaquina');
+}
+
+function confirmarNaoProceed() {
+    closeModal('confirmarProceed');
+    showModal('erro');
+}
+
 async function enviarReporteErro(event) {
     event.preventDefault();
     const form = event.target;
@@ -1323,7 +1333,7 @@ async function enviarReporteErro(event) {
 
     const dataReporte = {
         descricao: formData.get('descricao'),
-        colaborador_id: formData.get('colaborador_id'),
+        tipo: formData.get('tipo'),
         requisitos_ids: naoMarcadosIds,
         requisitos_especifico_ids: naoMarcadosEspIds
     };
@@ -1373,6 +1383,8 @@ async function enviarReporteErro(event) {
 
 window.enviarChecklist = enviarChecklist;
 window.enviarReporteErro = enviarReporteErro;
+window.confirmarSimProceed = confirmarSimProceed;
+window.confirmarNaoProceed = confirmarNaoProceed;
 
 // ==========================================
 // CRUD REQUISITOS (requisitos.php)

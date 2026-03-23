@@ -449,6 +449,10 @@ function showModal(qual, id) {
         document.getElementById("relacionarRequisitos").style.display = "flex";
     } else if (qual == "reportarMaquina") {
         document.getElementById("reportarMaquina").style.display = "flex";
+    } else if (qual == "confirmarProceed") {
+        document.getElementById("confirmarProceed").style.display = "flex";
+    } else if (qual == "erro") {
+        document.getElementById("erro").style.display = "flex";
     }
 }
 

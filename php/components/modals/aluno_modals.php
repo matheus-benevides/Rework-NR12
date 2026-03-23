@@ -9,7 +9,10 @@ $colaboradores_geral = [];
 
 if (isset($id_maquina)) {
     // 1. Busca dados da máquina
-    $sqlMaquina = "SELECT tipomaquina_id FROM maquina WHERE idmaquina = ?";
+    $sqlMaquina = "SELECT m.tipomaquina_id, m.maquina_ni, t.tipomaquina_nome 
+                   FROM maquina m
+                   LEFT JOIN tipomaquina t ON m.tipomaquina_id = t.idtipomaquina
+                   WHERE m.idmaquina = ?";
     $stmtMaquina = $conn->prepare($sqlMaquina);
     $stmtMaquina->bind_param('i', $id_maquina);
     $stmtMaquina->execute();
@@ -192,39 +195,92 @@ if ($resColab) {
     </div>
 </div>
 
-<div class="modal-fundo" id="reportarMaquina">
-    <div class="modal-box premium-modal">
+<!-- MODAL DE CONFIRMAÇÃO PARA PROSSEGUIR COM CHECKLIST INCOMPLETO -->
+<div class="modal-fundo" id="confirmarProceed" style="display: none;">
+    <div class="modal-box premium-modal" style="max-width: 450px;">
         <div class="modal-header">
-            <h3 class="premium-title"><i class="bi bi-exclamation-triangle-fill"></i> Reportar Erro</h3>
+            <h3 class="premium-title"><i class="bi bi-question-circle-fill"></i> Itens não marcados</h3>
+            <button type="button" class="bi bi-x-lg" onclick="closeModal('confirmarProceed')"></button>
+        </div>
+        <div class="premium-form" style="padding: 20px; text-align: center;">
+            <div class="modal-input">
+                <p style="color: var(--sombra); font-size: var(--txt-4xl); margin-bottom: 25px;">
+                    Identificamos que nem todos os itens foram marcados. Deseja prosseguir e reportar um problema à manutenção?
+                </p>
+            </div>
+            <div class="modal-footer-premium" style="display: flex; gap: 15px; justify-content: center;">
+                <button type="button" class="cadastrarhist-premium" onclick="confirmarNaoProceed()" style="background-color: var(--corBase); flex: 1;">
+                    Não, Voltar <i class="bi bi-arrow-left"></i>
+                </button>
+                <button type="button" class="cadastrarhist-premium" onclick="confirmarSimProceed()" style="background-color: var(--confirmar); flex: 1;">
+                    Sim, Prosseguir <i class="bi bi-check-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE ERRO (VISUAL PREMIUM) -->
+<div class="modal-fundo" id="erro" style="display: none;">
+    <div class="modal-box premium-modal" style="max-width: 450px; text-align: center;">
+        <div class="modal-header">
+            <h3 class="premium-title"><i class="bi bi-exclamation-octagon-fill"></i> Atenção</h3>
+            <button type="button" class="bi bi-x-lg" onclick="closeModal('erro')"></button>
+        </div>
+        <div class="premium-form" style="padding: 30px;">
+            <div class="modal-input">
+                <p id="erro-msg" style="color: var(--sombra); font-size: var(--txt-4xl); margin-bottom: 25px;">
+                    Você precisa reportar o defeito para prosseguir com o checklist incompleto.
+                </p>
+            </div>
+            <div class="modal-footer-premium">
+                <button type="button" class="cadastrarhist-premium" onclick="closeModal('erro')" style="background-color: var(--corBase); width: 100%;">
+                    Entendido <i class="bi bi-check-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-fundo" id="reportarMaquina">
+    <div class="modal-box premium-modal" style="max-width: 600px;">
+        <div class="modal-header">
+            <h3 class="premium-title"><i class="bi bi-exclamation-triangle-fill"></i> Reportar Erro à Manutenção</h3>
             <button type="button" class="bi bi-x-lg" onclick="closeModal('reportarMaquina')"></button>
         </div>
         <form id="formReportarErro" onsubmit="enviarReporteErro(event)" class="premium-form">
             <div class="modal-input">
-                <h4 style="color: var(--corTexto); margin-bottom: 10px;">Identificamos que você não selecionou todos os requisitos.</h4>
-                <p style="color: var(--corSombra); margin-bottom: 20px;">Caso algum requisito não possa ser marcado devido a um defeito na máquina, reporte-o abaixo para a manutenção.</p>
+                <p style="color: var(--sombra); font-size: 1.1rem; margin-bottom: 20px; text-align: center;">Identificamos que nem todos os requisitos foram selecionados.</p>
+                
+                <!-- Info da Máquina Automática -->
+                <div style="background: var(--corFundo); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--corBordas); display: flex; align-items: center; gap: 15px; justify-content: center;">
+                    <i class="bi bi-cpu-fill" style="font-size: 1.5rem; color: var(--corBase);"></i>
+                    <div style="text-align: left;">
+                        <p style="margin: 0; color: var(--corTxt3); font-size: 0.9rem; opacity: 0.8;">Patrimônio / Máquina:</p>
+                        <p style="margin: 0; color: var(--corTxt3); font-weight: 600;">
+                            <?= htmlspecialchars($maquina['maquina_ni'] ?? 'N/A') ?> - <?= htmlspecialchars($maquina['tipomaquina_nome'] ?? 'N/A') ?>
+                        </p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="colab-section">
-                <label for="colab_reporte" class="premium-label">COLABORADOR RESPONSÁVEL</label>
+
+            <div class="modal-input" style="margin-top: 15px;">
+                <label for="tipo_reporte" class="premium-label">TIPO:</label>
                 <div class="select-wrapper">
-                    <select name="colaborador_id" id="colab_reporte" class="premium-select" required>
-                        <option value="">Selecione um colaborador</option>
-                        <?php foreach ($colaboradores_geral as $colab): ?>
-                            <option value="<?= $colab['idcolaborador'] ?>">
-                                <?= htmlspecialchars($colab['colaborador_nome']) ?>
-                            </option>
-                        <?php endforeach; ?>
+                    <select name="tipo" id="tipo_reporte" class="premium-select" required>
+                        <option value="Corretivo">Corretivo</option>
+                        <option value="Outros">Outros</option>
                     </select>
                 </div>
             </div>
 
-            <div class="modal-input" style="margin-top: 20px;">
-                <label for="desc_reporte" class="premium-label">DESCRIÇÃO DO PROBLEMA</label>
-                <textarea name="descricao" id="desc_reporte" class="premium-input" style="height: 100px; resize: none; padding: 10px;" placeholder="Descreva o que está acontecendo..." required></textarea>
+            <div class="modal-input" style="margin-top: 15px;">
+                <label for="desc_reporte" class="premium-label">DESCRIÇÃO DO PROBLEMA:</label>
+                <textarea name="descricao" id="desc_reporte" class="premium-input" style="height: 120px; resize: none; padding: 12px;" placeholder="Descreva o problema detalhadamente..." required></textarea>
             </div>
 
-            <div class="modal-footer-premium" style="margin-top: 20px;">
-                <button type="submit" class="cadastrarhist-premium" style="background-color: var(--confirmar);">Reportar à Manutenção <i class="bi bi-tools"></i></button>
+            <div class="modal-footer-premium" style="margin-top: 25px; display: flex; justify-content: center;">
+                <button type="submit" class="cadastrarhist-premium" style="background-color: var(--confirmar); width: 100%; padding: 15px; font-weight: 600;">Abrir O.S. <i class="bi bi-send-fill"></i></button>
             </div>
         </form>
     </div>
