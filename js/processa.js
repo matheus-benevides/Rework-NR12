@@ -1300,6 +1300,21 @@ async function enviarChecklist(event, tipo) {
 
 function confirmarSimProceed() {
     closeModal('confirmarProceed');
+
+    if (tempChecklistData && tempChecklistData.tipo_checklist) {
+        const formOriginal = document.querySelector(`#formCheck${tempChecklistData.tipo_checklist}`);
+        const unchecked = Array.from(formOriginal.querySelectorAll('.check-norma:not(:checked)'));
+
+        let textoFinal = "REQUISITOS NÃO MARCADOS:\n";
+        unchecked.forEach(cb => {
+            const labelText = cb.closest('.premium-checkbox-card').querySelector('.checkbox-text').innerText.trim();
+            textoFinal += `• ${labelText}\n`;
+        });
+
+        const descField = document.getElementById('desc_reporte');
+        if (descField) descField.value = textoFinal;
+    }
+
     showModal('reportarMaquina');
 }
 

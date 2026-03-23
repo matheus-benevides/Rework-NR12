@@ -268,8 +268,8 @@ if ($resColab) {
                 <label for="tipo_reporte" class="premium-label">TIPO:</label>
                 <div class="select-wrapper">
                     <select name="tipo" id="tipo_reporte" class="premium-select" required>
-                        <option value="Corretivo">Corretivo</option>
-                        <option value="Outros">Outros</option>
+                        <option value="Corretivo" selected>Corretivo</option>
+                        <!-- <option value="Outros">Outros</option> -->
                     </select>
                 </div>
             </div>
