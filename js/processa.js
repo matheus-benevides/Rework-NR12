@@ -1349,6 +1349,7 @@ async function enviarReporteErro(event) {
     const dataReporte = {
         descricao: formData.get('descricao'),
         tipo: formData.get('tipo'),
+        colaborador_id: tempChecklistData.colaborador_id,
         requisitos_ids: naoMarcadosIds,
         requisitos_especifico_ids: naoMarcadosEspIds
     };
