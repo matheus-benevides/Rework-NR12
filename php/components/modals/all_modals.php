@@ -1,5 +1,5 @@
-<?php
-require_once '../configs/conexao.php';
+﻿<?php
+require_once __DIR__ . '\..\..\configs\conexao.php';
 ?>
 
 <!-- Adicionar Curso -->
@@ -50,7 +50,7 @@ require_once '../configs/conexao.php';
                 </div>
             </label>
 
-            <!-- Área de Preview -->
+            <!-- Ãrea de Preview -->
             <div id="preview-curso" class="preview-lote"></div>
 
             <div class="modal-footer footer-lote">
@@ -237,7 +237,7 @@ require_once '../configs/conexao.php';
                 </div>
             </label>
 
-            <!-- Área de Preview -->
+            <!-- Ãrea de Preview -->
             <div id="preview-turma" class="preview-lote"></div>
 
             <div class="modal-footer footer-lote">
@@ -463,7 +463,7 @@ require_once '../configs/conexao.php';
                 </div>
             </label>
 
-            <!-- Área de Preview -->
+            <!-- Ãrea de Preview -->
             <div id="preview-aluno" class="preview-lote"></div>
 
             <div class="modal-footer footer-lote">
@@ -693,7 +693,7 @@ require_once '../configs/conexao.php';
                 </div>
             </label>
 
-            <!-- Área de Preview -->
+            <!-- Ãrea de Preview -->
             <div id="preview-unidade" class="preview-lote"></div>
 
             <div class="modal-footer footer-lote">
@@ -929,7 +929,7 @@ require_once '../configs/conexao.php';
                 </div>
             </label>
 
-            <!-- Área de Preview -->
+            <!-- Ãrea de Preview -->
             <div id="preview-setor" class="preview-lote"></div>
 
             <div class="modal-footer footer-lote">
@@ -1132,7 +1132,7 @@ require_once '../configs/conexao.php';
                 </div>
             </label>
 
-            <!-- Área de Preview -->
+            <!-- Ãrea de Preview -->
             <div id="preview-colaborador" class="preview-lote"></div>
 
             <div class="modal-footer footer-lote">

@@ -1,5 +1,5 @@
-<?php
-require_once '../configs/conexao.php';
+﻿<?php
+require_once __DIR__ . '/../configs/conexao.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -74,7 +74,7 @@ switch ($metodo) {
             exit;
         }
 
-        // Correção na query UPDATE para corresponder à tabela turmas
+        // Correção na query UPDATE para corresponder Ã  tabela turmas
         $stmt = $conn->prepare("UPDATE turmas SET turma_nome = ?, turma_periodo = ?, turma_inicio = ?, turma_fim = ?, curso_id = ?, colaborador_id = ? WHERE idturmas = ?");
         $stmt->bind_param("ssssiii", $nome, $periodo, $inicio, $fim, $curso_id, $colaborador_id, $id);
 

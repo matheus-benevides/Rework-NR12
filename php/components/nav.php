@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 
-require_once "../configs/conexao.php";
+require_once __DIR__ . "/../configs/conexao.php";
 $atualmente_em = basename($_SERVER['PHP_SELF']);
 $permissao_usuario = $_SESSION['colaborador_permissao'];
 ?>

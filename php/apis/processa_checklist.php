@@ -1,5 +1,5 @@
-<?php
-require_once '../configs/conexao.php';
+﻿<?php
+require_once __DIR__ . '/../configs/conexao.php';
 // Nota: validar_acesso.php geralmente depende de sessão. APIs do projeto parecem ser independentes ou usar token.
 // Vou seguir o padrão de conexao.php e assumir que os dados necessários vêm no JSON.
 session_start();

@@ -1,4 +1,4 @@
-<?php require "php/components/modals/acesso_negado.php"; ?>
+﻿<?php require __DIR__ . "/php/components/modals/acesso_negado.php"; ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-tema="light">
 <!-- NÃO TIRA O DATA-TEMA DE JEITO NENHUM -->

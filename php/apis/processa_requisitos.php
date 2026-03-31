@@ -1,5 +1,5 @@
-<?php
-require_once '../configs/conexao.php';
+﻿<?php
+require_once __DIR__ . '/../configs/conexao.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

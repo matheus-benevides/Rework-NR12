@@ -1,6 +1,6 @@
-<?php require "../controllers/validar_acesso.php"; ?>
-<?php require '../components/modals/all_modals.php'; ?>
-<?php require '../components/modals/aluno_modals.php'; ?>
+﻿<?php require __DIR__ . "/../controllers/validar_acesso.php"; ?>
+<?php require __DIR__ . '/../components/modals/all_modals.php'; ?>
+<?php require __DIR__ . '/../components/modals/aluno_modals.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br" data-tema="">

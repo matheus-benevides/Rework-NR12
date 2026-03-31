@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, PUT, PATCH, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
-require_once '../configs/conexao.php';
+require_once __DIR__ . '/../configs/conexao.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents('php://input'), true);
@@ -89,3 +89,4 @@ switch ($method) {
         echo json_encode(["mensagem" => "Método não permitido."]);
         break;
 }
+

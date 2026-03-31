@@ -1,5 +1,5 @@
-<?php
-require "../configs/conexao.php";
+﻿<?php
+require __DIR__ . "/../configs/conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     session_start();
@@ -11,6 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Ajustar dps, tá só email agr
         $sqlAluno = "SELECT * FROM aluno WHERE aluno_matricula = ? OR aluno_email = ?";
         $stmt = mysqli_prepare($conn, $sqlAluno);
+        if (!$stmt) {
+            die("Erro no MySQL: " . mysqli_error($conn));
+        }
         mysqli_stmt_bind_param($stmt, "ss", $matricula, $matricula);
         mysqli_stmt_execute($stmt);
         $resAluno = mysqli_stmt_get_result($stmt);

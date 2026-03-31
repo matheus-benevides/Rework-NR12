@@ -1,5 +1,5 @@
-<?php
-require_once '../configs/conexao.php';
+﻿<?php
+require_once __DIR__ . '/../configs/conexao.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -12,12 +12,12 @@ $json_recebido = file_get_contents("php://input");
 $input = json_decode($json_recebido, true);
 
 if (json_last_error() !== JSON_ERROR_NONE && $metodo !== 'OPTIONS' && $metodo !== 'DELETE') {
-    file_put_contents("debug_api.log", "JSON Error: " . json_last_error_msg() . " | Input: " . $json_recebido . "\n", FILE_APPEND);
+    file_put_contents(__DIR__ . "/debug_api.log", "JSON Error: " . json_last_error_msg() . " | Input: " . $json_recebido . "\n", FILE_APPEND);
     http_response_code(400);
     echo json_encode(["mensagem" => "JSON inválido: " . json_last_error_msg()]);
     exit;
 }
-file_put_contents("debug_api.log", "Method: $metodo | Input: " . $json_recebido . "\n", FILE_APPEND);
+file_put_contents(__DIR__ . "/debug_api.log", "Method: $metodo | Input: " . $json_recebido . "\n", FILE_APPEND);
 
 $id = $input['id'] ?? null;
 

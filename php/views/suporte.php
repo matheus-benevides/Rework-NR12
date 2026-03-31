@@ -1,5 +1,5 @@
-<?php require "../controllers/validar_acesso.php"; ?>
-<?php require '../components/modals/all_modals.php'; ?>
+﻿<?php require __DIR__ . "/../controllers/validar_acesso.php"; ?>
+<?php require __DIR__ . '/../components/modals/all_modals.php'; ?>
 
 <!DOCTYPE html>
 <html lang="pt-br" data-tema="">
@@ -20,11 +20,11 @@
 </head>
 
 <body>
-    <?php require '../components/nav.php'; ?>
+    <?php require __DIR__ . '/../components/nav.php'; ?>
 
     <section class="sec-main dontmove" style="align-items: center; justify-content: center;">
 
-        <?php require '../components/header.php'; ?>
+        <?php require __DIR__ . '/../components/header.php'; ?>
 
         <div class="div-btns-pages">
 

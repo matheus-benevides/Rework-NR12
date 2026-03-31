@@ -1,5 +1,5 @@
-<?php
-require_once '../../configs/conexao.php';
+﻿<?php
+require_once __DIR__ . '/../../configs/conexao.php';
 
 // Definir headers para JSON
 header("Access-Control-Allow-Origin: *");
@@ -155,3 +155,4 @@ try {
 }
 
 $conn->close();
+

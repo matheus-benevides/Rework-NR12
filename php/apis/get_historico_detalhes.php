@@ -1,10 +1,10 @@
-<?php
-require_once '../configs/conexao.php';
+﻿<?php
+require_once __DIR__ . '/../configs/conexao.php';
 
 header('Content-Type: application/json');
 
 if (!isset($_GET['data']) || !isset($_GET['hora']) || !isset($_GET['maquina_id'])) {
-    echo json_encode(['erro' => 'Parâmetros inválidos']);
+    echo json_encode(['erro' => 'ParÃ¢metros inválidos']);
     exit;
 }
 
@@ -67,3 +67,4 @@ if ($stmt->execute()) {
 $stmt->close();
 $conn->close();
 ?>
+

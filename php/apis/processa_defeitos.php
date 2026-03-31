@@ -1,5 +1,5 @@
-<?php
-require_once '../configs/conexao.php';
+﻿<?php
+require_once __DIR__ . '/../configs/conexao.php';
 session_start();
 
 header("Access-Control-Allow-Origin: *");
@@ -58,7 +58,7 @@ $stmt->bind_param("siiiss", $descricao, $colaborador_id, $aluno_id, $maquina_id,
 if ($stmt->execute()) {
     $defeito_id = $stmt->insert_id;
 
-    // --- INTEGRAÇÃO COM SISTEMA DE MANUTENÇÃO (CRIAÇÃO DE O.S. AUTOMÁTICA) ---
+    // --- INTEGRAÇÃO COM SISTEMA DE MANUTENÇÃO (CRIAÇÃO DE O.S. AUTOMÃTICA) ---
     try {
         // 1. Coletar dados extras para a O.S.
         $ni = 'N/A';

@@ -1,6 +1,6 @@
-<?php
-require "../controllers/validar_acesso.php";
-require '../components/modals/all_modals.php';
+﻿<?php
+require __DIR__ . "/../controllers/validar_acesso.php";
+require __DIR__ . '/../components/modals/all_modals.php';
 
 // Carrega os relacionamentos atuais para exibir na interface
 $sql_assoc = "SELECT tipomaquina_id, requisitos_id FROM tipomaquina_requisito";
@@ -163,10 +163,10 @@ if ($res_assoc) {
 
 <body>
 
-    <?php require '../components/nav.php'; ?>
+    <?php require __DIR__ . '/../components/nav.php'; ?>
 
     <section class="sec-main">
-        <?php require '../components/header.php'; ?>
+        <?php require __DIR__ . '/../components/header.php'; ?>
 
         <div class="div-btns-pages">
             <form action="" method="GET" class="form-pesquisa" style="width: 100%;">
@@ -349,7 +349,7 @@ if ($res_assoc) {
             // 2. Limpar visualização da lista na UI
             document.getElementById('lista-requisitos').innerHTML = '<p id="placeholder-msg" style="color: #888; font-style: italic; margin: 0;">Nenhum requisito selecionado.</p>';
 
-            // 3. Marcar apenas o que pertence à máquina selecionada
+            // 3. Marcar apenas o que pertence Ã  máquina selecionada
             const reqs = maquinaRequisitos[id] || [];
             reqs.forEach(reqId => {
                 const cb = document.getElementById('req_' + reqId);
