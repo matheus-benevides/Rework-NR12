@@ -1,0 +1,4 @@
+2026-04-08 15:24:15 | Method: POST | Input: {"denominacao":"45","marca":"53","modelo":"","numero_identificacao":"94032","numero_serie":"2487","ano_fabricacao":"2015","setor":"CELULA 1","tipomaquina":"29","motor":"9"}
+2026-04-08 15:24:41 | Method: GET | Input: 
+2026-04-08 15:24:44 | Method: PUT | Input: {"id":"3","denominacao":"45","marca":"53","modelo":"333","numero_identificacao":"94032","numero_serie":"2487","ano_fabricacao":"2015","setor":"CELULA 1","tipomaquina":"semValor","motor":"semValor"}
+2026-04-08 15:24:47 | Method: GET | Input: 

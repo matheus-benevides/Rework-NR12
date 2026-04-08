@@ -375,20 +375,66 @@ function showModal(qual, id) {
         document.getElementById('editarMotor').style.display = "flex";
     } else if (qual == "deletarMotor") {
         document.getElementById('deletarMotor').style.display = "flex";
-    } else if (qual == "adicaoMaquina") {
-        document.getElementById("adicaoMaquina").style.display = "flex";
-    } else if (qual == "deletarMaquina") {
-        document.getElementById("deletarMaquina").style.display = "flex";
     } else if (qual == "edicaoMaquina") {
         document.getElementById("edicaoMaquina").style.display = "flex";
-    } else if (qual == "desativarMotor") {
-        document.getElementById('desativarMotor').style.display = "flex";
+        if (id) {
+            fetch(`../apis/processa_maquinas.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.id) {
+                        document.getElementById("id_maquina_edit").value = data.id;
+                        document.getElementById("denominacao_edit").value = data.denominacao;
+                        document.getElementById("marca_edit").value = data.marca;
+                        document.getElementById("modelo_edit").value = data.modelo;
+                        document.getElementById("ano_fabricacao_edit").value = data.ano_fabricacao;
+                        document.getElementById("numero_identificacao_edit").value = data.numero_identificacao;
+                        document.getElementById("numero_serie_edit").value = data.numero_serie;
+                        document.getElementById("setor_edit").value = data.setor;
+                        // Opcional: Tipo e Motor (se salvarmos IDs no futuro)
+                    }
+                })
+                .catch(error => console.error('Erro ao buscar máquina:', error));
+        }
+    } else if (qual == "deletarMaquina") {
+        document.getElementById("deletarMaquina").style.display = "flex";
+        if (id) {
+            document.getElementById("btn-confirmar-deletar-maquina").onclick = () => {
+                fetch(`../apis/processa_maquinas.php?id=${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                        location.reload();
+                    })
+                    .catch(error => console.error('Erro ao excluir máquina:', error));
+            };
+        }
+    } else if (qual == "adicaoMaquina") {
+        document.getElementById("adicaoMaquina").style.display = "flex";
     } else if (qual == "adicaoTipoMaquina") {
         document.getElementById("adicaoTipoMaquina").style.display = "flex";
     } else if (qual == "edicaoTipoMaquina") {
         document.getElementById("edicaoTipoMaquina").style.display = "flex";
+        if (id) {
+            fetch(`../apis/processa_tipomaquina.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("id_tipomaquina_edit").value = data.idtipomaquina;
+                    document.getElementById("tipomaquina_nome_edit").value = data.tipomaquina_nome;
+                })
+                .catch(error => console.error('Erro ao buscar tipo:', error));
+        }
     } else if (qual == "deletarTipoMaquina") {
         document.getElementById("deletarTipoMaquina").style.display = "flex";
+        if (id) document.querySelector("#deletarTipoMaquina #id_usuario").value = id;
+    } else if (qual == "desativarTipMa") {
+        document.getElementById("desativarTipMa").style.display = "flex";
+        if (id) document.querySelector("#desativarTipMa #id_usuario").value = id;
+    } else if (qual == "ativarTipMa") {
+        document.getElementById("ativarTipMa").style.display = "flex";
+        if (id) document.querySelector("#ativarTipMa #id_usuario").value = id;
     } else if (qual == "adicaoManutencao") {
         document.getElementById("adicaoManutencao").style.display = "flex";
     } else if (qual == "deletarManutencao") {
@@ -2207,6 +2253,185 @@ document.addEventListener("DOMContentLoaded", function () {
                     location.reload();
                 })
                 .catch(error => console.error('Erro ao ativar requisito:', error));
+        });
+    }
+
+    // Handlers para Máquinas (Cadastro)
+    const formCadMaquina = document.getElementById('form-cad-maquina');
+    if (formCadMaquina) {
+        formCadMaquina.addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            const getVal = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value : '';
+            };
+
+            const data = {
+                denominacao: getVal('denominacao'),
+                marca: getVal('marca'),
+                modelo: getVal('modelo'),
+                numero_identificacao: getVal('numero_identificacao'),
+                numero_serie: getVal('numero_serie'),
+                ano_fabricacao: getVal('ano_fabricacao'),
+                setor: getVal('setor'),
+                tipomaquina: getVal('tipomaquina')
+            };
+
+            fetch('../apis/processa_maquinas.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.mensagem || 'Erro no servidor'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('Erro ao cadastrar máquina:', error);
+                    alert('Erro ao cadastrar máquina: ' + error.message);
+                });
+        });
+    }
+
+    // Handlers para Máquinas (Edição)
+    const formEditMaquina = document.getElementById('form-edit-maquina');
+    if (formEditMaquina) {
+        formEditMaquina.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const getVal = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.value : '';
+            };
+
+            const data = {
+                id: getVal('id_maquina_edit'),
+                denominacao: getVal('denominacao_edit'),
+                marca: getVal('marca_edit'),
+                modelo: getVal('modelo_edit'),
+                numero_identificacao: getVal('numero_identificacao_edit'),
+                numero_serie: getVal('numero_serie_edit'),
+                ano_fabricacao: getVal('ano_fabricacao_edit'),
+                setor: getVal('setor_edit'),
+                tipomaquina: getVal('tipomaquina_edit')
+            };
+
+            fetch('../apis/processa_maquinas.php', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.mensagem || 'Erro no servidor'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error('Erro ao editar máquina:', error);
+                    alert('Erro ao editar máquina: ' + error.message);
+                });
+        });
+    }
+
+    // Handlers para Tipo de Máquina (Cadastro)
+    const formCadTipoMaquina = document.getElementById('form-cad-tipomaquina');
+    if (formCadTipoMaquina) {
+        formCadTipoMaquina.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const nome = document.getElementById('tipomaquina_nome_cad').value;
+            if (!nome) {
+                alert('O nome do tipo de máquina é obrigatório.');
+                return;
+            }
+            fetch('../apis/processa_tipomaquina.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tipomaquina_nome: nome })
+            })
+                .then(response => {
+                    if (!response.ok) return response.json().then(err => { throw new Error(err.mensagem); });
+                    return response.json();
+                })
+                .then(data => {
+                    sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                    location.reload();
+                })
+                .catch(error => alert('Erro: ' + error.message));
+        });
+    }
+
+    // Handlers para Tipo de Máquina (Edição)
+    const formEditTipoMaquina = document.getElementById('form-edit-tipomaquina');
+    if (formEditTipoMaquina) {
+        formEditTipoMaquina.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const id = document.getElementById('id_tipomaquina_edit').value;
+            const nome = document.getElementById('tipomaquina_nome_edit').value;
+            fetch('../apis/processa_tipomaquina.php', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, tipomaquina_nome: nome })
+            })
+                .then(response => {
+                    if (!response.ok) return response.json().then(err => { throw new Error(err.mensagem); });
+                    return response.json();
+                })
+                .then(data => {
+                    sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                    location.reload();
+                })
+                .catch(error => alert('Erro: ' + error.message));
+        });
+    }
+
+    // Handlers para exclusão/status de Tipo Máquina
+    const btnConfirmarDelTP = document.querySelector('#deletarTipoMaquina .confirmar');
+    if (btnConfirmarDelTP) {
+        btnConfirmarDelTP.addEventListener('click', function () {
+            const id = document.querySelector('#deletarTipoMaquina #id_usuario').value;
+            fetch(`../apis/processa_tipomaquina.php?id=${id}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    sessionStorage.setItem('pendingSuccessMessage', data.mensagem);
+                    location.reload();
+                })
+                .catch(error => alert('Erro: ' + error.message));
+        });
+    }
+
+    const btnDesativarTP = document.querySelector('#desativarTipMa .confirmar');
+    if (btnDesativarTP) {
+        btnDesativarTP.addEventListener('click', () => {
+            const id = document.querySelector('#desativarTipMa #id_usuario').value;
+            fetch('../apis/processa_tipomaquina.php', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, status: 'Inativo' })
+            }).then(() => { location.reload(); });
+        });
+    }
+
+    const btnAtivarTP = document.querySelector('#ativarTipMa .confirmar');
+    if (btnAtivarTP) {
+        btnAtivarTP.addEventListener('click', () => {
+            const id = document.querySelector('#ativarTipMa #id_usuario').value;
+            fetch('../apis/processa_tipomaquina.php', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, status: 'Ativo' })
+            }).then(() => { location.reload(); });
         });
     }
 });

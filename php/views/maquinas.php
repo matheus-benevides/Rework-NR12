@@ -1,4 +1,4 @@
-﻿<?php require __DIR__ . '/../controllers/validar_acesso.php'; ?>
+<?php require __DIR__ . '/../controllers/validar_acesso.php'; ?>
 <?php require __DIR__ . '/../configs/conexao.php'; ?>
 <?php require __DIR__ . '/../components/modals/all_modals.php'; ?>
 
@@ -70,53 +70,49 @@
             <div class="tabela-wrapper">
             <table class="tabela-main">
                 <thead>
-                    <th>NI</th>
-                    <th>Fabricante</th>
+                    <th>Denominação</th>
+                    <th>Marca</th>
                     <th>Modelo</th>
+                    <th>NI</th>
+                    <th>N° Série</th>
                     <th>Ano</th>
-                    <th>Capacidade</th>
-                    <th>Status</th>
+                    <th>Setor</th>
                     <th>Ações</th>
                 </thead>
                 <tbody id="tabela-maquinas">
                     <?php
-
+                    // Usando a conexão do banco de manutenção
                     if (!empty($busca_atual)) {
-                        $termo_seguro = $conn->real_escape_string($busca_atual);
+                        $termo_seguro = $conn_manutencao->real_escape_string($busca_atual);
 
-                        $sql = "SELECT * FROM maquina WHERE 
-                                maquina_ni LIKE '%$termo_seguro%' OR 
-                                maquina_fabricante LIKE '%$termo_seguro%' OR 
-                                maquina_modelo LIKE '%$termo_seguro%'";
+                        $sql = "SELECT * FROM maquinas WHERE 
+                                denominacao LIKE '%$termo_seguro%' OR 
+                                marca LIKE '%$termo_seguro%' OR 
+                                modelo LIKE '%$termo_seguro%' OR
+                                numero_identificacao LIKE '%$termo_seguro%' OR
+                                numero_serie LIKE '%$termo_seguro%'";
                     } else {
-                        $sql = "SELECT * FROM maquina";
+                        $sql = "SELECT * FROM maquinas";
                     }
 
-                    $resultado = $conn->query($sql);
+                    $resultado = $conn_manutencao->query($sql);
 
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {
-                            echo "<str>";
-                            echo "<td>" . $linha["maquina_ni"] . "</td>";
-                            echo "<td>" . $linha["maquina_fabricante"] . "</td>";
-                            echo "<td>" . $linha["maquina_modelo"] . "</td>";
-                            echo "<td>" . $linha["maquina_ano"] . "</td>";
-                            echo "<td>" . $linha["maquina_capacidade"] . "</td>";
+                            echo "<tr>";
+                            echo "<td>" . $linha["denominacao"] . "</td>";
+                            echo "<td>" . $linha["marca"] . "</td>";
+                            echo "<td>" . $linha["modelo"] . "</td>";
+                            echo "<td>" . $linha["numero_identificacao"] . "</td>";
+                            echo "<td>" . $linha["numero_serie"] . "</td>";
+                            echo "<td>" . $linha["ano_fabricacao"] . "</td>";
+                            echo "<td>" . $linha["setor"] . "</td>";
 
-                            $status = strtolower($linha["maquina_status"]);
-
-                            if ($status == 'ativo') {
-                                $classe = 'status-ativo';
-                            } else {
-                                $classe = 'status-inativo';
-                            }
-
-                            echo "<td><span class='$classe'>" . $linha["maquina_status"] . "</span></td>";
                             // Botões de Ação
                             echo "<td>
                                     <div>
-                                        <button class='btnAcao editar' type='button' onclick=\"showModal('edicaoMaquina', " . $linha['idmaquina'] . ")\"><i class='bi bi-pencil-square'></i></button>
-                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('deletarMaquina', " . $linha['idmaquina'] . ",'')\"><i class='bi bi-trash'></i></button>
+                                        <button class='btnAcao editar' type='button' onclick=\"showModal('edicaoMaquina', " . $linha['id'] . ")\"><i class='bi bi-pencil-square'></i></button>
+                                        <button class='btnAcao deletar' type='button' onclick=\"showModal('deletarMaquina', " . $linha['id'] . ",'')\"><i class='bi bi-trash'></i></button>
                                     </div>
                                   </td>";
                             echo "</tr>";

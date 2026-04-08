@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '\..\..\configs\conexao.php';
 ?>
 
@@ -1444,22 +1444,23 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
 
 <!-- Adição Máquina -->
 <div class="modal-fundo" id="adicaoMaquina" style="display: none">
-    <div class="modal-box">
+    <div class="modal-box modal-box-wide">
+
         <div class="modal-header">
             <h3>Registrar Máquina</h3>
             <button class="" onclick="closeModal('adicaoMaquina')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form action="../actions/maquina/registrar.php" class="modal-form" method="POST">
+        <form id="form-cad-maquina" class="modal-form">
 
-            <div class="modal-input">
-                <div class="input-wrapper">
-                    <label for="tipo">Tipo de Máquina:</label>
-                    <select name="tipo" id="tipo">
-                        <option value="sem Valor" disabled selected>Selecione o Tipo de Máquina</option>
+            <div class="modal-row">
+                <div class="modal-input">
+                    <label for="tipomaquina">Tipo de Máquina:</label>
+                    <select name="tipomaquina" id="tipomaquina">
+                        <option value="semValor">Selecione uma Opção</option>
                         <?php
-                        $buscar = "SELECT * FROM tipomaquina";
-                        $resultado = $conn->query($buscar);
+                        $sql = "SELECT * FROM tipomaquina";
+                        $resultado = $conn->query($sql);
                         if ($resultado && $resultado->num_rows > 0) {
                             while ($linha = $resultado->fetch_assoc()) {
                                 echo "<option value='" . $linha['idtipomaquina'] . "'>" . $linha['tipomaquina_nome'] . "</option>";
@@ -1472,127 +1473,74 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
 
             <div class="modal-row">
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="intervalo">Intervalo de Manutenção:</label>
-                        <select name="intervalo" id="intervalo">
-                            <option value="sem Valor" disabled selected>Selecione o intervalo de manutenção</option>
-                            <option value="3">3 Meses</option>
-                            <option value="6">6 Meses</option>
-                            <option value="12">1 Ano (12 Meses)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="setor">Setor:</label>
-                        <select name="setor" id="setor">
-                            <option value="sem Valor" disabled selected>Selecione um Setor</option>
-                            <?php
-                            $buscar = "SELECT * FROM setor";
-                            $resultado = $conn->query($buscar);
-                            if ($resultado && $resultado->num_rows > 0) {
-                                while ($linha = $resultado->fetch_assoc()) {
-                                    echo "<option value='" . $linha['idsetor'] . "'>" . $linha['setor_nome'] . "</option>";
-                                }
-                            }
-                            ?>
-                        </select>
-                    </div>
+                    <label for="denominacao">Denominação:</label>
+                    <input type="text" name="denominacao" id="denominacao" placeholder="Ex: TORNO MECÂNICO">
                 </div>
             </div>
 
             <div class="modal-row">
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="intervalo">Motor:</label>
-                        <select name="setor" id="setor">
-                            <option value="sem Valor" disabled selected>Selecione um Motor</option>
-                            <?php
-                            $buscar = "SELECT * FROM motor";
-                            $resultado = $conn->query($buscar);
-                            if ($resultado && $resultado->num_rows > 0) {
-                                while ($linha = $resultado->fetch_assoc()) {
-                                    echo "<option value='" . $linha['idmotor'] . "'>" . $linha['motor_nome'] . $linha['motor_fabricante'] . " - " . $linha['motor_modelo'] . " - " . $linha['motor_potencia'] . " - " . $linha['motor_tensão'] . " - " . $linha['motor_corrente'] . "</option>";
-                                }
-                            }
-                            ?>
-                        </select>
-                    </div>
+                    <label for="marca">Marca:</label>
+                    <input type="text" name="marca" id="marca" placeholder="ROMI">
                 </div>
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="ni">NI:</label>
-                        <input type="text" name="ni" id="ni" placeholder="Ex: N1,N2,N2">
-                        <label for="" style="color: var(--corBase); font-size: var(--text-sm)">Separados Por " ,
-                            "</label>
-                    </div>
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" name="modelo" id="modelo" placeholder="T 240">
+                </div>
+                <div class="modal-input">
+                    <label for="ano_fabricacao">Ano:
+                        <input type="number" name="ano_fabricacao" id="ano_fabricacao" min="1800" max="2099" step="1"
+                            placeholder="2020">
+                    </label>
                 </div>
             </div>
 
-            <div class="modal-row">
+            <div class="modal-row quebraMobile" id="tabela-frequencia">
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="peso">Peso:</label>
-                        <input type="number" name="peso" id="peso" placeholder="Ex: 1KG">
-                    </div>
+                    <label for="numero_identificacao">NI:</label>
+                    <input type="text" name="numero_identificacao" id="numero_identificacao"
+                        placeholder="1052694 SENAI">
                 </div>
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="fabricante">Fabricante:</label>
-                        <input type="text" name="Fabricante" id="Fabricante" placeholder="Ex: ROMI">
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-row">
-                <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="modelo">Modelo:</label>
-                        <input type="text" name="modelo" id="modelo" placeholder="Ex: AN12">
-                    </div>
+                    <label for="numero_serie">N° Série:</label>
+                    <input type="text" name="numero_serie" id="numero_serie" placeholder="016-016057-452">
                 </div>
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="intervalo">Ano:</label>
-                        <input type="text" name="nome" id="nome" placeholder="Ex: Desenvolvimento de Sistemas">
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-input">
-                <div class="input-wrapper">
-                    <label for="nome">Capacidade:</label>
-                    <input type="text" name="nome" id="nome" placeholder="Ex: Desenvolvimento de Sistemas">
+                    <label for="setor">Setor:</label>
+                    <input type="text" name="setor" id="setor" placeholder="CÉLULA 1">
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">
-                    Cadastrar <i class="bi bi-plus-lg"></i>
+                    Salvar Registro <i class="bi bi-check-lg"></i>
                 </button>
             </div>
+
         </form>
     </div>
 </div>
 
-<!-- Editar Maquina -->
+<!-- Edição Máquina -->
 <div class="modal-fundo" id="edicaoMaquina" style="display: none">
-    <div class="modal-box">
+    <div class="modal-box modal-box-wide">
+
         <div class="modal-header">
             <h3>Editar Máquina</h3>
             <button class="" onclick="closeModal('edicaoMaquina')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form action="../actions/maquina/registrar.php" class="modal-form" method="POST">
+        <form id="form-edit-maquina" class="modal-form">
+            <input type="hidden" name="id" id="id_maquina_edit">
 
-            <div class="modal-input">
-                <div class="input-wrapper">
-                    <label for="tipo">Tipo de Máquina:</label>
-                    <select name="tipo" id="tipo">
-                        <option value="sem Valor" disabled selected>Selecione o Tipo de Máquina</option>
+            <div class="modal-row">
+                <div class="modal-input">
+                    <label for="tipomaquina_edit">Tipo de Máquina:</label>
+                    <select name="tipomaquina" id="tipomaquina_edit">
+                        <option value="semValor">Selecione uma Opção</option>
                         <?php
-                        $buscar = "SELECT * FROM tipomaquina";
-                        $resultado = $conn->query($buscar);
+                        $sql = "SELECT * FROM tipomaquina";
+                        $resultado = $conn->query($sql);
                         if ($resultado && $resultado->num_rows > 0) {
                             while ($linha = $resultado->fetch_assoc()) {
                                 echo "<option value='" . $linha['idtipomaquina'] . "'>" . $linha['tipomaquina_nome'] . "</option>";
@@ -1605,105 +1553,50 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
 
             <div class="modal-row">
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="intervalo">Intervalo de Manutenção:</label>
-                        <select name="intervalo" id="intervalo">
-                            <option value="sem Valor" disabled selected>Selecione o intervalo de manutenção</option>
-                            <option value="3">3 Meses</option>
-                            <option value="6">6 Meses</option>
-                            <option value="12">1 Ano (12 Meses)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="setor">Setor:</label>
-                        <select name="setor" id="setor">
-                            <option value="sem Valor" disabled selected>Selecione um Setor</option>
-                            <?php
-                            $buscar = "SELECT * FROM setor";
-                            $resultado = $conn->query($buscar);
-                            if ($resultado && $resultado->num_rows > 0) {
-                                while ($linha = $resultado->fetch_assoc()) {
-                                    echo "<option value='" . $linha['idsetor'] . "'>" . $linha['setor_nome'] . "</option>";
-                                }
-                            }
-                            ?>
-                        </select>
-                    </div>
+                    <label for="denominacao_edit">Denominação:</label>
+                    <input type="text" name="denominacao" id="denominacao_edit" placeholder="Ex: TORNO MECÂNICO">
                 </div>
             </div>
 
             <div class="modal-row">
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="intervalo">Motor:</label>
-                        <select name="setor" id="setor">
-                            <option value="sem Valor" disabled selected>Selecione um Motor</option>
-                            <?php
-                            $buscar = "SELECT * FROM motor";
-                            $resultado = $conn->query($buscar);
-                            if ($resultado && $resultado->num_rows > 0) {
-                                while ($linha = $resultado->fetch_assoc()) {
-                                    echo "<option value='" . $linha['idmotor'] . "'>" . $linha['motor_nome'] . $linha['motor_fabricante'] . " - " . $linha['motor_modelo'] . " - " . $linha['motor_potencia'] . " - " . $linha['motor_tensão'] . " - " . $linha['motor_corrente'] . "</option>";
-                                }
-                            }
-                            ?>
-                        </select>
-                    </div>
+                    <label for="marca_edit">Marca:</label>
+                    <input type="text" name="marca" id="marca_edit" placeholder="ROMI">
                 </div>
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="ni">NI:</label>
-                        <input type="text" name="ni" id="ni" placeholder="Ex: N1,N2,N2">
-                        <label for="" style="color: var(--corBase); font-size: var(--text-sm)">Separados Por " ,
-                            "</label>
-                    </div>
+                    <label for="modelo_edit">Modelo:</label>
+                    <input type="text" name="modelo" id="modelo_edit" placeholder="T 240">
+                </div>
+                <div class="modal-input">
+                    <label for="ano_fabricacao_edit">Ano:
+                        <input type="number" name="ano_fabricacao" id="ano_fabricacao_edit" min="1800" max="2099" step="1"
+                            placeholder="2020">
+                    </label>
                 </div>
             </div>
 
-            <div class="modal-row">
+            <div class="modal-row quebraMobile">
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="peso">Peso:</label>
-                        <input type="number" name="peso" id="peso" placeholder="Ex: 1KG">
-                    </div>
+                    <label for="numero_identificacao_edit">NI:</label>
+                    <input type="text" name="numero_identificacao" id="numero_identificacao_edit"
+                        placeholder="1052694 SENAI">
                 </div>
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="fabricante">Fabricante:</label>
-                        <input type="text" name="Fabricante" id="Fabricante" placeholder="Ex: ROMI">
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-row">
-                <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="modelo">Modelo:</label>
-                        <input type="text" name="modelo" id="modelo" placeholder="Ex: AN12">
-                    </div>
+                    <label for="numero_serie_edit">N° Série:</label>
+                    <input type="text" name="numero_serie" id="numero_serie_edit" placeholder="016-016057-452">
                 </div>
                 <div class="modal-input">
-                    <div class="input-wrapper">
-                        <label for="intervalo">Ano:</label>
-                        <input type="text" name="nome" id="nome" placeholder="Ex: Desenvolvimento de Sistemas">
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-input">
-                <div class="input-wrapper">
-                    <label for="nome">Capacidade:</label>
-                    <input type="text" name="nome" id="nome" placeholder="Ex: Desenvolvimento de Sistemas">
+                    <label for="setor_edit">Setor:</label>
+                    <input type="text" name="setor" id="setor_edit" placeholder="CÉLULA 1">
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">
-                    Cadastrar <i class="bi bi-plus-lg"></i>
+                    Finalizar Edição <i class="bi bi-check-lg"></i>
                 </button>
             </div>
+
         </form>
     </div>
 </div>
@@ -1719,8 +1612,7 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
             <p>Tem certeza que quer deletar máquina?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
+            <button id="btn-confirmar-deletar-maquina" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('deletarMaquina')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
@@ -1831,12 +1723,12 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
             <button class="" onclick="closeModal('adicaoTipoMaquina')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form id="form-cad-curso" class="modal-form">
+        <form id="form-cad-tipomaquina" class="modal-form">
 
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="tipoMaquina">Tipo de Máquina:</label>
-                    <input type="text" id="tipoMaquinaInput">
+                    <label for="tipomaquina_nome_cad">Nome do Tipo:</label>
+                    <input type="text" id="tipomaquina_nome_cad" placeholder="Ex: TORNO MECÂNICO">
                 </div>
             </div>
 
@@ -1857,18 +1749,19 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
             <button class="" onclick="closeModal('edicaoTipoMaquina')"><i class="bi bi-x-lg"></i></button>
         </div>
 
-        <form id="form-cad-curso" class="modal-form">
+        <form id="form-edit-tipomaquina" class="modal-form">
+            <input type="hidden" id="id_tipomaquina_edit">
 
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="tipoMaquina">Tipo de máquina:</label>
-                    <input type="text" id="tipoMaquinaInput">
+                    <label for="tipomaquina_nome_edit">Nome do Tipo:</label>
+                    <input type="text" id="tipomaquina_nome_edit" placeholder="Ex: TORNO MECÂNICO">
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button type="submit" class="btn-confirmar-full confirmar">
-                    Editar <i class="bi bi-plus-lg"></i>
+                    Editar <i class="bi bi-pencil-square"></i>
                 </button>
             </div>
         </form>
@@ -1889,6 +1782,44 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
             <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
             <button onclick="closeModal('deletarTipoMaquina')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
+
+<!-- Desativar Tipo Máquina -->
+<div class="modal-fundo" id="desativarTipMa" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Desativar Tipo Máquina</h3>
+            <button onclick="closeModal('desativarTipMa')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer desativar este tipo máquina?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
+            <button class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('desativarTipMa')" type="button" class="btn-confirmar-full confirmar"
+                style="background-color: var(--corBase);">Não</button>
+        </div>
+    </div>
+</div>
+
+<!-- Ativar Tipo Máquina -->
+<div class="modal-fundo" id="ativarTipMa" style="display: none;">
+    <div class="modal-box" style="width: 400px; padding: 20px;">
+        <div class="modal-header" style="margin-bottom: 20px;">
+            <h3>Ativar Tipo Máquina</h3>
+            <button onclick="closeModal('ativarTipMa')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
+            <p>Tem certeza que quer ativar este tipo máquina?</p>
+        </div>
+        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
+            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
+            <button class="btn-confirmar-full confirmar">Sim</button>
+            <button onclick="closeModal('ativarTipMa')" type="button" class="btn-confirmar-full confirmar"
                 style="background-color: var(--corBase);">Não</button>
         </div>
     </div>

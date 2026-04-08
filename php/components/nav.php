@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 require_once __DIR__ . "/../configs/conexao.php";
 $atualmente_em = basename($_SERVER['PHP_SELF']);
@@ -58,15 +58,30 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
             <i class="bi bi-person-badge-fill"></i> Colaboradores
         </a>
 
+        <!-- MÁQUINAS (DROP-DOWN) -->
+        <div class="menu-manutencao" id="menu-maquinas-container">
+            <a href="javascript:void(0)" class="links manutencao-btn" id="btn-maquinas">
+                <div>
+                    <i class="bi bi-cpu"></i>
+                    <span>Máquinas</span>
+                </div>
+                <i class="bi bi-caret-down-fill seta"></i>
+            </a>
 
-        <a href="motores.php"
-            class="<?php if ($atualmente_em == 'motores.php') echo 'ativo'; ?> links" style='display: none;'>
-            <i class="bi bi-gear-fill"></i> Motores
-        </a>
+            <div class="submenu" id="submenu-maquinas">
+                <a href="maquinas.php"
+                    class="<?php if ($atualmente_em == 'maquinas.php') echo 'ativo'; ?> links-sub">
+                    <i class="bi bi-gear-fill"></i> Máquinas
+                </a>
+                <a href="tipo_maquina.php"
+                    class="<?php if ($atualmente_em == 'tipo_maquina.php') echo 'ativo'; ?> links-sub">
+                    <i class="bi bi-tags-fill"></i> Tipo Máquinas
+                </a>
+            </div>
+        </div>
 
-        <!-- MANUTENÇÃO -->
-
-        <div class="menu-manutencao" style="display: flex;">
+        <!-- REQUISITOS (DROP-DOWN) -->
+        <div class="menu-manutencao" id="menu-manutencao-container">
 
             <a href="javascript:void(0)"
                 class="links manutencao-btn"
@@ -79,31 +94,6 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
             </a>
 
             <div class="submenu" id="submenu-manutencao">
-
-                <!-- <a href="maquinas.php"
-                    class="<?php //if ($atualmente_em == 'maquinas.php') echo 'ativo'; ?> links-sub">
-                    <i class="bi bi-gear-wide-connected"></i> Máquinas
-                </a>
-
-                <a href="manuntencao.php"
-                    class="<?php //if ($atualmente_em == 'manuntencao.php') echo 'ativo'; ?> links-sub">
-                    <i class="bi bi-tools"></i> Manuntenção
-                </a>
-
-                <a href="proxima_manuntencao.php"
-                    class="<?php //if ($atualmente_em == 'proxima_manuntencao.php') echo 'ativo'; ?> links-sub">
-                    <i class="bi bi-tools"></i> Proxima Manuntenção
-                </a>
-
-                <a href="motores.php"
-                    class="<?php //if ($atualmente_em == 'motores.php') echo 'ativo'; ?> links-sub">
-                    <i class="bi bi-wrench-adjustable-circle"></i> Motores
-                </a> -->
-
-                <!-- <a href="tipo_maquina.php"
-                    class="<?php //if ($atualmente_em == 'tipo_maquina.php') echo 'ativo'; ?> links-sub">
-                    <i class="bi bi-gear-wide-connected"></i> Tipo de Máquinas
-                </a> -->
 
                 <a href="requisitos.php"
                     class="<?php if ($atualmente_em == 'requisitos.php') echo 'ativo'; ?> links-sub">
@@ -157,7 +147,6 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
     .submenu {
         display: none;
         margin-left: 28px;
-        /* rente ao ícone de Manutenção */
     }
 
     .submenu.aberto {
@@ -166,40 +155,67 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
 
     .links-sub {
         margin-top: 4px;
-        /* espaçamento leve entre os botões */
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--txtClaro);
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+    
+    .links-sub:hover, .links-sub.ativo {
+        background-color: var(--corFundo);
+        color: var(--corTxt3);
     }
 </style>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        const dropdowns = [
+            {
+                btnId: "btn-manutencao",
+                submenuId: "submenu-manutencao",
+                containerId: "menu-manutencao-container",
+                paginas: ["requisitos.php", "requisitos_maquina.php"]
+            },
+            {
+                btnId: "btn-maquinas",
+                submenuId: "submenu-maquinas",
+                containerId: "menu-maquinas-container",
+                paginas: ["maquinas.php", "tipo_maquina.php"]
+            }
+        ];
 
-        const btnManutencao = document.getElementById("btn-manutencao");
-        const submenu = document.getElementById("submenu-manutencao");
-        const menuManutencao = btnManutencao.parentElement;
-
-        function abrirMenu() {
-            submenu.classList.add("aberto");
-            menuManutencao.classList.add("aberto");
-            btnManutencao.classList.add("ativo");
-        }
-
-        function fecharMenu() {
-            submenu.classList.remove("aberto");
-            menuManutencao.classList.remove("aberto");
-            btnManutencao.classList.remove("ativo");
-        }
-
-        // Toggle no clique
-        btnManutencao.addEventListener("click", (e) => {
-            e.preventDefault();
-            submenu.classList.contains("aberto") ? fecharMenu() : abrirMenu();
-        });
-
-        // Mantém aberto se estiver em Preventiva ou Corretiva
         const paginaAtual = window.location.pathname;
-        if (paginaAtual.includes("motores.php") || paginaAtual.includes("maquinas.php") || paginaAtual.includes("manuntencao.php") || paginaAtual.includes("tipo_maquina.php") || paginaAtual.includes("requisitos_maquina.php")) {
-            abrirMenu();
-        }
 
+        dropdowns.forEach(({ btnId, submenuId, containerId, paginas }) => {
+            const btn = document.getElementById(btnId);
+            const submenu = document.getElementById(submenuId);
+            const container = document.getElementById(containerId);
+            if (!btn || !submenu || !container) return;
+
+            function abrir() {
+                submenu.classList.add("aberto");
+                container.classList.add("aberto");
+                btn.classList.add("ativo");
+            }
+
+            function fechar() {
+                submenu.classList.remove("aberto");
+                container.classList.remove("aberto");
+                btn.classList.remove("ativo");
+            }
+
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                submenu.classList.contains("aberto") ? fechar() : abrir();
+            });
+
+            if (paginas.some(p => paginaAtual.includes(p))) {
+                abrir();
+            }
+        });
     });
 </script>
