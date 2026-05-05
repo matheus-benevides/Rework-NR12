@@ -132,7 +132,8 @@
 
     </section>
 
-    <script src="../../js/scripts.js" defer></script>
+    <script src="../../js/scripts.js?v=2" defer></script>
+    <script src="../../js/processa_lotes.js?v=2" defer></script>
 </body>
 
 </html>

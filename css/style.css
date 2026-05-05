@@ -708,7 +708,6 @@ select {
 #select-filtro-agendamento,
 #select-filtro-agendamento,
 #select-filtro-manuntencao,
-#select-filtro-motores,
 #select-filtro-requisito,
 #select-filtro-suporte,
 #select-filtro-tipo-maquina,
@@ -735,7 +734,6 @@ select {
 #select-filtro-maquinas option,
 #select-filtro-agendamento option,
 #select-filtro-manuntencao option,
-#select-filtro-motores option,
 #select-filtro-suporte option,
 #select-filtro-tipo-maquina option,
 #select-filtro-unidade option {

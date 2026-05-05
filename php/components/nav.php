@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../configs/conexao.php";
 $atualmente_em = basename($_SERVER['PHP_SELF']);
-$permissao_usuario = $_SESSION['colaborador_permissao'];
+$permissao_usuario = $_SESSION['colaborador_permissao'] ?? $_SESSION['user_permissao'] ?? 'NORMAL';
 ?>
 
 <nav class="sidebar">
@@ -75,7 +75,7 @@ $permissao_usuario = $_SESSION['colaborador_permissao'];
                 </a>
                 <a href="tipo_maquina.php"
                     class="<?php if ($atualmente_em == 'tipo_maquina.php') echo 'ativo'; ?> links-sub">
-                    <i class="bi bi-tags-fill"></i> Tipo Máquinas
+                    <i class="bi bi-tags-fill"></i> Descrição Máquinas
                 </a>
             </div>
         </div>

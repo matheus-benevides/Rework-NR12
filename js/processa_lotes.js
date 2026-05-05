@@ -170,4 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Colaboradores
     processarLote('form-cad-colaborador-lote', 'arquivo-colaborador', 'lote_colaborador.php');
+
+    // Máquinas
+    processarLote('form-cad-maquina-lote', 'arquivo-maquina', 'lote_maquinas.php');
 });

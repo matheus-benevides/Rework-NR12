@@ -1307,140 +1307,7 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
     </div>
 </div>
 
-<!-- Adição Motores -->
-<div class="modal-fundo" id="adicaoMotor" style="display: none">
-    <div class="modal-box">
-        <div class="modal-header">
-            <h3>Cadastrar Motor</h3>
-            <button class="" onclick="closeModal('adicaoMotor')"><i class="bi bi-x-lg"></i></button>
-        </div>
 
-        <form action="../actions/cursos/registrar.php" class="modal-form" method="POST">
-
-            <div class="modal-input">
-                <div class="input-wrapper">
-                    <label for="fabricante">Fabricante:</label>
-                    <input type="text" name="fabricante" id="fabricante" placeholder="Ex: MWM, HERCULES">
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="modelo">Modelo:</label>
-                    <input type="text" name="modelo" id="modelo">
-                </div>
-
-
-                <div class="input-wrapper">
-                    <label for="potencia">Potência:</label>
-                    <input type="text" name="potencia" id="potencia">
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="tensao">Tensão</label>
-                    <input type="text" name="tensao" id="tensao">
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="corrente">Corrente</label>
-                    <input type="text" name="corrente" id="corrente">
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="submit" class="btn-confirmar-full confirmar">
-                    Cadastrar <i class="bi bi-plus-lg"></i>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Edição Motores -->
-
-<div class="modal-fundo" id="editarMotor" style="display: none">
-    <div class="modal-box">
-        <div class="modal-header">
-            <h3>Editar Motor</h3>
-            <button class="" onclick="closeModal('editarMotor')"><i class="bi bi-x-lg"></i></button>
-        </div>
-
-        <form action="../actions/cursos/registrar.php" class="modal-form" method="POST">
-
-            <div class="modal-input">
-                <div class="input-wrapper">
-                    <label for="fabricante">Fabricante:</label>
-                    <input type="text" name="fabricante" id="fabricante" placeholder="Ex: MWM, HERCULES">
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="modelo">Modelo:</label>
-                    <input type="text" name="modelo" id="modelo">
-                </div>
-
-
-                <div class="input-wrapper">
-                    <label for="potencia">Potência:</label>
-                    <input type="text" name="potencia" id="potencia">
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="tensao">Tensão</label>
-                    <input type="text" name="tensao" id="tensao">
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="corrente">Corrente</label>
-                    <input type="text" name="corrente" id="corrente">
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="submit" class="btn-confirmar-full confirmar">
-                    Finalizar edição <i class="bi bi-plus-lg"></i>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Deletar Motores -->
-<div class="modal-fundo" id="deletarMotor" style="display: none;">
-    <div class="modal-box" style="width: 400px; padding: 20px;">
-        <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Deletar Motor</h3>
-            <button onclick="closeModal('deletarMotor')"><i class="bi bi-x-lg"></i></button>
-        </div>
-        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer deletar motor?</p>
-        </div>
-        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
-            <button onclick="closeModal('deletarMotor')" type="button" class="btn-confirmar-full confirmar"
-                style="background-color: var(--corBase);">Não</button>
-        </div>
-    </div>
-</div>
-
-<!-- Desativar Motores -->
-<div class="modal-fundo" id="desativarMotor" style="display: none;">
-    <div class="modal-box" style="width: 400px; padding: 20px;">
-        <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Desativar Motor</h3>
-            <button onclick="closeModal('desativarMotor')"><i class="bi bi-x-lg"></i></button>
-        </div>
-        <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer desativar motor?</p>
-        </div>
-        <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
-            <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
-            <button onclick="" class="btn-confirmar-full confirmar">Sim</button>
-            <button onclick="closeModal('desativarMotor')" type="button" class="btn-confirmar-full confirmar"
-                style="background-color: var(--corBase);">Não</button>
-        </div>
-    </div>
-</div>
 
 <!-- Adição Máquina -->
 <div class="modal-fundo" id="adicaoMaquina" style="display: none">
@@ -1455,7 +1322,7 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
 
             <div class="modal-row">
                 <div class="modal-input">
-                    <label for="tipomaquina">Tipo de Máquina:</label>
+                    <label for="tipomaquina">Descrição Máquina:</label>
                     <select name="tipomaquina" id="tipomaquina">
                         <option value="semValor">Selecione uma Opção</option>
                         <?php
@@ -1515,8 +1382,38 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
                 <button type="submit" class="btn-confirmar-full confirmar">
                     Salvar Registro <i class="bi bi-check-lg"></i>
                 </button>
+                <br>
+                <button type="button" class="btn-confirmar-full btn" onclick="showModal('maquinasLote')">
+                    Cadastrar em Lote <i class="bi bi-plus-lg"></i>
+                </button>
             </div>
 
+        </form>
+    </div>
+</div>
+
+<!-- Adicionar Máquina em Lote -->
+<div class="modal-fundo" id="maquinasLote" style="display: none;">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>Cadastro em Lote - Máquinas</h3>
+            <button class="" onclick="closeModal('maquinasLote')"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <form id="form-cad-maquina-lote" class="modal-form">
+            <div class="modal-input file-input-wrapper">
+                <label for="arquivo-maquina">Faça Upload do Arquivo (CSV ou Excel)</label>
+                <div class="arquivos-div" style="border: 2px dashed var(--corBase); padding: 20px; text-align: center; cursor: pointer;" onclick="document.getElementById('arquivo-maquina').click()">
+                    <i class="bi bi-cloud-upload" style="font-size: 2rem; color: var(--corBase);"></i>
+                    <p class="label-arquivo" style="margin-top: 10px;">Arraste ou Pressione o Arquivo.</p>
+                </div>
+                <input type="file" name="arquivo-maquina" id="arquivo-maquina" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display: none;">
+            </div>
+            <div id="preview-maquina" class="preview-lote"></div>
+            <div class="modal-footer footer-lote">
+                <button type="submit" class="btn-confirmar-full btn">
+                    Enviar <i class="bi bi-check-lg"></i>
+                </button>
+            </div>
         </form>
     </div>
 </div>
@@ -1535,7 +1432,7 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
 
             <div class="modal-row">
                 <div class="modal-input">
-                    <label for="tipomaquina_edit">Tipo de Máquina:</label>
+                    <label for="tipomaquina_edit">Descrição Máquina:</label>
                     <select name="tipomaquina" id="tipomaquina_edit">
                         <option value="semValor">Selecione uma Opção</option>
                         <?php
@@ -1715,11 +1612,11 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
     </div>
 </div>
 
-<!-- Adicionar Tipos de Maquinas -->
+<!-- Adicionar Descrição de Máquinas -->
 <div class="modal-fundo" id="adicaoTipoMaquina" style="display: none">
     <div class="modal-box">
         <div class="modal-header">
-            <h3>Tipo de Máquina</h3>
+            <h3>Descrição de Máquina</h3>
             <button class="" onclick="closeModal('adicaoTipoMaquina')"><i class="bi bi-x-lg"></i></button>
         </div>
 
@@ -1727,7 +1624,7 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
 
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="tipomaquina_nome_cad">Nome do Tipo:</label>
+                    <label for="tipomaquina_nome_cad">Nome da Descrição:</label>
                     <input type="text" id="tipomaquina_nome_cad" placeholder="Ex: TORNO MECÂNICO">
                 </div>
             </div>
@@ -1741,11 +1638,11 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
     </div>
 </div>
 
-<!-- Edição de Tipo Máquina -->
+<!-- Edição de Descrição Máquina -->
 <div class="modal-fundo" id="edicaoTipoMaquina" style="display: none">
     <div class="modal-box">
         <div class="modal-header">
-            <h3>Editar Tipo de Máquina</h3>
+            <h3>Editar Descrição de Máquina</h3>
             <button class="" onclick="closeModal('edicaoTipoMaquina')"><i class="bi bi-x-lg"></i></button>
         </div>
 
@@ -1754,7 +1651,7 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
 
             <div class="modal-input">
                 <div class="input-wrapper">
-                    <label for="tipomaquina_nome_edit">Nome do Tipo:</label>
+                    <label for="tipomaquina_nome_edit">Nome da Descrição:</label>
                     <input type="text" id="tipomaquina_nome_edit" placeholder="Ex: TORNO MECÂNICO">
                 </div>
             </div>
@@ -1768,15 +1665,15 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
     </div>
 </div>
 
-<!-- Deletar Máquina -->
+<!-- Deletar Descrição Máquina -->
 <div class="modal-fundo" id="deletarTipoMaquina" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Deletar Tipo Máquina</h3>
+            <h3>Deletar Descrição Máquina</h3>
             <button onclick="closeModal('deletarTipoMaquina')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer deletar tipo máquina?</p>
+            <p>Tem certeza que quer deletar esta descrição máquina?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
@@ -1787,15 +1684,15 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
     </div>
 </div>
 
-<!-- Desativar Tipo Máquina -->
+<!-- Desativar Descrição Máquina -->
 <div class="modal-fundo" id="desativarTipMa" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Desativar Tipo Máquina</h3>
+            <h3>Desativar Descrição Máquina</h3>
             <button onclick="closeModal('desativarTipMa')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer desativar este tipo máquina?</p>
+            <p>Tem certeza que quer desativar esta descrição máquina?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
@@ -1806,15 +1703,15 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
     </div>
 </div>
 
-<!-- Ativar Tipo Máquina -->
+<!-- Ativar Descrição Máquina -->
 <div class="modal-fundo" id="ativarTipMa" style="display: none;">
     <div class="modal-box" style="width: 400px; padding: 20px;">
         <div class="modal-header" style="margin-bottom: 20px;">
-            <h3>Ativar Tipo Máquina</h3>
+            <h3>Ativar Descrição Máquina</h3>
             <button onclick="closeModal('ativarTipMa')"><i class="bi bi-x-lg"></i></button>
         </div>
         <div style="text-align: center; margin-bottom: 25px; color: var(--corTxt3);">
-            <p>Tem certeza que quer ativar este tipo máquina?</p>
+            <p>Tem certeza que quer ativar esta descrição máquina?</p>
         </div>
         <div style="width: 100%; display: flex; gap: 10px; justify-content: center;">
             <input type="number" name="id_usuario" id="id_usuario" style="display: none;">
@@ -1856,7 +1753,7 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
                             <option value="Outros">Unidades</option>
                             <option value="Outros">Setores</option>
                             <option value="Outros">Colaboradores</option>
-                            <option value="Outros">Motores</option>
+
                             <option value="Outros">Máquinas</option>
                             <option value="Outros">Manutenção</option>
                             <option value="Outros">Histórico</option>

@@ -369,12 +369,7 @@ function showModal(qual, id) {
     } else if (qual == 'resetPass') {
         document.getElementById('resetPass').style.display = 'flex';
         document.getElementById("id_usuario_reset").value = id;
-    } else if (qual == "adicaoMotor") {
-        document.getElementById('adicaoMotor').style.display = "flex";
-    } else if (qual == "editarMotor") {
-        document.getElementById('editarMotor').style.display = "flex";
-    } else if (qual == "deletarMotor") {
-        document.getElementById('deletarMotor').style.display = "flex";
+
     } else if (qual == "edicaoMaquina") {
         document.getElementById("edicaoMaquina").style.display = "flex";
         if (id) {
@@ -390,7 +385,7 @@ function showModal(qual, id) {
                         document.getElementById("numero_identificacao_edit").value = data.numero_identificacao;
                         document.getElementById("numero_serie_edit").value = data.numero_serie;
                         document.getElementById("setor_edit").value = data.setor;
-                        // Opcional: Tipo e Motor (se salvarmos IDs no futuro)
+                        // Opcional: Tipo (se salvarmos IDs no futuro)
                     }
                 })
                 .catch(error => console.error('Erro ao buscar máquina:', error));
@@ -461,6 +456,9 @@ function showModal(qual, id) {
     } else if (qual == "colaboradoresLote") {
         document.getElementById("colaboradoresLote").style.display = "flex";
         document.getElementById("adicaoColaborador").style.display = "none";
+    } else if (qual == "maquinasLote") {
+        document.getElementById("maquinasLote").style.display = "flex";
+        document.getElementById("adicaoMaquina").style.display = "none";
     } else if (qual == "adicaoSuporte") {
         document.getElementById("adicaoSuporte").style.display = "flex";
     } else if (qual == "changePassword") {
@@ -539,7 +537,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabelaCursos5 = document.getElementById("tabela-outros"); // Adicionei esta definição que faltava
     const tabelaCursos6 = document.getElementById("tabela-unidade");
     const tabelaCursos7 = document.getElementById("tabela-historico");
-    const tabelaCursos8 = document.getElementById("tabela-motor");
+    const tabelaCursos8 = document.getElementById("tabela-professores");
+
     const tabelaCursos9 = document.getElementById("tabela-setores");
     const tabelaCursos10 = document.getElementById("tabela-colaboradores");
     const tabelaCursos11 = document.getElementById("tabela-maquinas");
@@ -547,7 +546,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const tabelaCursos13 = document.getElementById("tabela-manuntencao");
     const tabelaCursos14 = document.getElementById("tabela-maquinas");
     const tabelaCursos15 = document.getElementById("tabela-agendamento");
-    const tabelaCursos16 = document.getElementById("tabela-motores");
+    const tabelaCursos16 = document.getElementById("tabela-qr");
+
     const tabelaCursos17 = document.getElementById("tabela-suporte");
     const tabelaCursos18 = document.getElementById("tabela-requisitos");
     const tabelaCursos19 = document.getElementById("tabela-requisitos-maquina");
@@ -1993,29 +1993,7 @@ function filtrarSuporte() {
 }
 
 
-function filtrarMotores() {
-    const select = document.querySelector("#select-filtro-motores");
-    const linhas = document.querySelectorAll("#tabela-motores tr");
 
-    if (!select) return;
-
-    const filtro = select.value.toLowerCase().trim();
-
-    linhas.forEach(linha => {
-        // Índice 4 confirmado (5ª coluna)
-        const colunaStatus = linha.getElementsByTagName("td")[5];
-
-        if (colunaStatus) {
-            const textoStatus = colunaStatus.textContent.toLowerCase().trim();
-
-            if (filtro === "todos" || textoStatus === filtro) {
-                linha.style.display = "";
-            } else {
-                linha.style.display = "none";
-            }
-        }
-    });
-}
 
 function filtrarSetor() {
     const select = document.querySelector("#select-filtro-setor");
@@ -2352,7 +2330,7 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             const nome = document.getElementById('tipomaquina_nome_cad').value;
             if (!nome) {
-                alert('O nome do tipo de máquina é obrigatório.');
+                alert('O nome da descrição de máquina é obrigatório.');
                 return;
             }
             fetch('../apis/processa_tipomaquina.php', {
@@ -2504,11 +2482,7 @@ function lerQr(inputIndex) {
     };
 
     const config = {
-        fps: 10,
-        qrbox: function (viewfinderWidth, viewfinderHeight) {
-            const side = Math.floor(Math.min(viewfinderWidth, viewfinderHeight) * 0.8);
-            return { width: side, height: side };
-        }
+        fps: 20
     };
 
     // Inicia a câmera traseira (environment)

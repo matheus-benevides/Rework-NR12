@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require __DIR__ . "/../controllers/validar_acesso.php";
 require __DIR__ . '/../components/modals/all_modals.php';
 
@@ -179,7 +179,7 @@ if ($res_assoc) {
                         <i class="bi bi-search search-icon"></i>
                         <input type="text" name="search" id="pesquisa_maquinas"
                             value="<?php echo htmlspecialchars($busca_atual); ?>"
-                            placeholder="Pesquisar tipo de máquina..." class="input-pesquisa">
+                            placeholder="Pesquisar descrição de máquina..." class="input-pesquisa">
 
                         <?php if ($busca_atual): ?>
                             <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i
@@ -201,7 +201,7 @@ if ($res_assoc) {
             <table class="tabela-main">
                 <thead>
                     <th>ID</th>
-                    <th>Tipo de Máquina</th>
+                    <th>Descrição Máquina</th>
                     <th>Qtd. Requisitos Associados</th>
                     <th>Ações</th>
                 </thead>
@@ -236,7 +236,7 @@ if ($res_assoc) {
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='4' style='text-align:center; padding:15px;'>Nenhum tipo de máquina encontrado.</td></tr>";
+                        echo "<tr><td colspan='4' style='text-align:center; padding:15px;'>Nenhuma descrição de máquina encontrada.</td></tr>";
                     }
                     ?>
                 </tbody>

@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão de Máquinas - NR12</title>
+    <title>Gestão de Descrição Máquina - NR12</title>
 
     <link rel="stylesheet" href="../../css/global.css">
     <link rel="stylesheet" href="../../css/nav.css">
@@ -57,14 +57,14 @@
                     <button type="submit" style="display: none;"></button>
                 </div>
             </form>
-            <button class="btn" onclick="showModal('adicaoTipoMaquina')">Tipo Máquina <i
+            <button class="btn" onclick="showModal('adicaoTipoMaquina')">Descrição Máquina <i
                     class="bi bi-plus-circle"></i></button>
         </div>
 
         <div class="tabela-bg2">
             <div class="tabela-titulo">
                 <i class="bi bi-tags"></i>
-                <h2>Tipo de Máquina</h2>
+                <h2>Descrição de Máquina</h2>
             </div>
             <div class="tabela-wrapper">
             <table class="tabela-main">
