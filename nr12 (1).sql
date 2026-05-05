@@ -1,9 +1,12 @@
+CREATE DATABASE nr12;
+USE nr12;
+
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 05/05/2026 às 19:14
+-- Tempo de geração: 05/05/2026 às 21:36
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -313,7 +316,7 @@ INSERT INTO `colaborador` (`idcolaborador`, `colaborador_nome`, `colaborador_nif
 (53, 'WELLINGTON GONCALVES NORBERTO', '', 'wellington.norberto@sp.senai.br', '$argon2id$v=19$m=131072,t=4,p=2$ejlXUVEvTG8zazQ4dUl6Nw$vALxm8vL3fK8F+vM0w2CX24J9exmDjkMj2FjTmaAhhc', 1, 'Ativo', 'Professor', 1),
 (57, 'Roberto Moraes', '1068806', 'r.junior@sp.senai.br', '$argon2id$v=19$m=65536,t=4,p=1$cHFHbUlSWFpLbmlKRVU5Sg$pwFnGR1AdDq/sUCmbcLSrupgIbs/zKB3m4LQcumcqAw', 1, 'Ativo', 'Coordenador', 0),
 (58, 'kaua', '1', 'kaua@email.com', '$argon2id$v=19$m=65536,t=4,p=1$aWI1TU83TkxLd3NoMHVWaQ$GfPtUR/yhX1m0JIwxjM2eKty041blxnet+5Ji0eMx40', 1, 'Ativo', 'Adm', 0),
-(59, 'Kaua Vitor Reis', '1227', 'kaua.v.reis6@aluno.senai.br', '$argon2id$v=19$m=65536,t=4,p=1$WkExaUhJRU55cFR2clZ2bg$Gk5iIpGJlF9awsKZ12LtUXUdfxcQwO1rZF/8pidBpgg', 1, 'Ativo', 'Adm', 1),
+(59, 'Kaua Vitor Reis', '1227', 'kaua.v.reis6@aluno.senai.br', '$2y$10$mgQIdMK/Q/DB.ZEhcH6lJuHKCG9.Jpe7Am6p99dbdNjj0H.hRpuFO', 1, 'Ativo', 'Adm', 0),
 (60, 'Joao Pedro Rodrigues', '2221', 'joao.p.silva443@aluno.senai.br', '$argon2id$v=19$m=65536,t=4,p=1$MFh3eTFVdDdCVWE3dUppMg$BVgJXfcvU9cAh7oKVU5iIoQSbYGUXgZFGfkOy1/PoSM', 1, 'Ativo', 'Adm', 1),
 (61, 'Miguel Casteletti Rosa', '123321', 'miguel.c.rosa6@aluno.senai.br', '$argon2id$v=19$m=65536,t=4,p=1$SGJINkZGbkR6TWlIRWppaQ$Kwh07jFdT7FMPHQCcDq5nfiUkvGYR8FuXdTU7cUvzuY', 2, 'Ativo', 'Adm', 0),
 (62, 'Rafael Adriano Oliveira da Silva', '4002892', 'rafael.a.silva64@aluno.senai.br', '$argon2id$v=19$m=65536,t=3,p=4$R6zKzJvE3AUpX8y3U6z+7g$argon2id$v=19$m=65536,t=3,p=4$R6zKzJvE3AUpX8y3U6z+7g$v9W2H/C6C5C0R2+9kYm4gUf9X7Y1V6z5C8B2A1M4k9I', 3, 'Ativo', 'Adm', 1),
