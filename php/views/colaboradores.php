@@ -27,9 +27,25 @@
 
         <?php require __DIR__ . '/../components/header.php'; ?>
 
+        <?php
+        // Capturar filtros
+        $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
+        $filtro_status = isset($_GET['filtro-status']) ? trim($_GET['filtro-status']) : 'todos';
+        $filtro_setor = isset($_GET['filtro-setor']) ? trim($_GET['filtro-setor']) : '';
+        $filtro_permissao = isset($_GET['filtro-permissao']) ? trim($_GET['filtro-permissao']) : '';
+
+        // Queries leves para filtros rápidos
+        $setores_lista = [];
+        $r = $conn->query("SELECT DISTINCT s.setor_nome FROM colaborador c LEFT JOIN setor s ON s.idsetor = c.setor_id WHERE s.setor_nome IS NOT NULL AND s.setor_nome != '' ORDER BY s.setor_nome ASC");
+        if ($r) { while ($row = $r->fetch_assoc()) $setores_lista[] = $row['setor_nome']; }
+
+        $permissoes_lista = [];
+        $r = $conn->query("SELECT DISTINCT colaborador_permissao FROM colaborador WHERE colaborador_permissao IS NOT NULL AND colaborador_permissao != '' ORDER BY colaborador_permissao ASC");
+        if ($r) { while ($row = $r->fetch_assoc()) $permissoes_lista[] = $row['colaborador_permissao']; }
+        ?>
+
         <div class="page-actions-bar">
             <form action="" method="GET" class="page-search-form">
-                <?php $busca_atual = isset($_GET['search']) ? $_GET['search'] : ''; ?>
                 <div class="page-search-box <?php echo $busca_atual ? 'has-content' : ''; ?>">
                     <input type="text" name="search" value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar colaborador...">
                     <?php if ($busca_atual): ?>
@@ -40,11 +56,33 @@
                 <div class="page-filter-box">
                     <label>Status:</label>
                     <select name="filtro-status" onchange="this.form.submit()">
-                        <option value="todos">Todos</option>
-                        <option value="ativo">Ativo</option>
-                        <option value="inativo">Inativo</option>
+                        <option value="todos" <?= $filtro_status == 'todos' ? 'selected' : '' ?>>Todos</option>
+                        <option value="ativo" <?= $filtro_status == 'ativo' ? 'selected' : '' ?>>Ativo</option>
+                        <option value="inativo" <?= $filtro_status == 'inativo' ? 'selected' : '' ?>>Inativo</option>
                     </select>
                 </div>
+                <?php if (!empty($setores_lista)): ?>
+                <div class="page-filter-box">
+                    <label>Setor:</label>
+                    <select name="filtro-setor" onchange="this.form.submit()">
+                        <option value="">Todos</option>
+                        <?php foreach ($setores_lista as $s): ?>
+                            <option value="<?= htmlspecialchars($s) ?>" <?= $filtro_setor === $s ? 'selected' : '' ?>><?= htmlspecialchars($s) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty($permissoes_lista)): ?>
+                <div class="page-filter-box">
+                    <label>Permissão:</label>
+                    <select name="filtro-permissao" onchange="this.form.submit()">
+                        <option value="">Todos</option>
+                        <?php foreach ($permissoes_lista as $p): ?>
+                            <option value="<?= htmlspecialchars($p) ?>" <?= $filtro_permissao === $p ? 'selected' : '' ?>><?= htmlspecialchars($p) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
             </form>
             <button class="btn-page-action" onclick="showModal('adicaoColaborador')"><i class="bi bi-plus-circle"></i> Adicionar Colaborador</button>
         </div>
@@ -82,6 +120,18 @@
                                    OR c.colaborador_nif LIKE '%$termo_seguro%' 
                                    OR c.colaborador_email LIKE '%$termo_seguro%' 
                                    OR s.setor_nome LIKE '%$termo_seguro%')";
+                    }
+                    // Filtro de Status
+                    if ($filtro_status !== 'todos') {
+                        $where .= " AND LOWER(c.colaborador_status) = '" . $conn->real_escape_string($filtro_status) . "'";
+                    }
+                    // Filtro de Setor
+                    if ($filtro_setor !== '') {
+                        $where .= " AND s.setor_nome = '" . $conn->real_escape_string($filtro_setor) . "'";
+                    }
+                    // Filtro de Permissão
+                    if ($filtro_permissao !== '') {
+                        $where .= " AND c.colaborador_permissao = '" . $conn->real_escape_string($filtro_permissao) . "'";
                     }
 
                     // Query de Contagem
@@ -144,15 +194,23 @@
                 </tbody>
             </table>
             </div>
+            <?php
+                $pag_params = http_build_query(array_filter([
+                    'search' => $busca_atual,
+                    'filtro-status' => $filtro_status !== 'todos' ? $filtro_status : '',
+                    'filtro-setor' => $filtro_setor,
+                    'filtro-permissao' => $filtro_permissao,
+                ], fn($v) => $v !== ''));
+            ?>
             <div class="page-pagination">
                 <?php if ($pagina_atual > 1): ?>
-                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual - 1; ?>" class="pag-btn"><i class="bi bi-chevron-left"></i> Anterior</a>
+                    <a href="?<?= $pag_params ?>&page=<?= $pagina_atual - 1 ?>" class="pag-btn"><i class="bi bi-chevron-left"></i> Anterior</a>
                 <?php else: ?>
                     <span class="pag-btn disabled"><i class="bi bi-chevron-left"></i> Anterior</span>
                 <?php endif; ?>
                 <span class="pag-current">Página <?php echo $pagina_atual; ?> de <?php echo max(1, $total_paginas); ?></span>
                 <?php if ($pagina_atual < $total_paginas): ?>
-                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual + 1; ?>" class="pag-btn">Próxima <i class="bi bi-chevron-right"></i></a>
+                    <a href="?<?= $pag_params ?>&page=<?= $pagina_atual + 1 ?>" class="pag-btn">Próxima <i class="bi bi-chevron-right"></i></a>
                 <?php else: ?>
                     <span class="pag-btn disabled">Próxima <i class="bi bi-chevron-right"></i></span>
                 <?php endif; ?>

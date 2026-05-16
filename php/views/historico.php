@@ -104,9 +104,32 @@
 
         <?php require __DIR__ . '/../components/header.php'; ?>
 
+        <?php
+        // Capturar filtros
+        $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
+        $filtro_maquina = isset($_GET['filtro-maquina']) ? trim($_GET['filtro-maquina']) : '';
+        $filtro_colaborador = isset($_GET['filtro-colaborador']) ? trim($_GET['filtro-colaborador']) : '';
+
+        // Queries leves para filtros rápidos
+        $maquinas_lista = [];
+        $r = $conn->query("SELECT DISTINCT CONCAT(COALESCE(NULLIF(m.modelo, ''), m.denominacao), ' (', m.numero_identificacao, ')') AS nome_ni
+                           FROM historico h
+                           LEFT JOIN manutencao_tds2026.maquinas m ON h.maquina_id = m.id
+                           WHERE m.id IS NOT NULL
+                           ORDER BY nome_ni ASC");
+        if ($r) { while ($row = $r->fetch_assoc()) $maquinas_lista[] = $row['nome_ni']; }
+
+        $colaboradores_lista = [];
+        $r = $conn->query("SELECT DISTINCT c.colaborador_nome
+                           FROM historico h
+                           LEFT JOIN colaborador c ON h.colaborador_id = c.idcolaborador
+                           WHERE c.colaborador_nome IS NOT NULL
+                           ORDER BY c.colaborador_nome ASC");
+        if ($r) { while ($row = $r->fetch_assoc()) $colaboradores_lista[] = $row['colaborador_nome']; }
+        ?>
+
         <div class="page-actions-bar">
             <form action="" method="GET" class="page-search-form">
-                <?php $busca_atual = isset($_GET['search']) ? $_GET['search'] : ''; ?>
                 <div class="page-search-box <?php echo $busca_atual ? 'has-content' : ''; ?>">
                     <input type="text" name="search" value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar histórico...">
                     <?php if ($busca_atual): ?>
@@ -114,6 +137,28 @@
                     <?php endif; ?>
                 </div>
                 <button type="submit" class="btn-search"><i class="bi bi-search"></i></button>
+                <?php if (!empty($maquinas_lista)): ?>
+                <div class="page-filter-box">
+                    <label>Máquina:</label>
+                    <select name="filtro-maquina" onchange="this.form.submit()">
+                        <option value="">Todos</option>
+                        <?php foreach ($maquinas_lista as $m): ?>
+                            <option value="<?= htmlspecialchars($m) ?>" <?= $filtro_maquina === $m ? 'selected' : '' ?>><?= htmlspecialchars($m) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty($colaboradores_lista)): ?>
+                <div class="page-filter-box">
+                    <label>Colaborador:</label>
+                    <select name="filtro-colaborador" onchange="this.form.submit()">
+                        <option value="">Todos</option>
+                        <?php foreach ($colaboradores_lista as $c): ?>
+                            <option value="<?= htmlspecialchars($c) ?>" <?= $filtro_colaborador === $c ? 'selected' : '' ?>><?= htmlspecialchars($c) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
             </form>
         </div>
 
@@ -149,8 +194,17 @@
                                    OR a.aluno_nome LIKE '%$termo%' 
                                    OR c.colaborador_nome LIKE '%$termo%')";
                     }
+                    // Filtro de Máquina
+                    if ($filtro_maquina !== '') {
+                        $maq_safe = $conn->real_escape_string($filtro_maquina);
+                        $where .= " AND CONCAT(COALESCE(NULLIF(m.modelo, ''), m.denominacao), ' (', m.numero_identificacao, ')') = '$maq_safe'";
+                    }
+                    // Filtro de Colaborador
+                    if ($filtro_colaborador !== '') {
+                        $where .= " AND c.colaborador_nome = '" . $conn->real_escape_string($filtro_colaborador) . "'";
+                    }
 
-                    // Contagem Total - Usando subquery para contar grupos únicos corretamente, mesmo com NULLs
+                    // Contagem Total
                     $sql_count = "SELECT COUNT(*) as total FROM (
                                     SELECT 1 FROM historico h 
                                     LEFT JOIN aluno a ON h.aluno_id = a.idaluno
@@ -217,15 +271,22 @@
                 </tbody>
             </table>
             </div>
-                        <div class="page-pagination">
+            <?php
+                $pag_params = http_build_query(array_filter([
+                    'search' => $busca_atual,
+                    'filtro-maquina' => $filtro_maquina,
+                    'filtro-colaborador' => $filtro_colaborador,
+                ], fn($v) => $v !== ''));
+            ?>
+            <div class="page-pagination">
                 <?php if ($pagina_atual > 1): ?>
-                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual - 1; ?>" class="pag-btn"><i class="bi bi-chevron-left"></i> Anterior</a>
+                    <a href="?<?= $pag_params ?>&page=<?= $pagina_atual - 1 ?>" class="pag-btn"><i class="bi bi-chevron-left"></i> Anterior</a>
                 <?php else: ?>
                     <span class="pag-btn disabled"><i class="bi bi-chevron-left"></i> Anterior</span>
                 <?php endif; ?>
                 <span class="pag-current">Página <?php echo $pagina_atual; ?> de <?php echo max(1, $total_paginas); ?></span>
                 <?php if ($pagina_atual < $total_paginas): ?>
-                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual + 1; ?>" class="pag-btn">Próxima <i class="bi bi-chevron-right"></i></a>
+                    <a href="?<?= $pag_params ?>&page=<?= $pagina_atual + 1 ?>" class="pag-btn">Próxima <i class="bi bi-chevron-right"></i></a>
                 <?php else: ?>
                     <span class="pag-btn disabled">Próxima <i class="bi bi-chevron-right"></i></span>
                 <?php endif; ?>

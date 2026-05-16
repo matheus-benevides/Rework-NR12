@@ -28,9 +28,29 @@
 
         <?php require __DIR__ . '/../components/header.php'; ?>
 
+        <?php
+        // Capturar filtros
+        $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
+        $filtro_modelo = isset($_GET['filtro-modelo']) ? trim($_GET['filtro-modelo']) : '';
+        $filtro_marca = isset($_GET['filtro-marca']) ? trim($_GET['filtro-marca']) : '';
+        $filtro_setor = isset($_GET['filtro-setor']) ? trim($_GET['filtro-setor']) : '';
+
+        // Queries leves para popular os selects de filtro rápido
+        $modelos_lista = [];
+        $r = $conn_manutencao->query("SELECT DISTINCT modelo FROM maquinas WHERE modelo IS NOT NULL AND modelo != '' ORDER BY modelo ASC");
+        if ($r) { while ($row = $r->fetch_assoc()) $modelos_lista[] = $row['modelo']; }
+
+        $marcas_lista = [];
+        $r = $conn_manutencao->query("SELECT DISTINCT marca FROM maquinas WHERE marca IS NOT NULL AND marca != '' ORDER BY marca ASC");
+        if ($r) { while ($row = $r->fetch_assoc()) $marcas_lista[] = $row['marca']; }
+
+        $setores_lista = [];
+        $r = $conn_manutencao->query("SELECT DISTINCT setor FROM maquinas WHERE setor IS NOT NULL AND setor != '' ORDER BY setor ASC");
+        if ($r) { while ($row = $r->fetch_assoc()) $setores_lista[] = $row['setor']; }
+        ?>
+
         <div class="page-actions-bar">
             <form action="" method="GET" class="page-search-form">
-                <?php $busca_atual = isset($_GET['search']) ? $_GET['search'] : ''; ?>
                 <div class="page-search-box <?php echo $busca_atual ? 'has-content' : ''; ?>">
                     <input type="text" name="search" value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar máquina...">
                     <?php if ($busca_atual): ?>
@@ -38,6 +58,39 @@
                     <?php endif; ?>
                 </div>
                 <button type="submit" class="btn-search"><i class="bi bi-search"></i></button>
+                <?php if (!empty($modelos_lista)): ?>
+                <div class="page-filter-box">
+                    <label>Modelo:</label>
+                    <select name="filtro-modelo" onchange="this.form.submit()">
+                        <option value="">Todos</option>
+                        <?php foreach ($modelos_lista as $m): ?>
+                            <option value="<?= htmlspecialchars($m) ?>" <?= $filtro_modelo === $m ? 'selected' : '' ?>><?= htmlspecialchars($m) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty($marcas_lista)): ?>
+                <div class="page-filter-box">
+                    <label>Marca:</label>
+                    <select name="filtro-marca" onchange="this.form.submit()">
+                        <option value="">Todos</option>
+                        <?php foreach ($marcas_lista as $m): ?>
+                            <option value="<?= htmlspecialchars($m) ?>" <?= $filtro_marca === $m ? 'selected' : '' ?>><?= htmlspecialchars($m) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty($setores_lista)): ?>
+                <div class="page-filter-box">
+                    <label>Setor:</label>
+                    <select name="filtro-setor" onchange="this.form.submit()">
+                        <option value="">Todos</option>
+                        <?php foreach ($setores_lista as $s): ?>
+                            <option value="<?= htmlspecialchars($s) ?>" <?= $filtro_setor === $s ? 'selected' : '' ?>><?= htmlspecialchars($s) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <?php endif; ?>
             </form>
             <button class="btn-page-action" onclick="showModal('adicaoMaquina')"><i class="bi bi-plus-circle"></i> Adicionar Máquina</button>
         </div>
@@ -74,6 +127,15 @@
                                    OR marca LIKE '%$termo_seguro%' 
                                    OR modelo LIKE '%$termo_seguro%' 
                                    OR numero_identificacao LIKE '%$termo_seguro%')";
+                    }
+                    if ($filtro_modelo !== '') {
+                        $where .= " AND modelo = '" . $conn_manutencao->real_escape_string($filtro_modelo) . "'";
+                    }
+                    if ($filtro_marca !== '') {
+                        $where .= " AND marca = '" . $conn_manutencao->real_escape_string($filtro_marca) . "'";
+                    }
+                    if ($filtro_setor !== '') {
+                        $where .= " AND setor = '" . $conn_manutencao->real_escape_string($filtro_setor) . "'";
                     }
 
                     // Query de Contagem
@@ -117,15 +179,23 @@
                 </tbody>
             </table>
             </div>
+            <?php
+                $pag_params = http_build_query(array_filter([
+                    'search' => $busca_atual,
+                    'filtro-modelo' => $filtro_modelo,
+                    'filtro-marca' => $filtro_marca,
+                    'filtro-setor' => $filtro_setor,
+                ], fn($v) => $v !== ''));
+            ?>
             <div class="page-pagination">
                 <?php if ($pagina_atual > 1): ?>
-                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual - 1; ?>" class="pag-btn"><i class="bi bi-chevron-left"></i> Anterior</a>
+                    <a href="?<?= $pag_params ?>&page=<?= $pagina_atual - 1 ?>" class="pag-btn"><i class="bi bi-chevron-left"></i> Anterior</a>
                 <?php else: ?>
                     <span class="pag-btn disabled"><i class="bi bi-chevron-left"></i> Anterior</span>
                 <?php endif; ?>
                 <span class="pag-current">Página <?php echo $pagina_atual; ?> de <?php echo max(1, $total_paginas); ?></span>
                 <?php if ($pagina_atual < $total_paginas): ?>
-                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual + 1; ?>" class="pag-btn">Próxima <i class="bi bi-chevron-right"></i></a>
+                    <a href="?<?= $pag_params ?>&page=<?= $pagina_atual + 1 ?>" class="pag-btn">Próxima <i class="bi bi-chevron-right"></i></a>
                 <?php else: ?>
                     <span class="pag-btn disabled">Próxima <i class="bi bi-chevron-right"></i></span>
                 <?php endif; ?>
