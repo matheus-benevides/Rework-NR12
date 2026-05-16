@@ -399,7 +399,6 @@ function showModal(qual, id) {
                         document.getElementById("modelo_edit").value = data.modelo;
                         document.getElementById("ano_fabricacao_edit").value = data.ano_fabricacao;
                         document.getElementById("numero_identificacao_edit").value = data.numero_identificacao;
-                        document.getElementById("numero_serie_edit").value = data.numero_serie;
                         document.getElementById("setor_edit").value = data.setor;
                         // Opcional: Tipo (se salvarmos IDs no futuro)
                     }
@@ -2135,7 +2134,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 marca: getVal('marca'),
                 modelo: getVal('modelo'),
                 numero_identificacao: getVal('numero_identificacao'),
-                numero_serie: getVal('numero_serie'),
                 ano_fabricacao: getVal('ano_fabricacao'),
                 setor: getVal('setor'),
                 tipomaquina: getVal('tipomaquina')
@@ -2180,7 +2178,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 marca: getVal('marca_edit'),
                 modelo: getVal('modelo_edit'),
                 numero_identificacao: getVal('numero_identificacao_edit'),
-                numero_serie: getVal('numero_serie_edit'),
                 ano_fabricacao: getVal('ano_fabricacao_edit'),
                 setor: getVal('setor_edit'),
                 tipomaquina: getVal('tipomaquina_edit')

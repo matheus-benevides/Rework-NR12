@@ -83,12 +83,12 @@
                         $where .= " AND (mtn.manutencao_estado LIKE '%$termo_seguro%'
                                    OR mtn.tipo_manutencao LIKE '%$termo_seguro%'
                                    OR col.colaborador_nome LIKE '%$termo_seguro%'
-                                   OR mq.maquina_modelo LIKE '%$termo_seguro%')";
+                                   OR COALESCE(NULLIF(mq.modelo, ''), mq.denominacao) LIKE '%$termo_seguro%')";
                     }
 
                     // Query para contar o total (para paginação)
                     $sql_count = "SELECT COUNT(*) as total FROM manutencao mtn
-                                  INNER JOIN maquina mq ON mtn.maquina_id = mq.idmaquina
+                                  INNER JOIN manutencao_tds2026.maquinas mq ON mtn.maquina_id = mq.id
                                   INNER JOIN colaborador col ON mtn.colaborador_id = col.idcolaborador
                                   $where";
                     $total_resultado = $conn->query($sql_count);
@@ -98,11 +98,11 @@
                     // Query Final com LIMIT e OFFSET
                     $sql = "SELECT 
                                mtn.*,
-                               mq.maquina_modelo,
+                               COALESCE(NULLIF(mq.modelo, ''), mq.denominacao) AS maquina_modelo,
                                col.colaborador_nome
                            FROM manutencao mtn
-                           INNER JOIN maquina mq
-                               ON mtn.maquina_id = mq.idmaquina
+                           INNER JOIN manutencao_tds2026.maquinas mq
+                               ON mtn.maquina_id = mq.id
                            INNER JOIN colaborador col
                                ON mtn.colaborador_id = col.idcolaborador
                            $where

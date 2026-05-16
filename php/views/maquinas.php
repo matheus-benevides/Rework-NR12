@@ -54,7 +54,6 @@
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>NI</th>
-                    <th>N° Série</th>
                     <th>Ano</th>
                     <th>Setor</th>
                     <th>Ações</th>
@@ -74,8 +73,7 @@
                         $where .= " AND (denominacao LIKE '%$termo_seguro%' 
                                    OR marca LIKE '%$termo_seguro%' 
                                    OR modelo LIKE '%$termo_seguro%' 
-                                   OR numero_identificacao LIKE '%$termo_seguro%' 
-                                   OR numero_serie LIKE '%$termo_seguro%')";
+                                   OR numero_identificacao LIKE '%$termo_seguro%')";
                     }
 
                     // Query de Contagem
@@ -85,7 +83,11 @@
                     $total_paginas = ceil($total_registros / $registros_por_pagina);
 
                     // Query Principal com Paginação
-                    $sql = "SELECT * FROM maquinas $where ORDER BY denominacao ASC LIMIT $registros_por_pagina OFFSET $offset";
+                    $sql = "SELECT id, denominacao, marca, modelo, numero_identificacao, ano_fabricacao, setor
+                            FROM maquinas
+                            $where
+                            ORDER BY denominacao ASC
+                            LIMIT $registros_por_pagina OFFSET $offset";
 
                     $resultado = $conn_manutencao->query($sql);
 
@@ -96,7 +98,6 @@
                             echo "<td>" . $linha["marca"] . "</td>";
                             echo "<td>" . $linha["modelo"] . "</td>";
                             echo "<td>" . $linha["numero_identificacao"] . "</td>";
-                            echo "<td>" . $linha["numero_serie"] . "</td>";
                             echo "<td>" . $linha["ano_fabricacao"] . "</td>";
                             echo "<td>" . $linha["setor"] . "</td>";
 
@@ -110,7 +111,7 @@
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='8' style='text-align:center; padding:30px; opacity:0.6;'><i class='bi bi-info-circle' style='font-size:1.5rem; display:block; margin-bottom:10px;'></i>Nenhuma máquina encontrada.</td></tr>";
+                        echo "<tr><td colspan='7' style='text-align:center; padding:30px; opacity:0.6;'><i class='bi bi-info-circle' style='font-size:1.5rem; display:block; margin-bottom:10px;'></i>Nenhuma máquina encontrada.</td></tr>";
                     }
                     ?>
                 </tbody>

@@ -9,10 +9,10 @@ $colaboradores_geral = [];
 
 if (isset($id_maquina)) {
     // 1. Busca dados da máquina
-    $sqlMaquina = "SELECT m.tipomaquina_id, m.maquina_ni, t.tipomaquina_nome 
-                   FROM maquina m
+    $sqlMaquina = "SELECT m.tipomaquina_id, m.numero_identificacao AS maquina_ni, t.tipomaquina_nome 
+                   FROM manutencao_tds2026.maquinas m
                    LEFT JOIN tipomaquina t ON m.tipomaquina_id = t.idtipomaquina
-                   WHERE m.idmaquina = ?";
+                   WHERE m.id = ?";
     $stmtMaquina = $conn->prepare($sqlMaquina);
     $stmtMaquina->bind_param('i', $id_maquina);
     $stmtMaquina->execute();

@@ -27,7 +27,7 @@ switch ($metodo) {
     case 'GET':
         $id = $_GET['id'] ?? null;
         if ($id) {
-            $stmt = $conn_manutencao->prepare("SELECT * FROM maquinas WHERE id = ?");
+            $stmt = $conn_manutencao->prepare("SELECT id, denominacao, marca, modelo, numero_identificacao, tipomaquina_id, ano_fabricacao, setor, data_proxima_manutencao FROM maquinas WHERE id = ?");
             if (!$stmt) {
                 echo json_encode(["mensagem" => "Erro na preparação: " . $conn_manutencao->error]);
                 exit;
@@ -43,7 +43,7 @@ switch ($metodo) {
             }
             $stmt->close();
         } else {
-            $resultado = $conn_manutencao->query("SELECT * FROM maquinas ORDER BY denominacao ASC");
+            $resultado = $conn_manutencao->query("SELECT id, denominacao, marca, modelo, numero_identificacao, tipomaquina_id, ano_fabricacao, setor, data_proxima_manutencao FROM maquinas ORDER BY denominacao ASC");
             $maquinas = [];
             while ($linha = $resultado->fetch_assoc()) {
                 $maquinas[] = $linha;
@@ -57,7 +57,7 @@ switch ($metodo) {
         $marca = $input['marca'] ?? null;
         $modelo = $input['modelo'] ?? null;
         $numero_identificacao = $input['numero_identificacao'] ?? null;
-        $numero_serie = $input['numero_serie'] ?? null;
+        $tipomaquina_id = isset($input['tipomaquina']) && $input['tipomaquina'] !== 'semValor' ? intval($input['tipomaquina']) : null;
         $ano_fabricacao = !empty($input['ano_fabricacao']) ? intval($input['ano_fabricacao']) : null;
         $setor = $input['setor'] ?? null;
 
@@ -67,7 +67,7 @@ switch ($metodo) {
             exit;
         }
 
-        $sql = "INSERT INTO maquinas (denominacao, marca, modelo, numero_identificacao, numero_serie, ano_fabricacao, setor) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO maquinas (denominacao, marca, modelo, numero_identificacao, tipomaquina_id, ano_fabricacao, setor) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn_manutencao->prepare($sql);
         
         if (!$stmt) {
@@ -76,7 +76,7 @@ switch ($metodo) {
             exit;
         }
 
-        $stmt->bind_param("sssssis", $denominacao, $marca, $modelo, $numero_identificacao, $numero_serie, $ano_fabricacao, $setor);
+        $stmt->bind_param("ssssiis", $denominacao, $marca, $modelo, $numero_identificacao, $tipomaquina_id, $ano_fabricacao, $setor);
 
         if ($stmt->execute()) {
             http_response_code(201);
@@ -94,7 +94,7 @@ switch ($metodo) {
         $marca = $input['marca'] ?? null;
         $modelo = $input['modelo'] ?? null;
         $numero_identificacao = $input['numero_identificacao'] ?? null;
-        $numero_serie = $input['numero_serie'] ?? null;
+        $tipomaquina_id = isset($input['tipomaquina']) && $input['tipomaquina'] !== 'semValor' ? intval($input['tipomaquina']) : null;
         $ano_fabricacao = !empty($input['ano_fabricacao']) ? intval($input['ano_fabricacao']) : null;
         $setor = $input['setor'] ?? null;
 
@@ -104,7 +104,7 @@ switch ($metodo) {
             exit;
         }
 
-        $sql = "UPDATE maquinas SET denominacao = ?, marca = ?, modelo = ?, numero_identificacao = ?, numero_serie = ?, ano_fabricacao = ?, setor = ? WHERE id = ?";
+        $sql = "UPDATE maquinas SET denominacao = ?, marca = ?, modelo = ?, numero_identificacao = ?, tipomaquina_id = ?, ano_fabricacao = ?, setor = ? WHERE id = ?";
         $stmt = $conn_manutencao->prepare($sql);
         
         if (!$stmt) {
@@ -113,7 +113,7 @@ switch ($metodo) {
             exit;
         }
 
-        $stmt->bind_param("sssssisi", $denominacao, $marca, $modelo, $numero_identificacao, $numero_serie, $ano_fabricacao, $setor, $id);
+        $stmt->bind_param("ssssiisi", $denominacao, $marca, $modelo, $numero_identificacao, $tipomaquina_id, $ano_fabricacao, $setor, $id);
 
         if ($stmt->execute()) {
             http_response_code(200);

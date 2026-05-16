@@ -72,23 +72,36 @@
                     $pagina_atual = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                     if ($pagina_atual < 1) $pagina_atual = 1;
                     $offset = ($pagina_atual - 1) * $registros_por_pagina;
-
                     // Query Base
                     $where = "WHERE 1=1";
                     if (!empty($busca_atual)) {
-                        $termo_seguro = $conn->real_escape_string($busca_atual);
-                        $where .= " AND (maquina_modelo LIKE '%$termo_seguro%' OR intervalo_manutencao LIKE '%$termo_seguro%' OR data_proxima_manutencao LIKE '%$termo_seguro%')";
+                        $termo_seguro = $conn_manutencao->real_escape_string($busca_atual);
+                        $where .= " AND (denominacao LIKE '%$termo_seguro%'
+                                   OR modelo LIKE '%$termo_seguro%'
+                                   OR numero_identificacao LIKE '%$termo_seguro%'
+                                   OR setor LIKE '%$termo_seguro%'
+                                   OR data_proxima_manutencao LIKE '%$termo_seguro%')";
                     }
 
                     // Query de Contagem
-                    $sql_count = "SELECT COUNT(*) as total FROM maquina $where";
-                    $total_resultado = $conn->query($sql_count);
+                    $sql_count = "SELECT COUNT(*) as total FROM maquinas $where";
+                    $total_resultado = $conn_manutencao->query($sql_count);
                     $total_registros = $total_resultado->fetch_assoc()['total'];
                     $total_paginas = ceil($total_registros / $registros_por_pagina);
 
                     // Query Principal com Paginação
-                    $sql = "SELECT * FROM maquina $where ORDER BY maquina_modelo ASC LIMIT $registros_por_pagina OFFSET $offset";
-                    $resultado = $conn->query($sql);
+                    $sql = "SELECT
+                                id AS idmaquina,
+                                COALESCE(NULLIF(modelo, ''), denominacao) AS maquina_modelo,
+                                ano_fabricacao AS maquina_ano,
+                                '-' AS intervalo_manutencao,
+                                data_proxima_manutencao,
+                                'Ativo' AS maquina_status
+                            FROM maquinas
+                            $where
+                            ORDER BY denominacao ASC
+                            LIMIT $registros_por_pagina OFFSET $offset";
+                    $resultado = $conn_manutencao->query($sql);
 
                     if ($resultado && $resultado->num_rows > 0) {
                         while ($linha = $resultado->fetch_assoc()) {

@@ -1369,10 +1369,6 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
                         placeholder="1052694 SENAI">
                 </div>
                 <div class="modal-input">
-                    <label for="numero_serie">N° Série:</label>
-                    <input type="text" name="numero_serie" id="numero_serie" placeholder="016-016057-452">
-                </div>
-                <div class="modal-input">
                     <label for="setor">Setor:</label>
                     <input type="text" name="setor" id="setor" placeholder="CÉLULA 1">
                 </div>
@@ -1479,10 +1475,6 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
                         placeholder="1052694 SENAI">
                 </div>
                 <div class="modal-input">
-                    <label for="numero_serie_edit">N° Série:</label>
-                    <input type="text" name="numero_serie" id="numero_serie_edit" placeholder="016-016057-452">
-                </div>
-                <div class="modal-input">
                     <label for="setor_edit">Setor:</label>
                     <input type="text" name="setor" id="setor_edit" placeholder="CÉLULA 1">
                 </div>
@@ -1537,8 +1529,8 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
                         <select name="nimaquina" id="nimaquina">
                             <option value="sem Valor" selected disabled>Selecione o NI</option>
                             <?php
-                            $buscar = "SELECT * FROM maquina";
-                            $resultado = $conn->query($buscar);
+                            $buscar = "SELECT id AS idmaquina, numero_identificacao AS maquina_ni, marca AS maquina_fabricante, COALESCE(NULLIF(modelo, ''), denominacao) AS maquina_modelo FROM manutencao_tds2026.maquinas ORDER BY denominacao ASC";
+                            $resultado = $conn_manutencao->query($buscar);
                             if ($resultado && $resultado->num_rows > 0) {
                                 while ($linha = $resultado->fetch_assoc()) {
                                     echo "<option value='" . $linha['idmaquina'] . "'>" . $linha['maquina_ni'] . " - " . $linha['maquina_fabricante'] . " - " . $linha['maquina_modelo'] . "</option>";
@@ -1835,19 +1827,17 @@ require_once __DIR__ . '\..\..\configs\conexao.php';
                 $totalNoti = 0;
                 $dataAtual = date('Y-m-d');
 
-                $sql = "SELECT 
-                            maquina.idmaquina,
-                            maquina.maquina_ni,
-                            maquina.maquina_modelo,
-                            maquina.data_proxima_manutencao,
-                            DATEDIFF(maquina.data_proxima_manutencao, '$dataAtual') AS dias,
-                            setor.setor_nome
-                        FROM maquina
-                        INNER JOIN setor
-                            ON setor.idsetor = maquina.setor_id
-                        WHERE maquina.data_proxima_manutencao IS NOT NULL
-                          AND DATEDIFF(maquina.data_proxima_manutencao, '$dataAtual') <= 10
-                        ORDER BY maquina.data_proxima_manutencao";
+                $sql = "SELECT
+                            id AS idmaquina,
+                            numero_identificacao AS maquina_ni,
+                            COALESCE(NULLIF(modelo, ''), denominacao) AS maquina_modelo,
+                            data_proxima_manutencao,
+                            DATEDIFF(data_proxima_manutencao, '$dataAtual') AS dias,
+                            setor AS setor_nome
+                        FROM manutencao_tds2026.maquinas
+                        WHERE data_proxima_manutencao IS NOT NULL
+                          AND DATEDIFF(data_proxima_manutencao, '$dataAtual') <= 10
+                        ORDER BY data_proxima_manutencao";
 
                 $resultado = $conn->query($sql);
 

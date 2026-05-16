@@ -64,9 +64,9 @@ if ($stmt->execute()) {
         $ni = 'N/A';
         $nome_aluno = 'Aluno';
         
-        $sqlInfo = "SELECT m.maquina_ni, a.aluno_nome 
-                    FROM maquina m, aluno a 
-                    WHERE m.idmaquina = ? AND a.idaluno = ?";
+        $sqlInfo = "SELECT m.numero_identificacao AS maquina_ni, a.aluno_nome 
+                    FROM manutencao_tds2026.maquinas m, aluno a 
+                    WHERE m.id = ? AND a.idaluno = ?";
         $stmtI = $conn->prepare($sqlInfo);
         if($stmtI){
             $stmtI->bind_param("ii", $maquina_id, $aluno_id);

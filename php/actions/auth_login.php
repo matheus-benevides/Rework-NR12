@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // 2. Verifica Máquina (Conforme sua imagem: maquina_ni e maquina_status)
-            $sqlMaq = "SELECT idmaquina, maquina_ni FROM maquina WHERE maquina_ni = ? AND maquina_status = 'Ativo'";
+            $sqlMaq = "SELECT id AS idmaquina, numero_identificacao AS maquina_ni FROM manutencao_tds2026.maquinas WHERE numero_identificacao = ? LIMIT 1";
             $stmtMaq = mysqli_prepare($conn, $sqlMaq);
             mysqli_stmt_bind_param($stmtMaq, "s", $nimaquina);
             mysqli_stmt_execute($stmtMaq);

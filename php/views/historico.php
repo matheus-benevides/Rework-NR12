@@ -144,8 +144,8 @@
                     $where = "WHERE 1=1";
                     if (!empty($busca_atual)) {
                         $termo = $conn->real_escape_string($busca_atual);
-                        $where = " WHERE (m.maquina_modelo LIKE '%$termo%' 
-                                   OR m.maquina_ni LIKE '%$termo%' 
+                        $where = " WHERE (COALESCE(NULLIF(m.modelo, ''), m.denominacao) LIKE '%$termo%' 
+                                   OR m.numero_identificacao LIKE '%$termo%' 
                                    OR a.aluno_nome LIKE '%$termo%' 
                                    OR c.colaborador_nome LIKE '%$termo%')";
                     }
@@ -155,7 +155,7 @@
                                     SELECT 1 FROM historico h 
                                     LEFT JOIN aluno a ON h.aluno_id = a.idaluno
                                     LEFT JOIN colaborador c ON h.colaborador_id = c.idcolaborador
-                                    LEFT JOIN maquina m ON h.maquina_id = m.idmaquina
+                                    LEFT JOIN manutencao_tds2026.maquinas m ON h.maquina_id = m.id
                                     $where
                                     GROUP BY h.historico_data, h.historico_hora, h.maquina_id, h.aluno_id, h.colaborador_id
                                   ) as sub";
@@ -172,12 +172,12 @@
                                 h.colaborador_id,
                                 a.aluno_nome,
                                 c.colaborador_nome,
-                                m.maquina_modelo,
-                                m.maquina_ni
+                                COALESCE(NULLIF(m.modelo, ''), m.denominacao) AS maquina_modelo,
+                                m.numero_identificacao AS maquina_ni
                             FROM historico h
                             LEFT JOIN aluno a ON h.aluno_id = a.idaluno
                             LEFT JOIN colaborador c ON h.colaborador_id = c.idcolaborador
-                            LEFT JOIN maquina m ON h.maquina_id = m.idmaquina
+                            LEFT JOIN manutencao_tds2026.maquinas m ON h.maquina_id = m.id
                             $where
                             GROUP BY h.historico_data, h.historico_hora, h.maquina_id, h.aluno_id, h.colaborador_id
                             ORDER BY h.historico_data DESC, h.historico_hora DESC

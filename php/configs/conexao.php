@@ -4,13 +4,14 @@ $host = 'localhost';
 $dbname = 'nr12';
 $username = 'root';
 $password = '';
-$port = '3306';
+$port = '3308';
 date_default_timezone_set('America/Sao_Paulo');
 
 $conn = mysqli_connect($host, $username, $password, $dbname, $port);
 
 if (!$conn) {
-    die("falhou a conexão ae KKKKKKKKJ, arruma isso " . mysqli_connect_error());
+    error_log("Erro de conexão com nr12: " . mysqli_connect_error());
+    die("Erro ao conectar ao banco de dados.");
 }
 
 // Conexão com o banco de dados do projeto Manutenção
@@ -18,5 +19,6 @@ $db_manutencao = 'manutencao_tds2026';
 $conn_manutencao = mysqli_connect($host, $username, $password, $db_manutencao, $port);
 
 if (!$conn_manutencao) {
-    die("falhou a conexão com o banco de manutenção " . mysqli_connect_error());
+    error_log("Erro de conexão com manutencao_tds2026: " . mysqli_connect_error());
+    die("Erro ao conectar ao banco de manutenção.");
 }

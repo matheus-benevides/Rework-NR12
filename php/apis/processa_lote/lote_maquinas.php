@@ -109,7 +109,6 @@ try {
         $marca = mb_convert_case($marca_raw, MB_CASE_UPPER, "UTF-8");
         $setor = mb_convert_case($setor_raw, MB_CASE_UPPER, "UTF-8");
         $modelo = "N/A";
-        $numero_serie = "N/A";
 
         // Verificar duplicata no banco de manutenção (tabela maquinas)
         $stmt_check = $conn_manutencao->prepare("SELECT id FROM maquinas WHERE numero_identificacao = ? LIMIT 1");
@@ -125,11 +124,11 @@ try {
         }
 
         // Inserir na tabela maquinas compartilhada
-        $sql = "INSERT INTO maquinas (denominacao, marca, modelo, numero_identificacao, numero_serie, ano_fabricacao, setor) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO maquinas (denominacao, marca, modelo, numero_identificacao, ano_fabricacao, setor) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_insert = $conn_manutencao->prepare($sql);
         
         if ($stmt_insert) {
-            $stmt_insert->bind_param("sssssis", $denominacao, $marca, $modelo, $numero_identificacao, $numero_serie, $ano_fabricacao, $setor);
+            $stmt_insert->bind_param("ssssis", $denominacao, $marca, $modelo, $numero_identificacao, $ano_fabricacao, $setor);
             if ($stmt_insert->execute()) {
                 $sucessoCount++;
             } else {

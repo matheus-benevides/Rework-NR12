@@ -1,4 +1,4 @@
-﻿<?php require __DIR__ . "/../controllers/validar_acesso.php"; ?>
+<?php require __DIR__ . "/../controllers/validar_acesso.php"; ?>
 <?php require __DIR__ . '/../components/modals/all_modals.php'; ?>
 <?php require __DIR__ . '/../components/modals/aluno_modals.php'; ?>
 
@@ -80,7 +80,7 @@
                     </div>
                     <h2>Máquina Atribuída</h2>
                     <?php
-                    $sqlMaq = "SELECT * FROM maquina WHERE idmaquina = ?";
+                    $sqlMaq = "SELECT id AS idmaquina, tipomaquina_id, numero_identificacao AS maquina_ni FROM manutencao_tds2026.maquinas WHERE id = ?";
                     $stmtMaq = $conn->prepare($sqlMaq);
                     $stmtMaq->bind_param("i", $id_maquina);
                     $stmtMaq->execute();
