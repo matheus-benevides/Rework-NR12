@@ -1,112 +1,171 @@
-﻿<?php require __DIR__ . "/../controllers/validar_acesso.php"; ?>
-<?php require __DIR__ . '/../components/modals/all_modals.php'; ?>
+<?php 
+require __DIR__ . "/../controllers/validar_acesso.php"; 
+require __DIR__ . '/../components/modals/all_modals.php'; 
+
+$id_colab = $_SESSION['user_id'] ?? null;
+$matricula_aluno = $_SESSION['matricula'] ?? null;
+$foto_perfil = $_SESSION['user_foto'] ?? $_SESSION['aluno_foto'] ?? '';
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br" data-tema="">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perfil - NR12</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - NR12</title>
 
-  <link rel="stylesheet" href="../../css/global.css">
-  <link rel="stylesheet" href="../../css/nav.css">
-  <link rel="stylesheet" href="../../css/style.css">
-  <link rel="stylesheet" href="../../css/header.css">
-  <link rel="stylesheet" href="../../css/modal.css">
-  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="shortcut icon" href="../../assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/nav.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/modal.css">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../../assets/icons/favicon.ico" type="image/x-icon">
+
+    <style>
+        .avatar-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+
+        .avatar-profile {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--corFundo);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--corDestaque);
+            border: 4px solid var(--corDestaque);
+            overflow: hidden;
+            object-fit: cover;
+        }
+
+        .upload-btn {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: var(--corDestaque);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid white;
+            transition: 0.3s;
+        }
+
+        .upload-btn:hover {
+            scale: 1.1;
+            background: var(--corBase);
+        }
+
+        #foto-input {
+            display: none;
+        }
+
+        .profile-info {
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
 </head>
 
 <body>
-  <?php require __DIR__ . '/../components/nav.php'; ?>
+    <?php require __DIR__ . '/../components/nav.php'; ?>
 
-  <section class="sec-main dontmove" style="align-items: center; justify-content: center;">
+    <section class="sec-main dontmove">
+        <?php require __DIR__ . '/../components/header.php'; ?>
 
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3>Perfil de Usuário</h3>
-      </div>
-
-      <form id="form-suporte" class="modal-form">
-
-        <div class="modal-row">
-
-        </div>
-        <div class="modal-row">
-          <div class="modal-input">
-            <label for="">Nome de Usuário: </label>
-            <div class="input-wrapper">
-              <input type="text" disabled value="<?php echo $nome_usuario ?>">
+        <div class="modal-box profile-info" style="margin-top: 50px;">
+            <div class="modal-header">
+                <h3>Meu Perfil</h3>
             </div>
-            <br>
-            <label for="">E-mail: </label>
-            <div class="input-wrapper">
-              <input type="text" disabled value="<?php
-                                                  $sql = "SELECT colaborador_email FROM colaborador WHERE idcolaborador = ?";
-                                                  $stmt = $conn->prepare($sql);
-                                                  $stmt->bind_param("i", $id_usuario);
-                                                  $stmt->execute();
-                                                  $resultado = $stmt->get_result();
-                                                  $convertendo = $resultado->fetch_assoc();
-                                                  $convertendo != null ? $resposta = $convertendo['colaborador_email'] : $resposta = "E-MAIL NÃO CADASTRADO";
-                                                  echo $resposta; ?>">
-            </div>
-          </div>
-          <div class="avatar-profile">
-            <?php echo substr($nome_usuario, 0, 2); ?>
-          </div>
-        </div>
-        <div class="modal-row">
-          <div class="modal-input">
-            <label for="">NIF: </label>
-            <div class="input-wrapper">
-              <input type="text" disabled value="<?php
-                                                  $sql = "SELECT colaborador_nif FROM colaborador WHERE idcolaborador = ?";
-                                                  $stmt = $conn->prepare($sql);
-                                                  $stmt->bind_param("i", $id_usuario);
-                                                  $stmt->execute();
-                                                  $resultado = $stmt->get_result();
-                                                  $convertendo = $resultado->fetch_assoc();
-                                                  $convertendo != null ? $resposta = $convertendo['colaborador_nif'] : $resposta = "NIF NÃO CADASTRADO";
-                                                  echo $resposta;
-                                                  ?>">
-            </div>
-          </div>
-          <div class="modal-input">
-            <label for="">Setor: </label>
-            <div class="input-wrapper">
-              <input type="text" disabled value="<?php
-                                                  $sql = "SELECT setor.setor_nome FROM setor INNER JOIN colaborador ON colaborador.setor_id = setor.idsetor WHERE colaborador.idcolaborador = ?";
-                                                  $stmt = $conn->prepare($sql);
-                                                  $stmt->bind_param("i", $id_usuario);
-                                                  $stmt->execute();
-                                                  $resultado = $stmt->get_result();
-                                                  $convertendo = $resultado->fetch_assoc();
-                                                  $convertendo != null ? $resposta = $convertendo['setor_nome'] : $resposta = "SETOR NÃO CADASTRADO";
-                                                  echo $resposta;
-                                                  ?>">
-            </div>
-          </div>
-        </div>
-        <div class="modal-input">
-          <label for="">Função: </label>
-          <div class="input-wrapper">
-            <input type="text" name="" id="" disabled value="<?php echo $permissao_usuario; ?>">
-          </div>
-        </div>
 
-        <div class="modal-footer">
-          <button type="submit" class="btn-confirmar-full deletar" onclick="window.location.href='../actions/logout.php'">
-            Sair <i class="bi bi-door-closed-fill"></i>
-          </button>
-        </div>
-      </form>
-    </div>
-  </section>
+            <form action="../actions/upload_foto.php" method="POST" enctype="multipart/form-data" class="modal-form">
+                
+                <div class="avatar-container">
+                    <div class="avatar-profile">
+                        <?php if (!empty($foto_perfil) && file_exists("../../uploads/perfis/" . $foto_perfil)): ?>
+                            <img src="../../uploads/perfis/<?= $foto_perfil ?>" alt="Foto" style="width: 100%; height: 100%; object-fit: cover;">
+                        <?php else: ?>
+                            <?= substr($nome_usuario, 0, 2); ?>
+                        <?php endif; ?>
+                    </div>
+                    <label for="foto-input" class="upload-btn">
+                        <i class="bi bi-camera-fill"></i>
+                    </label>
+                    <input type="file" name="foto" id="foto-input" onchange="this.form.submit()">
+                </div>
 
-  <script src="../../js/scripts.js" defer></script>
+                <div class="modal-row">
+                    <div class="modal-input">
+                        <label>Nome Completo:</label>
+                        <div class="input-wrapper">
+                            <input type="text" disabled value="<?= $nome_usuario ?>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-row">
+                    <div class="modal-input">
+                        <label>E-mail:</label>
+                        <div class="input-wrapper">
+                            <input type="text" disabled value="<?php
+                                if ($id_colab) {
+                                    $sql = "SELECT colaborador_email FROM colaborador WHERE idcolaborador = ?";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->bind_param("i", $id_colab);
+                                } else {
+                                    $sql = "SELECT aluno_email FROM aluno WHERE aluno_matricula = ?";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->bind_param("s", $matricula_aluno);
+                                }
+                                $stmt->execute();
+                                $res = $stmt->get_result()->fetch_assoc();
+                                echo $res['colaborador_email'] ?? $res['aluno_email'] ?? 'NÃO CADASTRADO';
+                            ?>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-row">
+                    <div class="modal-input">
+                        <label><?= ($id_colab) ? 'NIF:' : 'Matrícula:' ?></label>
+                        <div class="input-wrapper">
+                            <input type="text" disabled value="<?= ($id_colab) ? ($_SESSION['colaborador_nif'] ?? 'N/A') : $matricula_aluno ?>">
+                        </div>
+                    </div>
+                    <div class="modal-input">
+                        <label>Permissão:</label>
+                        <div class="input-wrapper">
+                            <input type="text" disabled value="<?= $permissao_usuario ?>">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="justify-content: center; gap: 20px;">
+                    <button type="button" class="btn-confirmar" onclick="window.location.href='home.php'" style="background: var(--corEscura);">
+                        Voltar
+                    </button>
+                    <button type="button" class="btn-confirmar deletar" onclick="window.location.href='../actions/logout.php'">
+                        Sair <i class="bi bi-door-closed-fill"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="../../js/scripts.js" defer></script>
 </body>
 
 </html>

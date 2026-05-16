@@ -168,27 +168,16 @@ if ($res_assoc) {
     <section class="sec-main">
         <?php require __DIR__ . '/../components/header.php'; ?>
 
-        <div class="div-btns-pages">
-            <form action="" method="GET" class="form-pesquisa" style="width: 100%;">
-                <div class="search-container" style="width: 100%;">
-                    <?php
-                    // Captura o valor atual para manter no input
-                    $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
-                    ?>
-                    <div class="box-pesquisa" style="width: 100%;">
-                        <i class="bi bi-search search-icon"></i>
-                        <input type="text" name="search" id="pesquisa_maquinas"
-                            value="<?php echo htmlspecialchars($busca_atual); ?>"
-                            placeholder="Pesquisar descrição de máquina..." class="input-pesquisa">
-
-                        <?php if ($busca_atual): ?>
-                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i
-                                    class="bi bi-x-lg"></i></a>
-                        <?php endif; ?>
-                    </div>
-                    <!-- Hidden submit button to allow Enter to search -->
-                    <button type="submit" style="display: none;"></button>
+        <div class="page-actions-bar">
+            <form action="" method="GET" class="page-search-form">
+                <?php $busca_atual = isset($_GET['search']) ? $_GET['search'] : ''; ?>
+                <div class="page-search-box <?php echo $busca_atual ? 'has-content' : ''; ?>">
+                    <input type="text" name="search" value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar...">
+                    <?php if ($busca_atual): ?>
+                        <a href="?" class="page-clear-btn"><i class="bi bi-x-lg"></i></a>
+                    <?php endif; ?>
                 </div>
+                <button type="submit" class="btn-search"><i class="bi bi-search"></i></button>
             </form>
         </div>
 
@@ -205,15 +194,29 @@ if ($res_assoc) {
                     <th>Qtd. Requisitos Associados</th>
                     <th>Ações</th>
                 </thead>
-                <tbody id="tabela-requisitos-maquina">
+                <tbody id="tabela-requisitos-maquina-srv">
                     <?php
+                    // Configuração da Paginação
+                    $registros_por_pagina = 10;
+                    $pagina_atual = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                    if ($pagina_atual < 1) $pagina_atual = 1;
+                    $offset = ($pagina_atual - 1) * $registros_por_pagina;
+
+                    // Query Base
+                    $where = "WHERE 1=1";
                     if (!empty($busca_atual)) {
                         $termo_seguro = $conn->real_escape_string($busca_atual);
-                        $sql = "SELECT idtipomaquina, tipomaquina_nome FROM tipomaquina WHERE tipomaquina_nome LIKE '%$termo_seguro%' ORDER BY tipomaquina_nome";
-                    } else {
-                        $sql = "SELECT idtipomaquina, tipomaquina_nome FROM tipomaquina ORDER BY tipomaquina_nome";
+                        $where .= " AND (tipomaquina_nome LIKE '%$termo_seguro%')";
                     }
 
+                    // Query de Contagem
+                    $sql_count = "SELECT COUNT(*) as total FROM tipomaquina $where";
+                    $total_resultado = $conn->query($sql_count);
+                    $total_registros = $total_resultado->fetch_assoc()['total'];
+                    $total_paginas = ceil($total_registros / $registros_por_pagina);
+
+                    // Query Principal com Paginação
+                    $sql = "SELECT idtipomaquina, tipomaquina_nome FROM tipomaquina $where ORDER BY tipomaquina_nome ASC LIMIT $registros_por_pagina OFFSET $offset";
                     $result = $conn->query($sql);
 
                     if ($result && $result->num_rows > 0) {
@@ -228,7 +231,7 @@ if ($res_assoc) {
                             echo "<td><span class='status-ativo' style='background-color: var(--corBase); color: #fff;'>{$qtd} Requisitos</span></td>";
                             echo "<td>
                                     <div style='display: flex; gap: 5px; justify-content: center;'>
-                                        <button class='btnAcao editar' type='button' style='width: auto; padding: 5px 15px;' onclick=\"abrirModalRelacionar({$id}, '{$nome}')\">
+                                        <button class='btnAcao editar' title='Relacionar Requisitos' type='button' style='width: auto; padding: 5px 15px;' onclick=\"abrirModalRelacionar({$id}, '{$nome}')\">
                                             <i class='bi bi-link-45deg'></i> Relacionar
                                         </button>
                                     </div>
@@ -236,17 +239,26 @@ if ($res_assoc) {
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='4' style='text-align:center; padding:15px;'>Nenhuma descrição de máquina encontrada.</td></tr>";
+                        echo "<tr><td colspan='4' style='text-align:center; padding:30px; opacity:0.6;'><i class='bi bi-info-circle' style='font-size:1.5rem; display:block; margin-bottom:10px;'></i>Nenhuma descrição de máquina encontrada.</td></tr>";
                     }
                     ?>
                 </tbody>
             </table>
             </div>
-            <div class="div-btns-change">
-                <button id="btn-ant" type="button"><i class="bi bi-chevron-left"></i></button>
-                <button id="btn-prox" type="button"><i class="bi bi-chevron-right"></i></button>
+                        <div class="page-pagination">
+                <?php if ($pagina_atual > 1): ?>
+                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual - 1; ?>" class="pag-btn"><i class="bi bi-chevron-left"></i> Anterior</a>
+                <?php else: ?>
+                    <span class="pag-btn disabled"><i class="bi bi-chevron-left"></i> Anterior</span>
+                <?php endif; ?>
+                <span class="pag-current">Página <?php echo $pagina_atual; ?> de <?php echo max(1, $total_paginas); ?></span>
+                <?php if ($pagina_atual < $total_paginas): ?>
+                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual + 1; ?>" class="pag-btn">Próxima <i class="bi bi-chevron-right"></i></a>
+                <?php else: ?>
+                    <span class="pag-btn disabled">Próxima <i class="bi bi-chevron-right"></i></span>
+                <?php endif; ?>
             </div>
-        </div>
+         </div>
 
     </section>
 

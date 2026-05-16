@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../configs/conexao.php';
 session_start();
 
@@ -123,7 +123,8 @@ if ($stmt->execute()) {
             mysqli_close($connM);
         }
     } catch (Exception $e) {
-        // Silenciar erro na O.S. para não interromper o processo principal
+        // Registrar falha de integração
+        error_log("Falha na integração NR12 -> Manutenção: " . $e->getMessage());
     }
 
     echo json_encode(["mensagem" => "Defeito registrado e O.S. aberta com sucesso!"]);

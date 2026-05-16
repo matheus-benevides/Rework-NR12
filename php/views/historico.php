@@ -1,4 +1,4 @@
-﻿<?php require __DIR__ . '/../controllers/validar_acesso.php'; ?>
+<?php require __DIR__ . '/../controllers/validar_acesso.php'; ?>
 <?php require __DIR__ . '/../configs/conexao.php'; ?>
 <?php require __DIR__ . '/../components/modals/all_modals.php'; ?>
 
@@ -104,34 +104,16 @@
 
         <?php require __DIR__ . '/../components/header.php'; ?>
 
-        <div class="div-btns-pages">
-            <form action="" method="GET" class="form-pesquisa">
-                <div class="search-container">
-                    <?php
-                    $busca_atual = isset($_GET['search']) ? $_GET['search'] : '';
-                    ?>
-                    <div class="box-pesquisa">
-                        <i class="bi bi-search search-icon"></i>
-                        <input type="text" name="search" id="pesquisa"
-                            value="<?php echo htmlspecialchars($busca_atual); ?>"
-                            placeholder="Pesquisar máquina, NI, aluno ou colaborador..." class="input-pesquisa">
-
-                        <?php if ($busca_atual): ?>
-                            <a href="<?php echo $_SERVER['PHP_SELF'] ?>" class="btn-clear-search"><i
-                                    class="bi bi-x-lg"></i></a>
-                        <?php endif; ?>
-                    </div>
-                    <div class="filtrar-status">
-                        <label for="">Status:</label>
-                        <select id="select-filtro-status" name="filtro-status"
-                            onchange="filtrarTabela('tabela-historico', 6)">
-                            <option value="todos">Todos</option>
-                            <option value="checkado">Checkado</option>
-                            <option value="nao-checkado">Não Checkado</option>
-                        </select>
-                    </div>
-                    <button type="submit" style="display: none;"></button>
+        <div class="page-actions-bar">
+            <form action="" method="GET" class="page-search-form">
+                <?php $busca_atual = isset($_GET['search']) ? $_GET['search'] : ''; ?>
+                <div class="page-search-box <?php echo $busca_atual ? 'has-content' : ''; ?>">
+                    <input type="text" name="search" value="<?php echo htmlspecialchars($busca_atual); ?>" placeholder="Pesquisar histórico...">
+                    <?php if ($busca_atual): ?>
+                        <a href="?" class="page-clear-btn"><i class="bi bi-x-lg"></i></a>
+                    <?php endif; ?>
                 </div>
+                <button type="submit" class="btn-search"><i class="bi bi-search"></i></button>
             </form>
         </div>
 
@@ -150,8 +132,38 @@
                     <th>Hora</th>
                     <th>Detalhes</th>
                 </thead>
-                <tbody id="tabela-historico">
+                <tbody id="tabela-historico-srv">
                     <?php
+                    // Configuração da Paginação
+                    $registros_por_pagina = 10;
+                    $pagina_atual = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                    if ($pagina_atual < 1) $pagina_atual = 1;
+                    $offset = ($pagina_atual - 1) * $registros_por_pagina;
+
+                    // Query Base
+                    $where = "WHERE 1=1";
+                    if (!empty($busca_atual)) {
+                        $termo = $conn->real_escape_string($busca_atual);
+                        $where = " WHERE (m.maquina_modelo LIKE '%$termo%' 
+                                   OR m.maquina_ni LIKE '%$termo%' 
+                                   OR a.aluno_nome LIKE '%$termo%' 
+                                   OR c.colaborador_nome LIKE '%$termo%')";
+                    }
+
+                    // Contagem Total - Usando subquery para contar grupos únicos corretamente, mesmo com NULLs
+                    $sql_count = "SELECT COUNT(*) as total FROM (
+                                    SELECT 1 FROM historico h 
+                                    LEFT JOIN aluno a ON h.aluno_id = a.idaluno
+                                    LEFT JOIN colaborador c ON h.colaborador_id = c.idcolaborador
+                                    LEFT JOIN maquina m ON h.maquina_id = m.idmaquina
+                                    $where
+                                    GROUP BY h.historico_data, h.historico_hora, h.maquina_id, h.aluno_id, h.colaborador_id
+                                  ) as sub";
+                    $total_resultado = $conn->query($sql_count);
+                    $total_registros = ($total_resultado && $total_resultado->num_rows > 0) ? $total_resultado->fetch_assoc()['total'] : 0;
+                    $total_paginas = ceil($total_registros / $registros_por_pagina);
+
+                    // Query Principal com Paginação
                     $sql = "SELECT 
                                 h.historico_data,
                                 h.historico_hora,
@@ -161,23 +173,15 @@
                                 a.aluno_nome,
                                 c.colaborador_nome,
                                 m.maquina_modelo,
-                                m.maquina_ni,
-                                count(h.historicoid) as total_requisitos
+                                m.maquina_ni
                             FROM historico h
                             LEFT JOIN aluno a ON h.aluno_id = a.idaluno
                             LEFT JOIN colaborador c ON h.colaborador_id = c.idcolaborador
-                            LEFT JOIN maquina m ON h.maquina_id = m.idmaquina";
-
-                    if (!empty($busca_atual)) {
-                        $termo = $conn->real_escape_string($busca_atual);
-                        $sql .= " WHERE (m.maquina_modelo LIKE '%$termo%' 
-                                   OR m.maquina_ni LIKE '%$termo%' 
-                                   OR a.aluno_nome LIKE '%$termo%' 
-                                   OR c.colaborador_nome LIKE '%$termo%')";
-                    }
-
-                    $sql .= " GROUP BY h.historico_data, h.historico_hora, h.maquina_id, h.aluno_id, h.colaborador_id";
-                    $sql .= " ORDER BY h.historico_data DESC, h.historico_hora DESC";
+                            LEFT JOIN maquina m ON h.maquina_id = m.idmaquina
+                            $where
+                            GROUP BY h.historico_data, h.historico_hora, h.maquina_id, h.aluno_id, h.colaborador_id
+                            ORDER BY h.historico_data DESC, h.historico_hora DESC
+                            LIMIT $registros_por_pagina OFFSET $offset";
 
                     $resultado = $conn->query($sql);
 
@@ -199,7 +203,7 @@
                             
                             echo "<td>";
                             echo "<div style='display: flex; gap: 5px; justify-content: center;'>";
-                            echo "<button class='btnAcao editar' onclick='abrirModalDetalhes(\"{$linha['historico_data']}\", \"{$linha['historico_hora']}\", \"$maq_id\", \"$al_id\", \"$colab_id\")'>";
+                            echo "<button class='btnAcao editar' title='Ver Detalhes' onclick='abrirModalDetalhes(\"{$linha['historico_data']}\", \"{$linha['historico_hora']}\", \"$maq_id\", \"$al_id\", \"$colab_id\")'>";
                             echo "<i class='bi bi-eye'></i>";
                             echo "</button>";
                             echo "</div>";
@@ -207,17 +211,26 @@
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='6' style='text-align:center; padding:15px;'>Nenhum registro encontrado.</td></tr>";
+                        echo "<tr><td colspan='6' style='text-align:center; padding:30px; opacity:0.6;'><i class='bi bi-info-circle' style='font-size:1.5rem; display:block; margin-bottom:10px;'></i>Nenhum registro de histórico encontrado.</td></tr>";
                     }
                     ?>
                 </tbody>
             </table>
             </div>
-            <div class="div-btns-change">
-                <button id="btn-ant" type="button"><i class="bi bi-chevron-left"></i></button>
-                <button id="btn-prox" type="button"><i class="bi bi-chevron-right"></i></button>
+                        <div class="page-pagination">
+                <?php if ($pagina_atual > 1): ?>
+                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual - 1; ?>" class="pag-btn"><i class="bi bi-chevron-left"></i> Anterior</a>
+                <?php else: ?>
+                    <span class="pag-btn disabled"><i class="bi bi-chevron-left"></i> Anterior</span>
+                <?php endif; ?>
+                <span class="pag-current">Página <?php echo $pagina_atual; ?> de <?php echo max(1, $total_paginas); ?></span>
+                <?php if ($pagina_atual < $total_paginas): ?>
+                    <a href="?search=<?php echo urlencode($busca_atual); ?>&page=<?php echo $pagina_atual + 1; ?>" class="pag-btn">Próxima <i class="bi bi-chevron-right"></i></a>
+                <?php else: ?>
+                    <span class="pag-btn disabled">Próxima <i class="bi bi-chevron-right"></i></span>
+                <?php endif; ?>
             </div>
-        </div>
+         </div>
 
     </section>
 

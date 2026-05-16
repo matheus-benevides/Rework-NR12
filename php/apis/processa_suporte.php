@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/../configs/conexao.php';
 
 header("Access-Control-Allow-Origin: *");

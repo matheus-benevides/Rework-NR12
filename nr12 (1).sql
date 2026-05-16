@@ -24,6 +24,19 @@ SET time_zone = "+00:00";
 -- Banco de dados: `nr12`
 --
 
+--
+-- Estrutura da tabela `logs`
+--
+
+CREATE TABLE IF NOT EXISTS `logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `sql_command` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 
 --
@@ -36,7 +49,8 @@ CREATE TABLE `aluno` (
   `aluno_matricula` int(9) NOT NULL,
   `turmas_id` int(11) NOT NULL,
   `aluno_status` enum('Ativo','Inativo') NOT NULL DEFAULT 'Ativo',
-  `aluno_email` varchar(145) DEFAULT NULL
+  `aluno_email` varchar(145) DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -50,7 +64,7 @@ INSERT INTO `aluno` (`idaluno`, `aluno_nome`, `aluno_matricula`, `turmas_id`, `a
 (333, 'HEITOR COUTINHO SIMÕES', 23222891, 30, 'Ativo', NULL),
 (334, 'ELIS REGINA APARECIDA RIBEIRO', 23222892, 30, 'Ativo', NULL),
 (335, 'KAUÃ MAYKON OLIVEIRA DOS SANTOS', 23222893, 30, 'Ativo', NULL),
-(336, 'MATHEUS BARBOSA DE ALMEIDA', 23222895, 30, 'Ativo', NULL),
+(336, 'MATHEUS BARBOSA DE ALMEIDA', 23222895, 30, 'Ativo', 'matheus@email.com'),
 (337, 'HEITOR TEIXEIRA LARIDONDO BARBIZANI', 23222896, 30, 'Ativo', NULL),
 (338, 'ANA JULIA MAGRI LUIZ', 23222897, 30, 'Ativo', NULL),
 (339, 'BRUNO RANGEL AMADO CRUZ', 23222898, 30, 'Ativo', NULL),
@@ -287,7 +301,8 @@ CREATE TABLE `colaborador` (
   `setor_id` int(11) NOT NULL,
   `colaborador_status` enum('Ativo','Inativo') NOT NULL DEFAULT 'Ativo',
   `colaborador_permissao` enum('Adm','Coordenador','Manutencao','Professor') NOT NULL,
-  `senha_padrao` tinyint(1) DEFAULT 1
+  `senha_padrao` tinyint(1) DEFAULT 1,
+  `foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -321,7 +336,8 @@ INSERT INTO `colaborador` (`idcolaborador`, `colaborador_nome`, `colaborador_nif
 (61, 'Miguel Casteletti Rosa', '123321', 'miguel.c.rosa6@aluno.senai.br', '$argon2id$v=19$m=65536,t=4,p=1$SGJINkZGbkR6TWlIRWppaQ$Kwh07jFdT7FMPHQCcDq5nfiUkvGYR8FuXdTU7cUvzuY', 2, 'Ativo', 'Adm', 0),
 (62, 'Rafael Adriano Oliveira da Silva', '4002892', 'rafael.a.silva64@aluno.senai.br', '$argon2id$v=19$m=65536,t=3,p=4$R6zKzJvE3AUpX8y3U6z+7g$argon2id$v=19$m=65536,t=3,p=4$R6zKzJvE3AUpX8y3U6z+7g$v9W2H/C6C5C0R2+9kYm4gUf9X7Y1V6z5C8B2A1M4k9I', 3, 'Ativo', 'Adm', 1),
 (64, 'Rafael2', '121332443555654', 'rafael@email.com', '$2y$10$A6bsfhafbdPEN6M5cVPWKu6XJ5df4bPgsyL4nSlQIhofpFjyTLvnW', 2, 'Ativo', 'Adm', 1),
-(66, 'Paralindu', '231', 'kilindu@gmail.com', '$2y$10$A2AhXY8vrgisCyOimxkfT.HnJUlneIvxqgEvEUJ0Rep8hRMB1FgBK', 1, 'Ativo', 'Adm', 0);
+(66, 'Paralindu', '231', 'kilindu@gmail.com', '$2y$10$A2AhXY8vrgisCyOimxkfT.HnJUlneIvxqgEvEUJ0Rep8hRMB1FgBK', 1, 'Ativo', 'Adm', 0),
+(67, 'Matheus', '1234567', 'matheus@email.com', '$2y$10$PrNTBI8sWsSPdGVnYkb4lO2JJSWmHSMb7RLb8yPzyX3.1SU3813uy', 1, 'Ativo', 'Adm', 0);
 
 -- --------------------------------------------------------
 

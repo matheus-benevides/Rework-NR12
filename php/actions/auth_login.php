@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require __DIR__ . "/../configs/conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['turmas_id'] = $rowAluno['turmas_id'];
                 $_SESSION['nimaquina'] = $maquina['maquina_ni'];
                 $_SESSION['idmaquina'] = $maquina['idmaquina'];
+                $_SESSION['aluno_foto'] = $rowAluno['foto'];
 
                 header("Location: ../views/menualuno.php");
                 exit;
@@ -80,6 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['colaborador_permissao'] = $colaborador['colaborador_permissao'];
                 $_SESSION['colaborador_nome'] = $colaborador['colaborador_nome'];
                 $_SESSION['user_senha_padrao'] = $colaborador['senha_padrao'];
+                $_SESSION['user_foto'] = $colaborador['foto'];
                 header("Location: ../views/home.php");
                 exit;
             } else {

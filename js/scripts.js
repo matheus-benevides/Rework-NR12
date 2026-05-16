@@ -81,6 +81,22 @@ window.onload = () => {
             }
         }
     }
+
+    // Lógica da Sidebar (Refatorada)
+    const arrow = document.getElementById("fechar-nav");
+    const body = document.body;
+
+    if (arrow) {
+        arrow.addEventListener('click', () => {
+            body.classList.toggle('sidebar-collapsed');
+            
+            if (body.classList.contains('sidebar-collapsed')) {
+                arrow.innerHTML = '<i class="bi bi-arrow-right-circle-fill"></i>';
+            } else {
+                arrow.innerHTML = '<i class="bi bi-arrow-left-circle-fill"></i>';
+            }
+        });
+    }
 }
 
 function showPass() {
@@ -949,72 +965,6 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarPagina(1);
     }
 
-    // --- BLOCO 7 ---
-    if (tabelaCursos7 != undefined) {
-        let paginaAtual = 1;
-        const linhas = Array.from(tabelaCursos7.getElementsByTagName("tr"));
-
-        const btnAnterior = document.getElementById("btn-ant");
-        const btnProximo = document.getElementById("btn-prox");
-
-        if (!btnAnterior || !btnProximo) {
-            console.error("Erro: Botões de paginação não encontrados.");
-            return;
-        }
-
-        function mostrarPagina(pagina) {
-            const inicio = (pagina - 1) * registrosPorPagina;
-            const fim = inicio + registrosPorPagina;
-
-            linhas.forEach((linha, index) => {
-                if (index >= inicio && index < fim) {
-                    linha.style.display = "";
-                } else {
-                    linha.style.display = "none";
-                }
-            });
-            atualizarBotoes();
-        }
-
-        function atualizarBotoes() {
-            if (paginaAtual === 1) {
-                btnAnterior.style.opacity = "0.3";
-                btnAnterior.disabled = true;
-                btnAnterior.style.pointerEvents = "none";
-            } else {
-                btnAnterior.style.opacity = "1";
-                btnAnterior.disabled = false;
-                btnAnterior.style.pointerEvents = "auto";
-            }
-
-            if (paginaAtual * registrosPorPagina >= linhas.length) {
-                btnProximo.style.opacity = "0.3";
-                btnProximo.disabled = true;
-                btnProximo.style.pointerEvents = "none";
-            } else {
-                btnProximo.style.opacity = "1";
-                btnProximo.disabled = false;
-                btnProximo.style.pointerEvents = "auto";
-            }
-        }
-
-        btnAnterior.addEventListener("click", function () {
-            if (paginaAtual > 1) {
-                paginaAtual--;
-                mostrarPagina(paginaAtual);
-            }
-        });
-
-        btnProximo.addEventListener("click", function () {
-            if ((paginaAtual * registrosPorPagina) < linhas.length) {
-                paginaAtual++;
-                mostrarPagina(paginaAtual);
-            }
-        });
-
-        mostrarPagina(1);
-    }
-
     // --- BLOCO 8 ---    
     if (tabelaCursos8 != undefined) {
         let paginaAtual = 1; // Reinicia contagem para esta tabela
@@ -1345,71 +1295,6 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarPagina(1);
     }
 
-    // --- BLOCO 13 ---    
-    if (tabelaCursos13 != undefined) {
-        let paginaAtual = 1;
-        const linhas = Array.from(tabelaCursos13.getElementsByTagName("tr"));
-
-        const btnAnterior = document.getElementById("btn-ant");
-        const btnProximo = document.getElementById("btn-prox");
-
-        if (!btnAnterior || !btnProximo) {
-            console.error("Erro: Botões de paginação não encontrados.");
-            return;
-        }
-
-        function mostrarPagina(pagina) {
-            const inicio = (pagina - 1) * registrosPorPagina;
-            const fim = inicio + registrosPorPagina;
-
-            linhas.forEach((linha, index) => {
-                if (index >= inicio && index < fim) {
-                    linha.style.display = "";
-                } else {
-                    linha.style.display = "none";
-                }
-            });
-            atualizarBotoes();
-        }
-
-        function atualizarBotoes() {
-            if (paginaAtual === 1) {
-                btnAnterior.style.opacity = "0.3";
-                btnAnterior.disabled = true;
-                btnAnterior.style.pointerEvents = "none";
-            } else {
-                btnAnterior.style.opacity = "1";
-                btnAnterior.disabled = false;
-                btnAnterior.style.pointerEvents = "auto";
-            }
-
-            if (paginaAtual * registrosPorPagina >= linhas.length) {
-                btnProximo.style.opacity = "0.3";
-                btnProximo.disabled = true;
-                btnProximo.style.pointerEvents = "none";
-            } else {
-                btnProximo.style.opacity = "1";
-                btnProximo.disabled = false;
-                btnProximo.style.pointerEvents = "auto";
-            }
-        }
-
-        btnAnterior.addEventListener("click", function () {
-            if (paginaAtual > 1) {
-                paginaAtual--;
-                mostrarPagina(paginaAtual);
-            }
-        });
-
-        btnProximo.addEventListener("click", function () {
-            if ((paginaAtual * registrosPorPagina) < linhas.length) {
-                paginaAtual++;
-                mostrarPagina(paginaAtual);
-            }
-        });
-
-        mostrarPagina(1);
-    }
 
     // --- BLOCO 14 ---    
     if (tabelaCursos14 != undefined) {
@@ -2503,5 +2388,69 @@ function fecharScanner() {
         });
     } else {
         container.style.display = 'none';
+    }
+}
+
+/**
+ * Funções de Paginação AJAX Modernizadas
+ */
+
+let paginasAtuais = {};
+
+async function carregarDadosPaginados(config) {
+    const { url, tabelaId, paginacaoId, renderLinha, page = 1, search = '' } = config;
+    
+    try {
+        const fullUrl = `${url}?page=${page}&search=${encodeURIComponent(search)}`;
+        const response = await fetch(fullUrl);
+        const result = await response.json();
+
+        if (result.success) {
+            const tbody = document.getElementById(tabelaId);
+            if (tbody) {
+                tbody.innerHTML = '';
+                if (result.dados.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:20px;">Nenhum registro encontrado.</td></tr>';
+                } else {
+                    result.dados.forEach(item => {
+                        tbody.innerHTML += renderLinha(item);
+                    });
+                }
+            }
+
+            renderizarPaginacaoControls(paginacaoId, result.pagina_atual, result.total_paginas, (novaPagina) => {
+                carregarDadosPaginados({ ...config, page: novaPagina, search: search });
+            });
+
+            paginasAtuais[tabelaId] = result.pagina_atual;
+        }
+    } catch (error) {
+        console.error(`Erro ao carregar dados para ${tabelaId}:`, error);
+    }
+}
+
+function renderizarPaginacaoControls(containerId, pagina_atual, total_paginas, callback) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class='div-paginacao premium-pagination'>
+            <button class='btn-pag' ${pagina_atual <= 1 ? 'disabled' : ''} id='btn-ant-${containerId}'>
+                <i class='bi bi-chevron-left'></i> Anterior
+            </button>
+            <span class='pag-info'>Página <strong>${pagina_atual}</strong> de <strong>${total_paginas}</strong></span>
+            <button class='btn-pag' ${pagina_atual >= total_paginas ? 'disabled' : ''} id='btn-prox-${containerId}'>
+                Próximo <i class='bi bi-chevron-right'></i>
+            </button>
+        </div>`;
+
+    const btnAnt = document.getElementById(`btn-ant-${containerId}`);
+    const btnProx = document.getElementById(`btn-prox-${containerId}`);
+
+    if (btnAnt && pagina_atual > 1) {
+        btnAnt.onclick = () => callback(pagina_atual - 1);
+    }
+    if (btnProx && pagina_atual < total_paginas) {
+        btnProx.onclick = () => callback(pagina_atual + 1);
     }
 }
