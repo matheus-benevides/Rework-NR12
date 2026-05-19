@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '\..\..\configs\conexao.php';
+require_once __DIR__ . '/../../configs/conexao.php';
 ?>
 
 <!-- Adicionar Curso -->

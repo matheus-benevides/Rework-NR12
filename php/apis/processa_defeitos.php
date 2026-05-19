@@ -80,7 +80,7 @@ if ($stmt->execute()) {
 
         // 2. Conectar ao Banco de Manutenção
         $db_manut = 'manutencao_tds2026';
-        $connM = mysqli_connect($host, $username, $password, $db_manut, $port);
+        $connM = mysqli_connect($host, $username, $password, $db_manut);
 
         if ($connM) {
             // 3. Definir Solicitante/Responsável (ADMIN Padrão)
