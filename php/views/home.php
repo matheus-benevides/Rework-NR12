@@ -1,4 +1,4 @@
-﻿<?php require __DIR__ . "/../controllers/validar_acesso.php"; ?>
+<?php require __DIR__ . "/../controllers/validar_acesso.php"; ?>
 <?php require __DIR__ . '/../components/modals/all_modals.php'; ?>
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../../css/modal.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="shortcut icon" href="../../assets/icons/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon">
 </head>
 
 <body>

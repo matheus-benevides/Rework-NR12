@@ -1,4 +1,4 @@
-﻿<?php require __DIR__ . "/php/components/modals/acesso_negado.php"; ?>
+<?php require __DIR__ . "/php/components/modals/acesso_negado.php"; ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-tema="light">
 <!-- NÃO TIRA O DATA-TEMA DE JEITO NENHUM -->
@@ -9,7 +9,7 @@
     <title>Login - SENAI NR12</title>
 
     <!-- Estilização, BootstrapIcons e Favicon -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/global.css">
@@ -47,7 +47,7 @@
         <div class="login-box">
             <form class="login-form" action="php/actions/auth_login.php" method="POST">
                 <div class="div-img">
-                    <img src="assets/imgs/senailogo1.png" alt="Logo Senai" id="senai-logo" style="width: 70%;">
+                    <img src="assets/imgs/senailogo.png" alt="Logo Senai" id="senai-logo" style="width: 70%;">
                 </div>
                 <?php if (isset($erro))
                     echo $erro; ?>

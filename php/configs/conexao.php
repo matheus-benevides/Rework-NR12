@@ -12,6 +12,7 @@ if (!$conn) {
     error_log("Erro de conexão com nr12: " . mysqli_connect_error());
     die("Erro ao conectar ao banco de dados.");
 }
+mysqli_set_charset($conn, "utf8mb4");
 
 // Conexão com o banco de dados do projeto Manutenção
 $db_manutencao = 'manutencao_tds2026';
@@ -21,3 +22,4 @@ if (!$conn_manutencao) {
     error_log("Erro de conexão com manutencao_tds2026: " . mysqli_connect_error());
     die("Erro ao conectar ao banco de manutenção.");
 }
+mysqli_set_charset($conn_manutencao, "utf8mb4");
